@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'lib-interactive-paycard-lib',
+  selector: 'lib-interactive-paycard',
   template: `
     <p>
       interactive-paycard-lib works!
@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: []
 })
-export class InteractivePaycardLibComponent implements OnInit {
+export class InteractivePaycardComponent implements OnInit {
 
   constructor() { }
 

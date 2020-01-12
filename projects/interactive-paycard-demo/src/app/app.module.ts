@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { InteractivePaycardLibModule } from 'projects/interactive-paycard-lib/src/public-api';
+import { InteractivePaycardModule } from 'interactive-paycard-lib';
 
 @NgModule({
   declarations: [
@@ -10,7 +10,7 @@ import { InteractivePaycardLibModule } from 'projects/interactive-paycard-lib/sr
   ],
   imports: [
     BrowserModule,
-    InteractivePaycardLibModule
+    InteractivePaycardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
