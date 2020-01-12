@@ -3,9 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "clean": "rimraf dist",
+    "start:demo": "wait-on dist/interactive-paycard-lib/fesm5 && ng serve --poll 2000",
     "build:demo": "ng build interactive-paycard-demo",
     "build:lib": "ng build interactive-paycard-lib",
+    "watch:lib": "ng build interactive-paycard-lib --watch",
+    "watch:all": "npm run clean && run-p watch:lib start:demo",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -30,9 +33,9 @@
     "@angular/cli": "~8.3.22",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "~3.3.8",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -42,10 +45,13 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "ng-packagr": "^5.4.0",
+    "npm-run-all": "^4.1.5",
     "protractor": "~5.4.0",
+    "rimraf": "^3.0.0",
     "ts-node": "~7.0.0",
     "tsickle": "^0.37.0",
     "tslint": "~5.15.0",
-    "typescript": "~3.5.3"
+    "typescript": "~3.5.3",
+    "wait-on": "^3.3.0"
   }
 }
