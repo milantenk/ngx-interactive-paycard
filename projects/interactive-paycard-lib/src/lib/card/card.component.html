@@ -1,1 +1,74 @@
-Here will be the card component..
+<div class="card-item">
+    <div class="card-item__side -front">
+        <div class="card-item__focus"></div>
+        <div class="card-item__cover">
+            <img class="card-item__bg" />
+        </div>
+        <div class="card-item__wrapper">
+            <div class="card-item__top">
+                <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png"
+                    class="card-item__chip" />
+                <div class="card-item__type">
+                    <!-- <transition name="slide-fade-up"> -->
+                    <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/mastercard.png"
+                        class="card-item__typeImg" />
+                    <!-- </transition> -->
+                </div>
+            </div>
+            <label class="card-item__number">
+                <span>
+                    <!-- <transition name="slide-fade-up"> -->
+                    <!-- <div class="card-item__numberItem">*</div> -->
+                    <div class="card-item__numberItem">number</div>
+                    <!-- <div class="card-item__numberItem">n</div> -->
+                    <!-- </transition> -->
+                </span>
+            </label>
+            <div class="card-item__content">
+                <label class="card-item__info">
+                    <div class="card-item__holder">Card Holder</div>
+                    <!-- <transition name="slide-fade-up"> -->
+                    <div class="card-item__name" key="1">
+                        <!-- <transition-group name="slide-fade-right"> -->
+                        <!-- <span class="card-item__nameItem">n</span> -->
+                        <!-- </transition-group> -->
+                    </div>
+                    <div class="card-item__name" key="2">Full Name</div>
+                    <!-- </transition> -->
+                </label>
+                <div class="card-item__date">
+                    <label class="card-item__dateTitle">Expires</label>
+                    <label class="card-item__dateItem">
+                        <!-- <transition name="slide-fade-up"> -->
+                        <!-- <span>labels card month</span> -->
+                        <span key="2">MM</span>
+                        <!-- </transition> -->
+                    </label>
+                    /
+                    <label for="cardYear" class="card-item__dateItem">
+                        <!-- <transition name="slide-fade-up"> -->
+                        <!-- <span>card year</span> -->
+                        <span key="2">YY</span>
+                        <!-- </transition> -->
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-item__side -back">
+        <div class="card-item__cover">
+            <img class="card-item__bg" />
+        </div>
+        <div class="card-item__band"></div>
+        <div class="card-item__cvv">
+            <div class="card-item__cvvTitle">CVV</div>
+            <div class="card-item__cvvBand">
+                <span>*</span>
+            </div>
+            <div class="card-item__type">
+                <img src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + cardType + '.png'"
+                    class="card-item__typeImg" />
+            </div>
+        </div>
+    </div>
+</div>
