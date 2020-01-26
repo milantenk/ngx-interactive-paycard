@@ -1,1 +1,38 @@
-Card Form component fgafdds
+<div class="card-form">
+    <div class="card-list">
+      <card></card>
+    </div>
+    <div class="card-form__inner">
+      <div class="card-input">
+        <label for="cardNumber" class="card-input__label">Card Number</label>
+        <input class="card-input__input"/>
+        <button class="card-input__eye"></button>
+      </div>
+      <div class="card-input" >
+        <label for="cardName" class="card-input__label">Card Name</label>
+        <input class="card-input__input"/>
+      </div>
+      <div class="card-form__row">
+        <div class="card-form__col">
+          <div class="card-form__group">
+            <label for="cardMonth" class="card-input__label">Expiration Date</label>
+            <select class="card-input__input -select">
+              <option>Month</option>
+              <option>option</option>
+            </select>
+            <select class="card-input__input -select">
+              <option>Year</option>
+              <option>option</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-form__col -cvv">
+          <div class="card-input">
+            <label for="cardCvv" class="card-input__label">CVV</label>
+            <input class="card-input__input"/>
+          </div>
+        </div>
+      </div>
+      <button class="card-form__button" v-on:click="invaildCard">Submit</button>
+    </div>
+  </div>
