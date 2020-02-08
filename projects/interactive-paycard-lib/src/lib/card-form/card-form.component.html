@@ -5,7 +5,17 @@
     <div class="card-form__inner">
       <div class="card-input">
         <label for="cardNumber" class="card-input__label">Card Number</label>
-        <input class="card-input__input"/>
+        <input 
+        class="card-input__input" 
+        type="tel" 
+        id="cardNumberId"
+        [maxlength]="cardNumberMaxLength"
+        [ngModel]="displayedCardNumber" 
+        (ngModelChange)="onCardNumberChange($event)"
+        (focus)="onCardNumberFocus()"
+        (blur)="onCardNumberBlur()"
+        [autocomplete]="'off'"
+        />
         <button class="card-input__eye"></button>
       </div>
       <div class="card-input" >
