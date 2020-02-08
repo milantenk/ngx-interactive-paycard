@@ -8,10 +8,10 @@
         <input 
         class="card-input__input" 
         type="tel" 
-        id="cardNumberId"
-        [maxlength]="cardNumberMaxLength"
-        [ngModel]="displayedCardNumber" 
-        (ngModelChange)="onCardNumberChange($event)"
+        [id]="cardNumberId"
+        [attr.maxlength]="cardNumberMaxLength"
+        [value]="displayedCardNumber" 
+        (input)="onCardNumberChange($event)"
         (focus)="onCardNumberFocus()"
         (blur)="onCardNumberBlur()"
         autocomplete="off"
@@ -67,7 +67,15 @@
         <div class="card-form__col -cvv">
           <div class="card-input">
             <label for="cardCvv" class="card-input__label">CVV</label>
-            <input class="card-input__input"/>
+            <input 
+              class="card-input__input"
+              type="tel"
+              id="cardCcvId"
+              [maxlength]="4"
+              [(ngModel)]="cardCcv"
+              autocomplete="off"
+              onlyNumbers
+            />
           </div>
         </div>
       </div>

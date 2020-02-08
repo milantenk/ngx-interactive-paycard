@@ -20,18 +20,22 @@ export class CardFormComponent implements OnInit {
     monthSelect = 'monthSelect';
     cardMonth = '';
 
-    cardYear='';
+    cardYear = '';
     minCardYear;
 
-    yearSelectId= 'yearSelectId';
+    yearSelectId = 'yearSelectId';
+
+    cardCcvId = 'cardCcvId';
+    cardCcv;
 
     constructor() { }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.minCardYear = new Date().getFullYear();
     }
 
-    onCardNumberChange(cardNumber) {
+    onCardNumberChange(event) {
+        let cardNumber = event.target.value;
         let value = cardNumber.replace(/\D/g, '')
         if ((/^3[47]\d{0,13}$/).test(value)) { // american express, 15 digits
             cardNumber = value.replace(/(\d{4})/, '$1 ').replace(/(\d{4}) (\d{6})/, '$1 $2 ')
@@ -44,15 +48,14 @@ export class CardFormComponent implements OnInit {
             this.cardNumberMaxLength = 19
         }
         this.displayedCardNumber = cardNumber;
+        event.target.value = cardNumber;
     }
 
     onCardNumberFocus() {
-        console.log('onCardNumberFocusCall')
         this.unMaskCardNumber();
     }
 
     onCardNumberBlur() {
-        console.log('onCardNumberBlurCall')
         if (this.isCardNumberMasked) {
             this.maskCardNumber()
         }
@@ -60,7 +63,6 @@ export class CardFormComponent implements OnInit {
 
     onCardNameKeyPress(event) {
         this.cardName = event.target.value // TODO: Two way data binding?
-        console.log(this.cardName)
         return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))
     }
 
@@ -88,12 +90,12 @@ export class CardFormComponent implements OnInit {
         }
     }
 
-    minCardMonth () {
+    minCardMonth() {
         if (this.cardYear === this.minCardYear) return new Date().getMonth() + 1
         return 1
-      }
+    }
 
-      generateMonthValue(n) {
+    generateMonthValue(n) {
         return n < 10 ? `0${n}` : n
-      }
+    }
 }
