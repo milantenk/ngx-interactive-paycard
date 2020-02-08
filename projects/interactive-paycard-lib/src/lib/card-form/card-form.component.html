@@ -50,9 +50,17 @@
                 {{generateMonthValue((n+1))}}
               </option>
             </select>
-            <select class="card-input__input -select">
-              <option>Year</option>
-              <option>option</option>
+            <select 
+              class="card-input__input -select"
+              [id]="yearSelectId"
+              [(ngModel)]="cardYear"
+            >
+              <option value disabled selected>Year</option>
+              <option
+                *ngFor="let i of [].constructor(12); let n = index"
+                [value]="minCardYear + n"
+              >{{n + minCardYear}}
+                </option>
             </select>
           </div>
         </div>

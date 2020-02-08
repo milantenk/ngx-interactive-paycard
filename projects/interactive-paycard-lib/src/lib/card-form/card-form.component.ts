@@ -21,11 +21,15 @@ export class CardFormComponent implements OnInit {
     cardMonth = '';
 
     cardYear='';
-    minCardYear='';
+    minCardYear;
+
+    yearSelectId= 'yearSelectId';
 
     constructor() { }
 
-    ngOnInit() { }
+    ngOnInit() { 
+        this.minCardYear = new Date().getFullYear();
+    }
 
     onCardNumberChange(cardNumber) {
         let value = cardNumber.replace(/\D/g, '')
