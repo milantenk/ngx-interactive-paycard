@@ -14,6 +14,15 @@ export class CardFormComponent implements OnInit {
     displayedCardNumber = this.cardNumberValue;
     isCardNumberMasked = true;
 
+    cardNameId = 'cardNameId';
+    cardName = '';
+
+    monthSelect = 'monthSelect';
+    cardMonth = '';
+
+    cardYear='';
+    minCardYear='';
+
     constructor() { }
 
     ngOnInit() { }
@@ -45,6 +54,12 @@ export class CardFormComponent implements OnInit {
         }
     }
 
+    onCardNameKeyPress(event) {
+        this.cardName = event.target.value // TODO: Two way data binding?
+        console.log(this.cardName)
+        return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))
+    }
+
     maskCardNumber() {
         this.cardNumberValue = this.displayedCardNumber
         let arr = this.displayedCardNumber.split('')
@@ -68,4 +83,13 @@ export class CardFormComponent implements OnInit {
             this.unMaskCardNumber()
         }
     }
+
+    minCardMonth () {
+        if (this.cardYear === this.minCardYear) return new Date().getMonth() + 1
+        return 1
+      }
+
+      generateMonthValue(n) {
+        return n < 10 ? `0${n}` : n
+      }
 }
