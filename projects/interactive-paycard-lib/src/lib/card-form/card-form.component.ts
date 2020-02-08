@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CardModel} from '../shared/card-model'
 
 @Component({
     selector: 'card-form',
@@ -8,17 +9,16 @@ import { Component, OnInit } from '@angular/core';
 
 export class CardFormComponent implements OnInit {
 
+    cardModel: CardModel;
+
     cardNumberId = 'cardNumberId';
-    cardNumberValue = '';
     cardNumberMaxLength = 19;
-    displayedCardNumber = this.cardNumberValue;
+    displayedCardNumber;
     isCardNumberMasked = true;
 
     cardNameId = 'cardNameId';
-    cardName = '';
 
     monthSelect = 'monthSelect';
-    cardMonth = '';
 
     cardYear = '';
     minCardYear;
@@ -28,7 +28,10 @@ export class CardFormComponent implements OnInit {
     cardCcvId = 'cardCcvId';
     cardCcv;
 
-    constructor() { }
+    constructor() {
+        this.cardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: 0, ccv: 0 }
+        this.displayedCardNumber = this.cardModel.cardNumber;
+    }
 
     ngOnInit() {
         this.minCardYear = new Date().getFullYear();
@@ -62,12 +65,12 @@ export class CardFormComponent implements OnInit {
     }
 
     onCardNameKeyPress(event) {
-        this.cardName = event.target.value // TODO: Two way data binding?
+        this.cardModel.cardName = event.target.value // TODO: Two way data binding?
         return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))
     }
 
     maskCardNumber() {
-        this.cardNumberValue = this.displayedCardNumber
+        this.cardModel.cardNumber = this.displayedCardNumber
         let arr = this.displayedCardNumber.split('')
         arr.forEach((element, index) => {
             if (index > 4 && index < 14 && element.trim() !== '') {
@@ -78,7 +81,7 @@ export class CardFormComponent implements OnInit {
     }
 
     unMaskCardNumber() {
-        this.displayedCardNumber = this.cardNumberValue
+        this.displayedCardNumber = this.cardModel.cardNumber
     }
 
     toggleCardNumberMask() {

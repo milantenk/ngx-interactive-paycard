@@ -29,7 +29,7 @@
         <input class="card-input__input"
           type="text"
           [id]="cardNameId"
-          [ngModel]="cardName" 
+          [ngModel]="cardModel.cardName" 
           (keypress)='onCardNameKeyPress($event)'
           autocomplete="off"
         />
@@ -41,7 +41,7 @@
             <select 
               class="card-input__input -select"
               id="monthSelect"
-              [(ngModel)]="cardMonth"
+              [(ngModel)]="cardModel.expirationMonth"
             >
               <option value disabled selected>Month</option>
               <option *ngFor="let i of [].constructor(12); let n = index"
