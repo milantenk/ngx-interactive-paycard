@@ -16,7 +16,13 @@
         (blur)="onCardNumberBlur()"
         [autocomplete]="'off'"
         />
-        <button class="card-input__eye"></button>
+        <button 
+          [ngClass]="isCardNumberMasked ? 'card-input__eye':'card-input__eye -active'"
+          [title]="'Show/Hide card number'"
+          [tabindex]="-1"
+          [disabled]="displayedCardNumber===''"
+          (click)="toggleCardNumberMask()"
+        ></button>
       </div>
       <div class="card-input" >
         <label for="cardName" class="card-input__label">Card Name</label>

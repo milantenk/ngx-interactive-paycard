@@ -59,4 +59,13 @@ export class CardFormComponent implements OnInit {
     unMaskCardNumber() {
         this.displayedCardNumber = this.cardNumberValue
     }
+
+    toggleCardNumberMask() {
+        this.isCardNumberMasked = !this.isCardNumberMasked
+        if (this.isCardNumberMasked) {
+            this.maskCardNumber()
+        } else {
+            this.unMaskCardNumber()
+        }
+    }
 }
