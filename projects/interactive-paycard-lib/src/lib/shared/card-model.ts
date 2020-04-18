@@ -2,6 +2,6 @@ export class CardModel {
     cardNumber: string;
     cardName: string;
     expirationMonth: string;
-    expirationYear: number;
+    expirationYear: string;
     ccv: number;
 }

@@ -20,7 +20,6 @@ export class CardFormComponent implements OnInit {
 
     monthSelect = 'monthSelect';
 
-    cardYear = '';
     minCardYear;
 
     yearSelectId = 'yearSelectId';
@@ -29,7 +28,7 @@ export class CardFormComponent implements OnInit {
     cardCcv;
 
     constructor() {
-        this.cardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: 0, ccv: 0 }
+        this.cardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', ccv: 0 }
         this.displayedCardNumber = this.cardModel.cardNumber;
     }
 
@@ -94,7 +93,7 @@ export class CardFormComponent implements OnInit {
     }
 
     minCardMonth() {
-        if (this.cardYear === this.minCardYear) return new Date().getMonth() + 1
+        if (this.cardModel.expirationYear === this.minCardYear) return new Date().getMonth() + 1
         return 1
     }
 

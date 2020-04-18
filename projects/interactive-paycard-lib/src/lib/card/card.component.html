@@ -42,15 +42,15 @@
                     <label class="card-item__dateTitle">Expires</label>
                     <label class="card-item__dateItem">
                         <!-- <transition name="slide-fade-up"> -->
-                        <!-- <span>labels card month</span> -->
-                        <span key="2">MM</span>
+                        <span *ngIf="cardModel.expirationMonth; else monthPlaceHolder">{{cardModel.expirationMonth}}</span>
+                        <ng-template #monthPlaceHolder>MM</ng-template>
                         <!-- </transition> -->
                     </label>
                     /
                     <label for="cardYear" class="card-item__dateItem">
                         <!-- <transition name="slide-fade-up"> -->
-                        <!-- <span>card year</span> -->
-                        <span key="2">YY</span>
+                        <span *ngIf="cardModel.expirationYear; else yearPlaceHolder">{{cardModel.expirationYear.slice(2,4)}}</span>
+                        <ng-template #yearPlaceHolder>YY</ng-template>
                         <!-- </transition> -->
                     </label>
                 </div>
