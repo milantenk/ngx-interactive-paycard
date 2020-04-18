@@ -32,8 +32,8 @@
         <input class="card-input__input"
           type="text"
           [id]="cardNameId"
-          [ngModel]="cardModel.cardName" 
-          (keypress)='onCardNameKeyPress($event)'
+          [(ngModel)]="cardModel.cardName" 
+          (keyup)='onCardNameKeyPress($event)'
           autocomplete="off"
         />
       </div>

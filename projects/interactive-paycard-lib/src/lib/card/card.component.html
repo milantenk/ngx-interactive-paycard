@@ -16,15 +16,13 @@
                 </div>
             </div>
             <label class="card-item__number">
-                <span *ngFor="let n of currentPlaceholder; let i = index">
+                <span *ngFor="let n of currentCardNumberPlaceholder; let i = index">
                     <!-- <transition name="slide-fade-up"> -->
                     <ng-container class="card-item__numberItem" *ngIf="getIsNumberMasked(i,n); else elseBlock1">*</ng-container>
                     <ng-template #elseBlock1>
                         <ng-container class="card-item__numberItem" *ngIf="cardModel.cardNumber.length > i; else elseBlock2">{{cardModel.cardNumber.charAt(i)}}</ng-container>
                     </ng-template>
-                    <ng-template #elseBlock2>
-                        <ng-template class="card-item__numberItem">{{n}}</ng-template>
-                    </ng-template>
+                    <ng-template class="card-item__numberItem" #elseBlock2>{{n}}</ng-template>
                     <!-- </transition> -->
                 </span>
             </label>
@@ -32,12 +30,12 @@
                 <label class="card-item__info">
                     <div class="card-item__holder">Card Holder</div>
                     <!-- <transition name="slide-fade-up"> -->
-                    <div class="card-item__name" key="1">
+                    <div class="card-item__name" *ngIf="this.cardModel.cardName.length > 0; else namePlaceHolder">
                         <!-- <transition-group name="slide-fade-right"> -->
-                        <!-- <span class="card-item__nameItem">n</span> -->
+                        <span class="card-item__nameItem" *ngFor="let n of this.cardModel.cardName.split(''); let i = index">{{n}}</span>
                         <!-- </transition-group> -->
                     </div>
-                    <div class="card-item__name" key="2">Full Name</div>
+                    <ng-template class="card-item__name" #namePlaceHolder>Full Name</ng-template>
                     <!-- </transition> -->
                 </label>
                 <div class="card-item__date">

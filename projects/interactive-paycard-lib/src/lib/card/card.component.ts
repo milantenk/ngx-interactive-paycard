@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CardModel } from '../shared/card-model';
 
 @Component({
@@ -13,7 +13,8 @@ export class CardComponent implements OnInit {
     @Input() cardModel: CardModel;
     @Input() isCardNumberMasked;
 
-    currentPlaceholder: string[];
+    currentCardNumberPlaceholder: string[];
+    cardHolderName: string[];
     amexCardPlaceholder = '#### ###### #####';
     dinersCardPlaceholder = '#### ###### ####';
     defaultCardPlaceholder = '#### #### #### ####';
@@ -22,16 +23,18 @@ export class CardComponent implements OnInit {
         console.log(this.cardModel)
         console.log(this.isCardNumberMasked)
         this.changePlaceholder();
+        console.log(this.currentCardNumberPlaceholder)
     }
+
 
     changePlaceholder() {
         const cardType = this.cardType();
         if (cardType === 'amex') {
-            this.currentPlaceholder = this.amexCardPlaceholder.split('')
+            this.currentCardNumberPlaceholder = this.amexCardPlaceholder.split('')
         } else if (cardType === 'dinersclub') {
-            this.currentPlaceholder = this.dinersCardPlaceholder.split('')
+            this.currentCardNumberPlaceholder = this.dinersCardPlaceholder.split('')
         } else {
-            this.currentPlaceholder = this.defaultCardPlaceholder.split('')
+            this.currentCardNumberPlaceholder = this.defaultCardPlaceholder.split('')
         }
         /*this.$nextTick(() => {
             this.changeFocus()

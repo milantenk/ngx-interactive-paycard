@@ -52,6 +52,7 @@ export class CardFormComponent implements OnInit {
         }
         this.displayedCardNumber = cardNumber;
         event.target.value = cardNumber;
+        this.cardModel.cardNumber = cardNumber;
     }
 
     onCardNumberFocus() {
@@ -65,7 +66,6 @@ export class CardFormComponent implements OnInit {
     }
 
     onCardNameKeyPress(event) {
-        this.cardModel.cardName = event.target.value // TODO: Two way data binding?
         return ((event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 97 && event.charCode <= 122) || (event.charCode == 32))
     }
 
