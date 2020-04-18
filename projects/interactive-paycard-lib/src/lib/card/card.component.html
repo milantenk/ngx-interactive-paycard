@@ -16,11 +16,15 @@
                 </div>
             </div>
             <label class="card-item__number">
-                <span>
+                <span *ngFor="let n of currentPlaceholder; let i = index">
                     <!-- <transition name="slide-fade-up"> -->
-                    <!-- <div class="card-item__numberItem">*</div> -->
-                    <div class="card-item__numberItem">number</div>
-                    <!-- <div class="card-item__numberItem">n</div> -->
+                    <ng-container class="card-item__numberItem" *ngIf="getIsNumberMasked(i,n); else elseBlock1">*</ng-container>
+                    <ng-template #elseBlock1>
+                        <ng-container class="card-item__numberItem" *ngIf="cardModel.cardNumber.length > i; else elseBlock2">{{cardModel.cardNumber.charAt(i)}}</ng-container>
+                    </ng-template>
+                    <ng-template #elseBlock2>
+                        <ng-template class="card-item__numberItem">{{n}}</ng-template>
+                    </ng-template>
                     <!-- </transition> -->
                 </span>
             </label>
