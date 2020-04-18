@@ -3,6 +3,7 @@
       <card 
       [cardModel]="cardModel" 
       [isCardNumberMasked]="isCardNumberMasked"
+      [isCardFlipped]="isCvvFocused"
       ></card>
     </div>
     <div class="card-form__inner">
@@ -73,11 +74,13 @@
             <input 
               class="card-input__input"
               type="tel"
-              id="cardCcvId"
+              id="cardCvvId"
               [maxlength]="4"
-              [(ngModel)]="cardCcv"
+              [(ngModel)]="cardModel.cvv"
               autocomplete="off"
               onlyNumbers
+              (blur)="onCvvBlur()" 
+              (focus)="onCvvFocus()"
             />
           </div>
         </div>

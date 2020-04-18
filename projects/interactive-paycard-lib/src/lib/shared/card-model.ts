@@ -3,5 +3,5 @@ export class CardModel {
     cardName: string;
     expirationMonth: string;
     expirationYear: string;
-    ccv: number;
+    cvv: string;
 }

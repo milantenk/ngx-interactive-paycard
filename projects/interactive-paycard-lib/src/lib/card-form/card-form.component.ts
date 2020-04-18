@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CardModel} from '../shared/card-model'
+import { CardModel } from '../shared/card-model'
 
 @Component({
     selector: 'card-form',
@@ -15,6 +15,7 @@ export class CardFormComponent implements OnInit {
     cardNumberMaxLength = 19;
     displayedCardNumber;
     isCardNumberMasked = true;
+    isCvvFocused = false;
 
     cardNameId = 'cardNameId';
 
@@ -24,11 +25,10 @@ export class CardFormComponent implements OnInit {
 
     yearSelectId = 'yearSelectId';
 
-    cardCcvId = 'cardCcvId';
-    cardCcv;
+    cardCvvId = 'cardCvvId';
 
     constructor() {
-        this.cardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', ccv: 0 }
+        this.cardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' }
         this.displayedCardNumber = this.cardModel.cardNumber;
     }
 
@@ -62,6 +62,14 @@ export class CardFormComponent implements OnInit {
         if (this.isCardNumberMasked) {
             this.maskCardNumber()
         }
+    }
+
+    onCvvBlur() {
+        this.isCvvFocused = false;
+    }
+
+    onCvvFocus() {
+        this.isCvvFocused = true;
     }
 
     onCardNameKeyPress(event) {

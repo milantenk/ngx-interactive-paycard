@@ -12,6 +12,7 @@ export class CardComponent implements OnInit {
 
     @Input() cardModel: CardModel;
     @Input() isCardNumberMasked;
+    @Input() isCardFlipped;
 
     currentCardNumberPlaceholder: string[];
     cardHolderName: string[];

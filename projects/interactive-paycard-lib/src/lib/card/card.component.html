@@ -1,6 +1,6 @@
-<div class="card-item">
+<div [ngClass]="isCardFlipped ? 'card-item -active':'card-item'">
     <div class="card-item__side -front">
-        <div class="card-item__focus"></div>
+        <div class="card-item__focus "></div>
         <div class="card-item__cover">
             <img class="card-item__bg" />
         </div>
@@ -65,11 +65,9 @@
         <div class="card-item__cvv">
             <div class="card-item__cvvTitle">CVV</div>
             <div class="card-item__cvvBand">
-                <span>*</span>
+                <span *ngFor="let n of cardModel.cvv.split('')">*</span>
             </div>
             <div class="card-item__type">
-                <img src="'https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/' + cardType + '.png'"
-                    class="card-item__typeImg" />
             </div>
         </div>
     </div>
