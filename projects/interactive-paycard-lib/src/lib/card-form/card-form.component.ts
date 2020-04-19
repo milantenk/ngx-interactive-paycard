@@ -23,7 +23,7 @@ export class CardFormComponent {
     yearSelectId = 'yearSelectId';
     cardCvvId = 'cardCvvId';
 
-    onCardNumberChange($event) {
+    onCardNumberChange($event): void {
         let cardNumber: string = $event.target.value;
         let value = cardNumber.replace(/\D/g, '');
         if ((/^3[47]\d{0,13}$/).test(value)) { // american express, 15 digits
@@ -40,29 +40,29 @@ export class CardFormComponent {
         this.cardModel.cardNumber = cardNumber;
     }
 
-    onCardNumberFocus() {
+    onCardNumberFocus(): void {
         this.unMaskCardNumber();
     }
 
-    onCardNumberBlur() {
+    onCardNumberBlur(): void {
         if (this.isCardNumberMasked) {
             this.maskCardNumber();
         }
     }
 
-    onCvvBlur() {
+    onCvvBlur(): void {
         this.isCvvFocused = false;
     }
 
-    onCvvFocus() {
+    onCvvFocus(): void {
         this.isCvvFocused = true;
     }
 
-    onCardNameKeyPress($event) {
+    onCardNameKeyPress($event): boolean {
         return (($event.charCode >= 65 && $event.charCode <= 90) || ($event.charCode >= 97 && $event.charCode <= 122) || ($event.charCode == 32));
     }
 
-    onToggleCardNumberMask() {
+    onToggleCardNumberMask(): void {
         this.isCardNumberMasked = !this.isCardNumberMasked;
         if (this.isCardNumberMasked) {
             this.maskCardNumber();
@@ -71,13 +71,13 @@ export class CardFormComponent {
         }
     }
 
-    onYearChange() {
+    onYearChange(): void {
         if (this.cardModel.expirationYear === this.minCardYear.toString()) {
             this.cardModel.expirationMonth = '';
         }
     }
 
-    minCardMonth() {
+    minCardMonth(): number {
         if (this.cardModel.expirationYear === this.minCardYear.toString()) {
             return new Date().getMonth() + 1;
         } else {
@@ -85,11 +85,11 @@ export class CardFormComponent {
         }
     }
 
-    generateMonthValue(n) {
-        return n < 10 ? `0${n}` : n;
+    generateMonthValue(index: number): string {
+        return index < 10 ? `0${index}` : index.toString();
     }
 
-    private maskCardNumber() {
+    private maskCardNumber(): void {
         this.cardModel.cardNumber = this.displayedCardNumber;
         let arr = this.displayedCardNumber.split('');
         arr.forEach((element, index) => {
@@ -100,7 +100,7 @@ export class CardFormComponent {
         this.displayedCardNumber = arr.join('');
     }
 
-    private unMaskCardNumber() {
+    private unMaskCardNumber(): void {
         this.displayedCardNumber = this.cardModel.cardNumber;
     }
 }
