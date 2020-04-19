@@ -6,52 +6,38 @@
         </div>
         <div class="card-item__wrapper">
             <div class="card-item__top">
-                <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png"
+                <img src="chip.png"
                     class="card-item__chip" />
                 <div class="card-item__type">
-                    <!-- <transition name="slide-fade-up"> -->
-                    <!-- TODO: CardTypeImg <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/mastercard.png"
-                        class="card-item__typeImg" /> -->
-                    <!-- </transition> -->
                 </div>
             </div>
             <label class="card-item__number">
-                <span *ngFor="let n of currentCardNumberPlaceholder; let i = index">
-                    <!-- <transition name="slide-fade-up"> -->
-                    <ng-container class="card-item__numberItem" *ngIf="getIsNumberMasked(i,n); else elseBlock1">*</ng-container>
-                    <ng-template #elseBlock1>
-                        <ng-container class="card-item__numberItem" *ngIf="cardModel.cardNumber.length > i; else elseBlock2">{{cardModel.cardNumber.charAt(i)}}</ng-container>
+                <span *ngFor="let cardPlaceHolderLetter of currentCardNumberPlaceholder; let i = index">
+                    <ng-container class="card-item__numberItem" *ngIf="getIsNumberMasked(i, cardPlaceHolderLetter); else showCardNumer">*</ng-container>
+                    <ng-template #showCardNumer>
+                        <ng-container class="card-item__numberItem" *ngIf="cardModel.cardNumber.length > i; else showPlaceHolderLetter">{{cardModel.cardNumber.charAt(i)}}</ng-container>
                     </ng-template>
-                    <ng-template class="card-item__numberItem" #elseBlock2>{{n}}</ng-template>
-                    <!-- </transition> -->
+                    <ng-template class="card-item__numberItem" #showPlaceHolderLetter>{{cardPlaceHolderLetter}}</ng-template>
                 </span>
             </label>
             <div class="card-item__content">
                 <label class="card-item__info">
                     <div class="card-item__holder">Card Holder</div>
-                    <!-- <transition name="slide-fade-up"> -->
                     <div class="card-item__name" *ngIf="this.cardModel.cardName.length > 0; else namePlaceHolder">
-                        <!-- <transition-group name="slide-fade-right"> -->
-                        <span class="card-item__nameItem" *ngFor="let n of this.cardModel.cardName.split(''); let i = index">{{n}}</span>
-                        <!-- </transition-group> -->
+                        <span class="card-item__nameItem" *ngFor="let cardNameLetter of this.cardModel.cardName.split(''); let i = index">{{cardNameLetter}}</span>
                     </div>
                     <ng-template class="card-item__name" #namePlaceHolder>Full Name</ng-template>
-                    <!-- </transition> -->
                 </label>
                 <div class="card-item__date">
                     <label class="card-item__dateTitle">Expires</label>
                     <label class="card-item__dateItem">
-                        <!-- <transition name="slide-fade-up"> -->
                         <span *ngIf="cardModel.expirationMonth; else monthPlaceHolder">{{cardModel.expirationMonth}}</span>
                         <ng-template #monthPlaceHolder>MM</ng-template>
-                        <!-- </transition> -->
                     </label>
                     /
                     <label for="cardYear" class="card-item__dateItem">
-                        <!-- <transition name="slide-fade-up"> -->
                         <span *ngIf="cardModel.expirationYear; else yearPlaceHolder">{{cardModel.expirationYear.slice(2,4)}}</span>
                         <ng-template #yearPlaceHolder>YY</ng-template>
-                        <!-- </transition> -->
                     </label>
                 </div>
             </div>
