@@ -25,7 +25,7 @@
           title="Show/Hide card number"
           tabindex="-1"
           [disabled]="displayedCardNumber===''"
-          (click)="toggleCardNumberMask()"
+          (click)="onToggleCardNumberMask()"
         ></button>
       </div>
       <div class="card-input" >
@@ -58,6 +58,7 @@
               class="card-input__input -select"
               [id]="yearSelectId"
               [(ngModel)]="cardModel.expirationYear"
+              (change)="onYearChange()"
             >
               <option value disabled selected>Year</option>
               <option
