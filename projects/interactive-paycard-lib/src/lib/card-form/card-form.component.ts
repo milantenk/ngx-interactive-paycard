@@ -38,6 +38,7 @@ export class CardFormComponent {
         }
         this.displayedCardNumber = cardNumber;
         this.cardModel.cardNumber = cardNumber;
+        $event.target.value = cardNumber; // The value in event has to be updated, otherwise the letter remains in the <input>
     }
 
     onCardNumberFocus(): void {
