@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'interactive-paycard',
@@ -6,6 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styles: []
 })
 export class InteractivePaycardComponent implements OnInit {
+
+  @Input() chipImgPath: string;
+  @Input() logoImgPath: string;
 
   constructor() { }
 

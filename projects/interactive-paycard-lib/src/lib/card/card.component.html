@@ -6,9 +6,11 @@
         </div>
         <div class="card-item__wrapper">
             <div class="card-item__top">
-                <img src="https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/chip.png"
+                <img src="{{chipImgPath}}"
                     class="card-item__chip" />
                 <div class="card-item__type">
+                    <img src="{{logoImgPath}}"
+                    class="card-item__typeImg" />
                 </div>
             </div>
             <label class="card-item__number">
@@ -54,6 +56,8 @@
                 <span *ngFor="let n of cardModel.cvv.split('')">*</span>
             </div>
             <div class="card-item__type">
+                <img src="{{logoImgPath}}"
+                class="card-item__typeImg" />
             </div>
         </div>
     </div>

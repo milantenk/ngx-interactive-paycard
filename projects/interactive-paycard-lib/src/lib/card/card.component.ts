@@ -13,6 +13,8 @@ export class CardComponent implements OnInit {
     @Input() cardModel: CardModel;
     @Input() isCardNumberMasked: boolean;
     @Input() isCardFlipped: boolean;
+    @Input() chipImgPath: string;
+    @Input() logoImgPath: string;
 
     currentCardNumberPlaceholder: string[];
     cardHolderName: string[];

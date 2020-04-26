@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CardModel } from '../shared/card-model'
 
 @Component({
@@ -8,6 +8,9 @@ import { CardModel } from '../shared/card-model'
 })
 
 export class CardFormComponent {
+
+    @Input() chipImgPath: string;
+    @Input() logoImgPath: string;
 
     cardModel: CardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' };
     isCardNumberMasked = true;
