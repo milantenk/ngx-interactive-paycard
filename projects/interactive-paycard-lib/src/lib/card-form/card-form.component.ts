@@ -11,6 +11,8 @@ export class CardFormComponent {
 
     @Input() chipImgPath: string;
     @Input() logoImgPath: string;
+    @Input() backBgImgPath: string; 
+    @Input() frontBgImgPath: string;
 
     cardModel: CardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' };
     isCardNumberMasked = true;

@@ -9,6 +9,8 @@ export class InteractivePaycardComponent implements OnInit {
 
   @Input() chipImgPath: string;
   @Input() logoImgPath: string;
+  @Input() backBgImgPath: string; 
+  @Input() frontBgImgPath: string; 
 
   constructor() { }
 

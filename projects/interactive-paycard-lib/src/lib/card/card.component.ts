@@ -15,6 +15,8 @@ export class CardComponent implements OnInit {
     @Input() isCardFlipped: boolean;
     @Input() chipImgPath: string;
     @Input() logoImgPath: string;
+    @Input() backBgImgPath: string; 
+    @Input() frontBgImgPath: string;
 
     currentCardNumberPlaceholder: string[];
     cardHolderName: string[];
