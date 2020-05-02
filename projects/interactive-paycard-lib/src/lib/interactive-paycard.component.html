@@ -92,6 +92,6 @@
           </div>
         </div>
       </div>
-      <button class="card-form__button" v-on:click="invaildCard">Submit</button>
+      <button class="card-form__button" (click)="submitEvent.emit(cardModel)">Submit</button>
     </div>
 </div>

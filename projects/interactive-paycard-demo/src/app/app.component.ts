@@ -9,4 +9,8 @@ export class AppComponent {
   title = 'interactive-paycard-demo';
   cardNumberFormat = "#### #### #### ####";
   cardNumberMask = "#### **** **** ####";
+
+  onSubmitEvent($event) {
+    console.log($event);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CardModel } from './shared/card-model';
 
 @Component({
@@ -14,6 +14,7 @@ export class InteractivePaycardComponent implements OnInit {
   @Input() frontBgImgPath: string;
   @Input() cardNumberFormat: string;
   @Input() cardNumberMask: string;
+  @Output() submitEvent = new EventEmitter<CardModel>();
 
   cardModel: CardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' };
   isCardNumberMasked = true;
@@ -103,6 +104,11 @@ export class InteractivePaycardComponent implements OnInit {
     if (this.cardModel.expirationYear === this.minCardYear.toString()) {
       this.cardModel.expirationMonth = '';
     }
+  }
+
+  onSubmitClick() {
+    console.log(this.cardModel)
+    this.submitEvent.emit(this.cardModel);
   }
 
   minCardMonth(): number {
