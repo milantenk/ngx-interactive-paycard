@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CardModel } from './shared/card-model';
 
 @Component({
@@ -6,7 +6,7 @@ import { CardModel } from './shared/card-model';
   templateUrl: 'interactive-paycard.component.html',
   styleUrls: ['./interactive-paycard.component.scss']
 })
-export class InteractivePaycardComponent {
+export class InteractivePaycardComponent implements OnInit {
 
   @Input() chipImgPath: string;
   @Input() logoImgPath: string;
@@ -29,6 +29,18 @@ export class InteractivePaycardComponent {
   yearSelectId = 'yearSelectId';
   cardCvvId = 'cardCvvId';
 
+  ngOnInit() {
+    if(new RegExp('[^# ]').test(this.cardNumberFormat)) {
+      throw new Error('The card number format must contain only "#" and " " characters! Check the "cardNumberFormat" input parameter!');
+    }
+    if(new RegExp('[^# *]').test(this.cardNumberMask)) {
+      throw new Error('The card number mask must contain only "#", "*" and " " characters! Check the "cardNumberMask" input parameter!');
+    }
+    if(this.cardNumberMask.length != this.cardNumberFormat.length) {
+      throw new Error('The card number mask and the card number format must have the same length! Check the "cardNumberFormat" and the "cardNumberMask" input parameters!');
+    }
+  }
+
   onCardNumberChange($event): void {
     let cardNumber: string = $event.target.value;
     this.cardNumberMaxLength = this.cardNumberFormat.length;
@@ -40,11 +52,11 @@ export class InteractivePaycardComponent {
         // if the typed number is at the border of a space, the space has to be added and the number itself
         newValues.push(' ');
         newValues.push(element);
-      } else if (this.cardNumberFormat[index] == ' ' && element == ' ') { 
+      } else if (this.cardNumberFormat[index] == ' ' && element == ' ') {
         // if there is already a space in the number and in the placeholder, a space is needed
         newValues.push(' ');
       }
-      else if (!(letterRegex.test(element))) { 
+      else if (!(letterRegex.test(element))) {
         // only numbers are allowed
         newValues.push(element);
       }
@@ -112,8 +124,8 @@ export class InteractivePaycardComponent {
       /*if (index > 4 && index < 14 && element.trim() !== '') {
         arr[index] = '*';
       }*/
-      if(this.cardNumberMask[index]=='*') {
-          arr[index]='*';
+      if (this.cardNumberMask[index] == '*') {
+        arr[index] = '*';
       }
     })
     this.displayedCardNumber = arr.join('');
