@@ -12,6 +12,8 @@ export class InteractivePaycardComponent {
   @Input() logoImgPath: string;
   @Input() backBgImgPath: string;
   @Input() frontBgImgPath: string;
+  @Input() cardNumberFormat: string;
+  @Input() cardNumberMask: string;
 
   cardModel: CardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' };
   isCardNumberMasked = true;
@@ -29,17 +31,26 @@ export class InteractivePaycardComponent {
 
   onCardNumberChange($event): void {
     let cardNumber: string = $event.target.value;
-    let value = cardNumber.replace(/\D/g, '');
-    if ((/^3[47]\d{0,13}$/).test(value)) { // american express, 15 digits
-      cardNumber = value.replace(/(\d{4})/, '$1 ').replace(/(\d{4}) (\d{6})/, '$1 $2 ');
-      this.cardNumberMaxLength = 17;
-    } else if ((/^3(?:0[0-5]|[68]\d)\d{0,11}$/).test(value)) { // diner's club, 14 digits
-      cardNumber = value.replace(/(\d{4})/, '$1 ').replace(/(\d{4}) (\d{6})/, '$1 $2 ');
-      this.cardNumberMaxLength = 16;
-    } else if ((/^\d{0,16}$/).test(value)) { // regular cc number, 16 digits
-      cardNumber = value.replace(/(\d{4})/, '$1 ').replace(/(\d{4}) (\d{4})/, '$1 $2 ').replace(/(\d{4}) (\d{4}) (\d{4})/, '$1 $2 $3 ');
-      this.cardNumberMaxLength = 19;
-    }
+    this.cardNumberMaxLength = this.cardNumberFormat.length;
+
+    let newValues = [];
+    let letterRegex = new RegExp('[^0-9]');
+    cardNumber.split('').forEach((element, index) => {
+      if (this.cardNumberFormat[index] == ' ' && element != ' ' && !(letterRegex.test(element))) {
+        // if the typed number is at the border of a space, the space has to be added and the number itself
+        newValues.push(' ');
+        newValues.push(element);
+      } else if (this.cardNumberFormat[index] == ' ' && element == ' ') { 
+        // if there is already a space in the number and in the placeholder, a space is needed
+        newValues.push(' ');
+      }
+      else if (!(letterRegex.test(element))) { 
+        // only numbers are allowed
+        newValues.push(element);
+      }
+    });
+    cardNumber = newValues.join('').trim();
+
     this.displayedCardNumber = cardNumber;
     this.cardModel.cardNumber = cardNumber;
     $event.target.value = cardNumber; // The value in event has to be updated, otherwise the letter remains in the <input>
@@ -98,8 +109,11 @@ export class InteractivePaycardComponent {
     this.cardModel.cardNumber = this.displayedCardNumber;
     let arr = this.displayedCardNumber.split('');
     arr.forEach((element, index) => {
-      if (index > 4 && index < 14 && element.trim() !== '') {
+      /*if (index > 4 && index < 14 && element.trim() !== '') {
         arr[index] = '*';
+      }*/
+      if(this.cardNumberMask[index]=='*') {
+          arr[index]='*';
       }
     })
     this.displayedCardNumber = arr.join('');
