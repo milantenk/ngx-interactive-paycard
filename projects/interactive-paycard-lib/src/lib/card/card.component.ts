@@ -14,8 +14,8 @@ import { trigger, transition, state, animate, style, AnimationEvent } from '@ang
             animate('0.25s 0.1s ease-in-out')
             ]),
             transition(':leave', [
-                style({ transform: 'translateX(-23px)',  opacity: 1,  width: 0  }),
-                animate('0.25s ease-in-out', style({ transform: 'translate(-23px,-15px)', opacity: 0, width: 0  })),
+                style({ transform: 'translateX(-22px)',  opacity: 1,  width: 0  }),
+                animate('0.25s ease-in-out', style({ transform: 'translate(-22px,-15px)', opacity: 0, width: 0  })),
             ])
         ]),
         trigger('cardNumSlideFadeUp', [
