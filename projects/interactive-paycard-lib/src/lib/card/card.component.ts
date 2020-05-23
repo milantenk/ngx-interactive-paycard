@@ -10,25 +10,31 @@ import { trigger, transition, state, animate, style, AnimationEvent } from '@ang
         trigger('expireSlideFadeUp', [
             state('in', style({ transform: 'translateY(0)' })),
             transition(':enter', [
-            style({ transform: 'translateY(15px)',  opacity: 0 }),
-            animate('0.25s 0.1s ease-in-out')
-            ]),
-            transition(':leave', [
-                style({ transform: 'translateX(-22px)',  opacity: 1,  width: 0  }),
-                animate('0.25s ease-in-out', style({ transform: 'translate(-22px,-15px)', opacity: 0, width: 0  })),
+                style({ transform: 'translateY(15px)', opacity: 0 }),
+                animate('0.25s ease-in-out')
             ])
         ]),
         trigger('cardNumSlideFadeUp', [
             state('in', style({ transform: 'translate(0,0)' })),
             transition(':enter', [
-            style({ transform: 'translateY(15px)',  opacity: 0 }),
-            animate('0.25s 0.1s ease-in-out')
-            ]),
-            transition(':leave', [
-                style({ transform: 'translateX(-16px)',  opacity: 1,  width: 0, position:'absolute'  }),
-                animate('0.25s ease-in-out', style({ transform: 'translate(-16px,-15px)', opacity: 0, width: 0, position:'absolute' })),
+                style({ transform: 'translateY(15px)', opacity: 0 }),
+                animate('0.25s ease-in-out')
             ])
         ]),
+        trigger('cardHolderFadeRight', [
+            state('in', style({ transform: 'translate(0,0)' })),
+            transition(':enter', [
+                style({ transform: 'translateX(10px) rotate(45deg)', opacity: 0, position: 'absolute' }),
+                animate('0.25s ease-in-out')
+            ]),
+        ]),
+        trigger('cardHolderFadeUp', [
+            state('in', style({ transform: 'translate(0,0)' })),
+            transition(':enter', [
+                style({ transform: 'translateY(15px)', opacity: 0, position: 'absolute' }),
+                animate('0.25s ease-in-out')
+            ]),
+        ])
     ]
 })
 
