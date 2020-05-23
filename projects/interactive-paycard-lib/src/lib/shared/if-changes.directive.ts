@@ -1,4 +1,4 @@
-import { Directive, ViewContainerRef, TemplateRef, Input } from '@angular/core';
+import { Directive, ViewContainerRef, TemplateRef, Input, HostListener, HostBinding } from '@angular/core';
 
 // Used by animations, see following issue for expanition:
 // https://github.com/angular/angular/issues/29439

@@ -10,6 +10,7 @@
       [frontBgImgPath] = "frontBgImgPath"
       [cardNumberFormat] = "cardNumberFormat"
       [displayedCardNumber] = "displayedCardNumber"
+      [focusedElement] = "focusedElement"
       ></card>
     </div>
     <div class="card-form__inner">
@@ -42,6 +43,8 @@
           [(ngModel)]="cardModel.cardName" 
           (keyup)='onCardNameKeyPress($event)'
           autocomplete="off"
+          (focus)="onCardNameFocus()"
+          (blur)="onBlur()"
         />
       </div>
       <div class="card-form__row">
@@ -52,6 +55,8 @@
               class="card-input__input -select"
               id="monthSelect"
               [(ngModel)]="cardModel.expirationMonth"
+              (focus)="onDateFocus()"
+              (blur)="onBlur()"
             >
               <option value disabled selected>Month</option>
               <option *ngFor="let element of [].constructor(12); let i = index"
@@ -65,6 +70,8 @@
               [id]="yearSelectId"
               [(ngModel)]="cardModel.expirationYear"
               (change)="onYearChange()"
+              (focus)="onDateFocus()"
+              (blur)="onBlur()"
             >
               <option value disabled selected>Year</option>
               <option

@@ -1,6 +1,6 @@
 <div [ngClass]="isCardFlipped ? 'card-item -active':'card-item'">
     <div class="card-item__side -front">
-        <div class="card-item__focus "></div>
+        <div [ngClass]="focusStyle ? 'card-item__focus -active': 'card-item__focus'" [ngStyle]="focusStyle" ></div>
         <div class="card-item__cover">
             <img class="card-item__bg" src="{{frontBgImgPath}}" />
         </div>
@@ -13,7 +13,7 @@
                     class="card-item__typeImg" />
                 </div>
             </div>
-            <label class="card-item__number">
+            <label class="card-item__number" #cardNumber>
                 <span *ngFor="let cardPlaceHolderLetter of currentCardNumberPlaceholder; let i = index">
                     <span *ifChanges="cardModel.cardNumber.charAt(i)" [@cardNumSlideFadeUp]="'in'" class="card-item__numberItem">
                         <ng-container class="card-item__numberItem" *ngIf="getIsNumberMasked(i); else showCardNumer">*</ng-container>

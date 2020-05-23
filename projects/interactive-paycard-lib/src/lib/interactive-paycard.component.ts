@@ -1,5 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, Injectable, HostListener } from '@angular/core';
 import { CardModel } from './shared/card-model';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'interactive-paycard',
@@ -29,6 +30,8 @@ export class InteractivePaycardComponent implements OnInit {
   monthSelect = 'monthSelect';
   yearSelectId = 'yearSelectId';
   cardCvvId = 'cardCvvId';
+
+  focusedElement;
 
   ngOnInit() {
     if(new RegExp('[^# ]').test(this.cardNumberFormat)) {
@@ -70,13 +73,27 @@ export class InteractivePaycardComponent implements OnInit {
   }
 
   onCardNumberFocus(): void {
+    this.focusedElement = 'cardNumber';
     this.unMaskCardNumber();
+  }
+
+  onCardNameFocus(): void {
+    this.focusedElement = 'cardName';
+  }
+
+  onDateFocus(): void {
+    this.focusedElement = 'date';
+  }
+
+  onBlur(): void {
+    this.focusedElement = null;
   }
 
   onCardNumberBlur(): void {
     if (this.isCardNumberMasked) {
       this.maskCardNumber();
     }
+    this.onBlur();
   }
 
   onCvvBlur(): void {
