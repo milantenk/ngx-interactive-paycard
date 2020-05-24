@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter, Injectable, HostListener } from '@angular/core';
 import { CardModel } from './shared/card-model';
+import { FocusedElement } from './shared/focused-element';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -31,16 +32,16 @@ export class InteractivePaycardComponent implements OnInit {
   yearSelectId = 'yearSelectId';
   cardCvvId = 'cardCvvId';
 
-  focusedElement;
+  focusedElement: FocusedElement;
 
   ngOnInit() {
-    if(new RegExp('[^# ]').test(this.cardNumberFormat)) {
+    if (new RegExp('[^# ]').test(this.cardNumberFormat)) {
       throw new Error('The card number format must contain only "#" and " " characters! Check the "cardNumberFormat" input parameter!');
     }
-    if(new RegExp('[^# *]').test(this.cardNumberMask)) {
+    if (new RegExp('[^# *]').test(this.cardNumberMask)) {
       throw new Error('The card number mask must contain only "#", "*" and " " characters! Check the "cardNumberMask" input parameter!');
     }
-    if(this.cardNumberMask.length != this.cardNumberFormat.length) {
+    if (this.cardNumberMask.length != this.cardNumberFormat.length) {
       throw new Error('The card number mask and the card number format must have the same length! Check the "cardNumberFormat" and the "cardNumberMask" input parameters!');
     }
   }
@@ -73,16 +74,16 @@ export class InteractivePaycardComponent implements OnInit {
   }
 
   onCardNumberFocus(): void {
-    this.focusedElement = 'cardNumber';
     this.unMaskCardNumber();
+    this.focusedElement = FocusedElement.CardNumber;
   }
 
   onCardNameFocus(): void {
-    this.focusedElement = 'cardName';
+    this.focusedElement = FocusedElement.CardName;
   }
 
   onDateFocus(): void {
-    this.focusedElement = 'date';
+    this.focusedElement = FocusedElement.ExpirationDate;
   }
 
   onBlur(): void {

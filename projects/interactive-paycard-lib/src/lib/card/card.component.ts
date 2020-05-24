@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { CardModel } from '../shared/card-model';
+import { FocusedElement } from '../shared/focused-element';
 import { trigger, transition, state, animate, style, AnimationEvent } from '@angular/animations';
 
 @Component({
@@ -50,15 +51,15 @@ export class CardComponent implements OnInit {
     @Input() frontBgImgPath: string;
     @Input() cardNumberFormat: string;
     @Input() displayedCardNumber: string;
-    @Input() focusedElement: string;
+    @Input() focusedElement: FocusedElement;
 
-    @ViewChild('cardNumber', {static: false}) 
-    cardNumberViewChild: ElementRef;
+    @ViewChild('cardNumber', { static: false }) cardNumberViewChild: ElementRef;
+    @ViewChild('cardName', { static: false }) cardNameViewChild: ElementRef;
+    @ViewChild('expireDate', { static: false }) expireDateViewChild: ElementRef;
 
     currentCardNumberPlaceholder: string[];
     cardHolderName: string[];
-
-    focusStyle = { width: "50px", height: "40px", transform: "translateX(50px) translateY(50px)" };
+    focusStyle = null;
 
     ngOnInit() {
         this.currentCardNumberPlaceholder = this.cardNumberFormat.split('');
@@ -70,21 +71,26 @@ export class CardComponent implements OnInit {
 
     ngOnChanges(changes: SimpleChanges) {
         for (const propName in changes) {
-            if (changes.hasOwnProperty(propName)) {
-                if (propName === 'focusedElement') {
-                    console.log(changes[propName].currentValue)
-                    if(changes[propName].currentValue) {
-                        console.log("CardComponent -> ngOnChanges -> this.cardNumberViewChild.nativeElement.offsetHeight", this.cardNumberViewChild.nativeElement.offsetHeight)
-                        console.log("CardComponent -> ngOnChanges -> this.cardNumberViewChild.nativeElement.offsetHeight", this.cardNumberViewChild.nativeElement.offsetWidth)
-                        console.log("CardComponent -> ngOnChanges -> this.cardNumberViewChild.nativeElement.offsetHeight", this.cardNumberViewChild.nativeElement.offsetLeft)
-                        console.log("CardComponent -> ngOnChanges -> this.cardNumberViewChild.nativeElement.offsetHeight", this.cardNumberViewChild.nativeElement.offsetTop)
-                        this.focusStyle = { 
-                            width: `${this.cardNumberViewChild.nativeElement.offsetWidth}px`, 
-                            height: `${this.cardNumberViewChild.nativeElement.offsetHeight}px`, 
-                            transform: `translateX(${this.cardNumberViewChild.nativeElement.offsetLeft}px) translateY(${this.cardNumberViewChild.nativeElement.offsetTop}px)` };
-                    } else {
-                        this.focusStyle = null;
+            if (propName === 'focusedElement') {
+                console.log(changes[propName].currentValue)
+                if (changes[propName].currentValue != null) {
+                    let focusedNativeElement;
+                    if (changes[propName].currentValue === FocusedElement.CardNumber) {
+                        focusedNativeElement = this.cardNumberViewChild.nativeElement;
+                    } else if (changes[propName].currentValue === FocusedElement.CardName) {
+                        focusedNativeElement = this.cardNameViewChild.nativeElement;
+                    } else if (changes[propName].currentValue === FocusedElement.ExpirationDate) {
+                        focusedNativeElement = this.expireDateViewChild.nativeElement;
                     }
+                    if (focusedNativeElement) {
+                        this.focusStyle = {
+                            width: `${focusedNativeElement.offsetWidth}px`,
+                            height: `${focusedNativeElement.offsetHeight}px`,
+                            transform: `translateX(${focusedNativeElement.offsetLeft}px) translateY(${focusedNativeElement.offsetTop}px)`
+                        };
+                    }
+                } else {
+                    this.focusStyle = null;
                 }
             }
         }

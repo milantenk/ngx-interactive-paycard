@@ -25,14 +25,14 @@
                 </span>
             </label>
             <div class="card-item__content">
-                <label class="card-item__info">
+                <label class="card-item__info" #cardName>
                     <div class="card-item__holder">Card Holder</div>
                     <div class="card-item__name" *ngIf="this.cardModel.cardName.length > 0; else namePlaceHolder">
                         <span class="card-item__nameItem" *ngFor="let cardNameLetter of this.cardModel.cardName.split(''); let i = index"><span *ifChanges="this.cardModel.cardName.charAt(i)" [@cardHolderFadeRight]="'in'">{{cardNameLetter}}</span></span>
                     </div>
                     <ng-template class="card-item__name" #namePlaceHolder><span [@cardHolderFadeUp]="'in'">Full Name</span></ng-template>
                 </label>
-                <div class="card-item__date">
+                <div class="card-item__date" #expireDate>
                     <label class="card-item__dateTitle">Expires</label>
                     <label class="card-item__dateItem" *ifChanges="cardModel.expirationMonth" [@expireSlideFadeUp]="'in'">
                         <span *ngIf="cardModel.expirationMonth; else monthPlaceHolder" >{{cardModel.expirationMonth}}</span>
