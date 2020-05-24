@@ -15,10 +15,13 @@ export class IfChangesDirective {
     ) { }
 
     @Input() set ifChanges(val: any) {
+        console.log("IfChangesDirective -> @Input -> this.currentValue", this.currentValue)
+    console.log("IfChangesDirective -> @Input -> val", val)
+        
         if (!this.hasView) {
             this.viewContainer.createEmbeddedView(this.templateRef);
             this.hasView = true;
-        } else if (val !== this.currentValue) {
+        } else if (val !== this.currentValue && (!this.currentValue || !val)) {
             this.viewContainer.clear();
             this.viewContainer.createEmbeddedView(this.templateRef);
             this.currentValue = val;
