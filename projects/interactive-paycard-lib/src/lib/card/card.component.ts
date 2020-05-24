@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { CardModel } from '../shared/card-model';
 import { FocusedElement } from '../shared/focused-element';
-import { trigger, transition, state, animate, style, AnimationEvent } from '@angular/animations';
+import { trigger, transition, state, animate, style } from '@angular/animations';
 
 @Component({
     selector: 'card',
@@ -38,13 +38,11 @@ import { trigger, transition, state, animate, style, AnimationEvent } from '@ang
         ])
     ]
 })
-
 export class CardComponent implements OnInit {
     constructor() { }
 
     @Input() cardModel: CardModel;
     @Input() isCardNumberMasked: boolean;
-    @Input() isCardFlipped: boolean;
     @Input() chipImgPath: string;
     @Input() logoImgPath: string;
     @Input() backBgImgPath: string;
@@ -61,6 +59,8 @@ export class CardComponent implements OnInit {
     cardHolderName: string[];
     focusStyle = null;
 
+    FocusedElement = FocusedElement; // This way the enum can be accessed in the template
+
     ngOnInit() {
         this.currentCardNumberPlaceholder = this.cardNumberFormat.split('');
     }
@@ -69,6 +69,8 @@ export class CardComponent implements OnInit {
         return this.displayedCardNumber[index] == '*';
     }
 
+    // The selection of the card elements is handled here
+    // The card flip based on the CVV is handled in the template directly
     ngOnChanges(changes: SimpleChanges) {
         for (const propName in changes) {
             if (propName === 'focusedElement') {

@@ -3,7 +3,6 @@
       <card 
       [cardModel]="cardModel" 
       [isCardNumberMasked]="isCardNumberMasked"
-      [isCardFlipped]="isCvvFocused"
       [chipImgPath] = "chipImgPath"
       [logoImgPath] = "logoImgPath"
       [backBgImgPath] = "backBgImgPath"
@@ -89,12 +88,11 @@
               class="card-input__input"
               type="tel"
               id="cardCvvId"
-              [maxlength]="4"
-              [(ngModel)]="cardModel.cvv"
+              maxlength="4"
               autocomplete="off"
-              onlyNumbers
-              (blur)="onCvvBlur()" 
+              (blur)="onBlur()" 
               (focus)="onCvvFocus()"
+              (input)="onCvvChange($event)"
             />
           </div>
         </div>

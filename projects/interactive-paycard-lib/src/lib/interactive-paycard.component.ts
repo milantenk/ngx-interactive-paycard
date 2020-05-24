@@ -20,7 +20,6 @@ export class InteractivePaycardComponent implements OnInit {
 
   cardModel: CardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' };
   isCardNumberMasked = true;
-  isCvvFocused = false;
 
   cardNumberMaxLength = 19;
   minCardYear = new Date().getFullYear();
@@ -73,6 +72,11 @@ export class InteractivePaycardComponent implements OnInit {
     $event.target.value = cardNumber; // The value in event has to be updated, otherwise the letter remains in the <input>
   }
 
+  onCvvChange(event): void {
+    this.cardModel.cvv = event.target.value.replace(/[^0-9]*/g, '');
+    event.target.value = this.cardModel.cvv;
+  }
+
   onCardNumberFocus(): void {
     this.unMaskCardNumber();
     this.focusedElement = FocusedElement.CardNumber;
@@ -86,6 +90,10 @@ export class InteractivePaycardComponent implements OnInit {
     this.focusedElement = FocusedElement.ExpirationDate;
   }
 
+  onCvvFocus(): void {
+    this.focusedElement = FocusedElement.CVV;
+  }
+
   onBlur(): void {
     this.focusedElement = null;
   }
@@ -95,14 +103,6 @@ export class InteractivePaycardComponent implements OnInit {
       this.maskCardNumber();
     }
     this.onBlur();
-  }
-
-  onCvvBlur(): void {
-    this.isCvvFocused = false;
-  }
-
-  onCvvFocus(): void {
-    this.isCvvFocused = true;
   }
 
   onCardNameKeyPress($event): boolean {
@@ -145,9 +145,6 @@ export class InteractivePaycardComponent implements OnInit {
     this.cardModel.cardNumber = this.displayedCardNumber;
     let arr = this.displayedCardNumber.split('');
     arr.forEach((element, index) => {
-      /*if (index > 4 && index < 14 && element.trim() !== '') {
-        arr[index] = '*';
-      }*/
       if (this.cardNumberMask[index] == '*') {
         arr[index] = '*';
       }

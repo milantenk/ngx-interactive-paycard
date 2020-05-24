@@ -1,4 +1,4 @@
-<div [ngClass]="isCardFlipped ? 'card-item -active':'card-item'">
+<div [ngClass]="focusedElement === FocusedElement.CVV ? 'card-item -active':'card-item'">
     <div class="card-item__side -front">
         <div [ngClass]="focusStyle ? 'card-item__focus -active': 'card-item__focus'" [ngStyle]="focusStyle" ></div>
         <div class="card-item__cover">
