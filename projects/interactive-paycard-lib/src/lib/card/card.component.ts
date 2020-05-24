@@ -42,7 +42,6 @@ export class CardComponent implements OnInit {
     constructor() { }
 
     @Input() cardModel: CardModel;
-    @Input() isCardNumberMasked: boolean;
     @Input() chipImgPath: string;
     @Input() logoImgPath: string;
     @Input() backBgImgPath: string;
@@ -74,7 +73,6 @@ export class CardComponent implements OnInit {
     ngOnChanges(changes: SimpleChanges) {
         for (const propName in changes) {
             if (propName === 'focusedElement') {
-                console.log(changes[propName].currentValue)
                 if (changes[propName].currentValue != null) {
                     let focusedNativeElement;
                     if (changes[propName].currentValue === FocusedElement.CardNumber) {

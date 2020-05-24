@@ -2,7 +2,6 @@
     <div class="card-list">
       <card 
       [cardModel]="cardModel" 
-      [isCardNumberMasked]="isCardNumberMasked"
       [chipImgPath] = "chipImgPath"
       [logoImgPath] = "logoImgPath"
       [backBgImgPath] = "backBgImgPath"
@@ -15,7 +14,7 @@
     <div class="card-form__inner">
       <div class="card-input">
         <label for="cardNumber" class="card-input__label">Card Number</label>
-        <input 
+        <input
         class="card-input__input" 
         type="tel" 
         [id]="cardNumberId"
@@ -26,13 +25,6 @@
         (blur)="onCardNumberBlur()"
         autocomplete="off"
         />
-        <button 
-          [ngClass]="isCardNumberMasked ? 'card-input__eye':'card-input__eye -active'"
-          title="Show/Hide card number"
-          tabindex="-1"
-          [disabled]="displayedCardNumber===''"
-          (click)="onToggleCardNumberMask()"
-        ></button>
       </div>
       <div class="card-input" >
         <label for="cardName" class="card-input__label">Card Name</label>

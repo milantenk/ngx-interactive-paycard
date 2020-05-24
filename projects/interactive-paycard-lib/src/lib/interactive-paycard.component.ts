@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter, Injectable, HostListener } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, Injectable, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { CardModel } from './shared/card-model';
 import { FocusedElement } from './shared/focused-element';
 import { Subject } from 'rxjs';
@@ -17,9 +17,9 @@ export class InteractivePaycardComponent implements OnInit {
   @Input() cardNumberFormat: string;
   @Input() cardNumberMask: string;
   @Output() submitEvent = new EventEmitter<CardModel>();
+  @ViewChild('cardNumberInput', { static: false }) cardNumberInputViewChild: ElementRef;
 
   cardModel: CardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' };
-  isCardNumberMasked = true;
 
   cardNumberMaxLength = 19;
   minCardYear = new Date().getFullYear();
@@ -99,23 +99,12 @@ export class InteractivePaycardComponent implements OnInit {
   }
 
   onCardNumberBlur(): void {
-    if (this.isCardNumberMasked) {
-      this.maskCardNumber();
-    }
+    this.maskCardNumber();
     this.onBlur();
   }
 
   onCardNameKeyPress($event): boolean {
     return (($event.charCode >= 65 && $event.charCode <= 90) || ($event.charCode >= 97 && $event.charCode <= 122) || ($event.charCode == 32));
-  }
-
-  onToggleCardNumberMask(): void {
-    this.isCardNumberMasked = !this.isCardNumberMasked;
-    if (this.isCardNumberMasked) {
-      this.maskCardNumber();
-    } else {
-      this.unMaskCardNumber();
-    }
   }
 
   onYearChange(): void {
@@ -125,7 +114,6 @@ export class InteractivePaycardComponent implements OnInit {
   }
 
   onSubmitClick() {
-    console.log(this.cardModel)
     this.submitEvent.emit(this.cardModel);
   }
 
