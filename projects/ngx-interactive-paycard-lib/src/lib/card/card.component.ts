@@ -8,15 +8,8 @@ import { trigger, transition, state, animate, style } from '@angular/animations'
     templateUrl: 'card.component.html',
     styleUrls: ['card.component.scss'],
     animations: [
-        trigger('expireSlideFadeUp', [
+        trigger('slideFadeUp', [
             state('in', style({ transform: 'translateY(0)' })),
-            transition(':enter', [
-                style({ transform: 'translateY(15px)', opacity: 0 }),
-                animate('0.25s ease-in-out')
-            ])
-        ]),
-        trigger('cardNumSlideFadeUp', [
-            state('in', style({ transform: 'translate(0,0)' })),
             transition(':enter', [
                 style({ transform: 'translateY(15px)', opacity: 0 }),
                 animate('0.25s ease-in-out')
