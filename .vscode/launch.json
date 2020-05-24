@@ -11,7 +11,7 @@
             "url": "http://localhost:4200",
             "webRoot": "${workspaceFolder}",
             "sourceMapPathOverrides": {
-                "webpack:///ng://interactive-paycard-lib/lib/*": "${workspaceFolder}/projects/interactive-paycard-lib/src/lib/*"
+                "webpack:///ng://ngx-interactive-paycard-lib/lib/*": "${workspaceFolder}/projects/ngx-interactive-paycard-lib/src/lib/*"
             },
         }
     ]

@@ -8,9 +8,9 @@ describe('workspace-project App', () => {
     page = new AppPage();
   });
 
-  it('should display welcome message', () => {
+  it('should check if the submit button exists', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('interactive-paycard-demo app is running!');
+    expect(page.getButtonText()).toBeDefined();
   });
 
   afterEach(async () => {

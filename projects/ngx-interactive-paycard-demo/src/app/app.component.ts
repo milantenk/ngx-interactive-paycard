@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'interactive-paycard-demo';
+  title = 'ngx-interactive-paycard-demo';
   cardNumberFormat = "#### #### #### ####";
   cardNumberMask = "#### **** **** ####";
 

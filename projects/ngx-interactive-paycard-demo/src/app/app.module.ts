@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { InteractivePaycardModule } from 'interactive-paycard-lib';
+import { InteractivePaycardModule } from 'ngx-interactive-paycard-lib';
 
 @NgModule({
   declarations: [

@@ -19,11 +19,11 @@
       "dom"
     ],
     "paths": {
-      "interactive-paycard-lib": [
-        "dist/interactive-paycard-lib"
+      "ngx-interactive-paycard-lib": [
+        "dist/ngx-interactive-paycard-lib"
       ],
-      "interactive-paycard-lib/*": [
-        "dist/interactive-paycard-lib/*"
+      "ngx-interactive-paycard-lib/*": [
+        "dist/ngx-interactive-paycard-lib/*"
       ]
     }
   },

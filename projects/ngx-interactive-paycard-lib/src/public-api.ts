@@ -1,5 +1,5 @@
 /*
- * Public API Surface of interactive-paycard-lib
+ * Public API Surface of ngx-interactive-paycard-lib
  */
 
 export * from './lib/interactive-paycard.component';

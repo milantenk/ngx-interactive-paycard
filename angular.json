@@ -3,33 +3,33 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "interactive-paycard-lib": {
+    "ngx-interactive-paycard-lib": {
       "projectType": "library",
-      "root": "projects/interactive-paycard-lib",
-      "sourceRoot": "projects/interactive-paycard-lib/src",
+      "root": "projects/ngx-interactive-paycard-lib",
+      "sourceRoot": "projects/ngx-interactive-paycard-lib/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/interactive-paycard-lib/tsconfig.lib.json",
-            "project": "projects/interactive-paycard-lib/ng-package.json"
+            "tsConfig": "projects/ngx-interactive-paycard-lib/tsconfig.lib.json",
+            "project": "projects/ngx-interactive-paycard-lib/ng-package.json"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/interactive-paycard-lib/src/test.ts",
-            "tsConfig": "projects/interactive-paycard-lib/tsconfig.spec.json",
-            "karmaConfig": "projects/interactive-paycard-lib/karma.conf.js"
+            "main": "projects/ngx-interactive-paycard-lib/src/test.ts",
+            "tsConfig": "projects/ngx-interactive-paycard-lib/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-interactive-paycard-lib/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/interactive-paycard-lib/tsconfig.lib.json",
-              "projects/interactive-paycard-lib/tsconfig.spec.json"
+              "projects/ngx-interactive-paycard-lib/tsconfig.lib.json",
+              "projects/ngx-interactive-paycard-lib/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -38,32 +38,32 @@
         }
       }
     },
-    "interactive-paycard-demo": {
+    "ngx-interactive-paycard-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
         }
       },
-      "root": "projects/interactive-paycard-demo",
-      "sourceRoot": "projects/interactive-paycard-demo/src",
+      "root": "projects/ngx-interactive-paycard-demo",
+      "sourceRoot": "projects/ngx-interactive-paycard-demo/src",
       "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/interactive-paycard-demo",
-            "index": "projects/interactive-paycard-demo/src/index.html",
-            "main": "projects/interactive-paycard-demo/src/main.ts",
-            "polyfills": "projects/interactive-paycard-demo/src/polyfills.ts",
-            "tsConfig": "projects/interactive-paycard-demo/tsconfig.app.json",
+            "outputPath": "dist/ngx-interactive-paycard-demo",
+            "index": "projects/ngx-interactive-paycard-demo/src/index.html",
+            "main": "projects/ngx-interactive-paycard-demo/src/main.ts",
+            "polyfills": "projects/ngx-interactive-paycard-demo/src/polyfills.ts",
+            "tsConfig": "projects/ngx-interactive-paycard-demo/tsconfig.app.json",
             "aot": false,
             "assets": [
-              "projects/interactive-paycard-demo/src/favicon.ico",
-              "projects/interactive-paycard-demo/src/assets"
+              "projects/ngx-interactive-paycard-demo/src/favicon.ico",
+              "projects/ngx-interactive-paycard-demo/src/assets"
             ],
             "styles": [
-              "projects/interactive-paycard-demo/src/styles.scss"
+              "projects/ngx-interactive-paycard-demo/src/styles.scss"
             ],
             "scripts": []
           },
@@ -71,8 +71,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "projects/interactive-paycard-demo/src/environments/environment.ts",
-                  "with": "projects/interactive-paycard-demo/src/environments/environment.prod.ts"
+                  "replace": "projects/ngx-interactive-paycard-demo/src/environments/environment.ts",
+                  "with": "projects/ngx-interactive-paycard-demo/src/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -102,7 +102,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "interactive-paycard-demo:build",
+            "browserTarget": "ngx-interactive-paycard-demo:build",
             "sourceMap": {
               "scripts": true,
               "styles": true,
@@ -111,29 +111,29 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "interactive-paycard-demo:build:production"
+              "browserTarget": "ngx-interactive-paycard-demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "interactive-paycard-demo:build"
+            "browserTarget": "ngx-interactive-paycard-demo:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/interactive-paycard-demo/src/test.ts",
-            "polyfills": "projects/interactive-paycard-demo/src/polyfills.ts",
-            "tsConfig": "projects/interactive-paycard-demo/tsconfig.spec.json",
-            "karmaConfig": "projects/interactive-paycard-demo/karma.conf.js",
+            "main": "projects/ngx-interactive-paycard-demo/src/test.ts",
+            "polyfills": "projects/ngx-interactive-paycard-demo/src/polyfills.ts",
+            "tsConfig": "projects/ngx-interactive-paycard-demo/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-interactive-paycard-demo/karma.conf.js",
             "assets": [
-              "projects/interactive-paycard-demo/src/favicon.ico",
-              "projects/interactive-paycard-demo/src/assets"
+              "projects/ngx-interactive-paycard-demo/src/favicon.ico",
+              "projects/ngx-interactive-paycard-demo/src/assets"
             ],
             "styles": [
-              "projects/interactive-paycard-demo/src/styles.scss"
+              "projects/ngx-interactive-paycard-demo/src/styles.scss"
             ],
             "scripts": []
           }
@@ -142,9 +142,9 @@
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/interactive-paycard-demo/tsconfig.app.json",
-              "projects/interactive-paycard-demo/tsconfig.spec.json",
-              "projects/interactive-paycard-demo/e2e/tsconfig.json"
+              "projects/ngx-interactive-paycard-demo/tsconfig.app.json",
+              "projects/ngx-interactive-paycard-demo/tsconfig.spec.json",
+              "projects/ngx-interactive-paycard-demo/e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -154,16 +154,16 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "projects/interactive-paycard-demo/e2e/protractor.conf.js",
-            "devServerTarget": "interactive-paycard-demo:serve"
+            "protractorConfig": "projects/ngx-interactive-paycard-demo/e2e/protractor.conf.js",
+            "devServerTarget": "ngx-interactive-paycard-demo:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "interactive-paycard-demo:serve:production"
+              "devServerTarget": "ngx-interactive-paycard-demo:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "interactive-paycard-lib"
+  "defaultProject": "ngx-interactive-paycard-lib"
 }
