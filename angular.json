@@ -42,7 +42,7 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "sass"
+          "style": "scss"
         }
       },
       "root": "projects/interactive-paycard-demo",
@@ -63,7 +63,7 @@
               "projects/interactive-paycard-demo/src/assets"
             ],
             "styles": [
-              "projects/interactive-paycard-demo/src/styles.sass"
+              "projects/interactive-paycard-demo/src/styles.scss"
             ],
             "scripts": []
           },
@@ -133,7 +133,7 @@
               "projects/interactive-paycard-demo/src/assets"
             ],
             "styles": [
-              "projects/interactive-paycard-demo/src/styles.sass"
+              "projects/interactive-paycard-demo/src/styles.scss"
             ],
             "scripts": []
           }

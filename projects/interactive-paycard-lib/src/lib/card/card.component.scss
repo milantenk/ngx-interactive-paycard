@@ -1,24 +1,4 @@
 
-body {
-  background: #ddeefc;
-  font-family: "Source Sans Pro", sans-serif;
-  font-size: 16px;
-}
-* {
-  box-sizing: border-box;
-  &:focus {
-    outline: none;
-  }
-}
-.wrapper {
-  min-height: 100vh;
-  display: flex;
-  padding: 50px 15px;
-  @media screen and (max-width: 700px), (max-height: 500px) {
-    flex-wrap: wrap;
-    flex-direction: column;
-  }
-}
 .card-item {
   max-width: 430px;
   height: 270px;
