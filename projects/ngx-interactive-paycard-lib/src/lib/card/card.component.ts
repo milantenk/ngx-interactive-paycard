@@ -48,13 +48,14 @@ export class CardComponent implements OnInit {
     @ViewChild('expireDate', { static: false }) expireDateViewChild: ElementRef;
 
     currentCardNumberPlaceholder: string[];
-    cardHolderName: string[];
+    cardHolderNamePlaceholder: string[];
     focusStyle = null;
 
     FocusedElement = FocusedElement; // This way the enum can be accessed in the template
 
     ngOnInit() {
         this.currentCardNumberPlaceholder = this.cardNumberFormat.split('');
+        this.cardHolderNamePlaceholder = Array(30).fill(""); // CardHolder name is handled the same way as the cardNumber
     }
 
     getIsNumberMasked(index: number): boolean {

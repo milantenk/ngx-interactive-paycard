@@ -21,6 +21,7 @@ export class IfChangesDirective {
         if (!this.hasView) {
             this.viewContainer.createEmbeddedView(this.templateRef);
             this.hasView = true;
+            this.currentValue = val;
         } else if (val !== this.currentValue && (!this.currentValue || !val)) {
             this.viewContainer.clear();
             this.viewContainer.createEmbeddedView(this.templateRef);
