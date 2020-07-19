@@ -5,10 +5,11 @@ import { InteractivePaycardComponent } from './interactive-paycard.component';
 import { CardComponent } from './card/card.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IfChangesDirective } from './shared/if-changes.directive';
+import { IfUndefinedChangesDirective } from './shared/if-undefined-changes.directive';
+import { IfEveryChangesDirective } from './shared/if-every-changes.directive';
 
 @NgModule({
-  declarations: [InteractivePaycardComponent, CardComponent, IfChangesDirective],
+  declarations: [InteractivePaycardComponent, CardComponent, IfUndefinedChangesDirective, IfEveryChangesDirective],
   imports: [
     FormsModule,
     CommonModule,
