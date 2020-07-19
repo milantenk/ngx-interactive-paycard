@@ -4,7 +4,7 @@ import { FocusedElement } from './shared/focused-element';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'interactive-paycard',
+  selector: 'ngx-interactive-paycard',
   templateUrl: 'interactive-paycard.component.html',
   styleUrls: ['./interactive-paycard.component.scss']
 })
@@ -24,7 +24,7 @@ export class InteractivePaycardComponent implements OnInit {
   cardNumberMaxLength = 19;
   minCardYear = new Date().getFullYear();
   displayedCardNumber = this.cardModel.cardNumber; // The displayedCardNumber can be masked, the cardModel.cardNumber contains the real data
-  displayedCvv = this.cardModel.cvv;
+  displayedCvv = this.cardModel.cvv; // The displayed cvv can be masked
 
   cardNumberId = 'cardNumberId';
   cardNameId = 'cardNameId';
