@@ -24,6 +24,7 @@ export class InteractivePaycardComponent implements OnInit {
   cardNumberMaxLength = 19;
   minCardYear = new Date().getFullYear();
   displayedCardNumber = this.cardModel.cardNumber; // The displayedCardNumber can be masked, the cardModel.cardNumber contains the real data
+  displayedCvv = this.cardModel.cvv;
 
   cardNumberId = 'cardNumberId';
   cardNameId = 'cardNameId';
@@ -88,6 +89,7 @@ export class InteractivePaycardComponent implements OnInit {
 
   onCvvChange(event): void {
     this.cardModel.cvv = event.target.value.replace(/[^0-9]*/g, '');
+    this.displayedCvv = this.cardModel.cvv;
     event.target.value = this.cardModel.cvv;
   }
 
@@ -105,6 +107,7 @@ export class InteractivePaycardComponent implements OnInit {
   }
 
   onCvvFocus(): void {
+    this.unMaskCvv();
     this.focusedElement = FocusedElement.CVV;
   }
 
@@ -114,6 +117,11 @@ export class InteractivePaycardComponent implements OnInit {
 
   onCardNumberBlur(): void {
     this.maskCardNumber();
+    this.onBlur();
+  }
+
+  onCvvBlur(): void {
+    this.maskCvv();
     this.onBlur();
   }
 
@@ -158,4 +166,11 @@ export class InteractivePaycardComponent implements OnInit {
     this.displayedCardNumber = this.cardModel.cardNumber;
   }
 
+  private unMaskCvv(): void {
+    this.displayedCvv = this.cardModel.cvv;
+  }
+
+  private maskCvv(): void {
+    this.displayedCvv = new Array(this.cardModel.cvv.length + 1).join('*');
+  }
 }

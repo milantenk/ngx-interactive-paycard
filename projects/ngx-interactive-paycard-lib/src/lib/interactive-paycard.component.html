@@ -82,7 +82,8 @@
               id="cardCvvId"
               maxlength="4"
               autocomplete="off"
-              (blur)="onBlur()" 
+              [value]="displayedCvv"
+              (blur)="onCvvBlur()" 
               (focus)="onCvvFocus()"
               (input)="onCvvChange($event)"
             />
