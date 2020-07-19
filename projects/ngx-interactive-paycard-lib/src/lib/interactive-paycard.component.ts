@@ -49,17 +49,28 @@ export class InteractivePaycardComponent implements OnInit {
   }
 
   onCardNumberChange($event): void {
+    let cursorPosStart = $event.srcElement.selectionStart;
+    let cursorPosEnd = $event.srcElement.selectionEnd;
     let processedCardNumber: string = $event.target.value;
-    let newValues:string[] = [];
-    let letterRegex = new RegExp('[^0-9]');
-    let cardNumWithoutSpaceAsArray = processedCardNumber.replace(/ /g, '').split('');
+    const newValues: string[] = [];
+    const letterRegex = new RegExp('[^0-9]');
+    const isCursorAtTheEnd = cursorPosEnd == processedCardNumber.length;
+    const cardNumWithoutSpaceAsArray = processedCardNumber.replace(/ /g, '').split('');
     this.cardNumberFormatArray.forEach((format) => {
       if (cardNumWithoutSpaceAsArray.length > 0) {
         if (format === '#') {
-          const character = cardNumWithoutSpaceAsArray.shift()
-          if (!(letterRegex.test(character))) {
-            newValues.push(character);
-          }
+          let isNumber: boolean;
+          let character: string;
+          do {
+            character = cardNumWithoutSpaceAsArray.shift();
+            isNumber = !(letterRegex.test(character));
+            if (isNumber) {
+              newValues.push(character);
+            } else { // don't move the cursor, if a letter is removed
+              cursorPosEnd--;
+              cursorPosStart--;
+            }
+          } while (!isNumber && character != undefined); // find the next number
         } else if (format === ' ') {
           newValues.push(' ');
         }
@@ -69,6 +80,10 @@ export class InteractivePaycardComponent implements OnInit {
     this.displayedCardNumber = processedCardNumber;
     this.cardModel.cardNumber = processedCardNumber;
     $event.target.value = processedCardNumber; // The value in event has to be updated, otherwise the letter remains in the <input>
+    if (!isCursorAtTheEnd) { // The cursor position has to be corrected because of the newly created string
+      $event.srcElement.selectionEnd = cursorPosEnd;
+      $event.srcElement.selectionStart = cursorPosStart;
+    }
   }
 
   onCvvChange(event): void {
