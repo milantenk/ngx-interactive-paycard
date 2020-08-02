@@ -11,7 +11,7 @@
     "start:demo": "wait-on dist/ngx-interactive-paycard-lib/fesm5 && ng serve --poll 2000",
     "build:demo": "ng build ngx-interactive-paycard-demo",
     "build:lib": "ng build ngx-interactive-paycard-lib",
-    "build:all": "npm run build:lib & npm run build:demo",
+    "build:all": "npm run build:lib && npm run build:demo",
     "watch:lib": "ng build ngx-interactive-paycard-lib --watch",
     "watch:all": "npm run clean && run-p watch:lib start:demo",
     "test:lib": "ng test ngx-interactive-paycard-lib",
