@@ -57,7 +57,7 @@
             "main": "projects/ngx-interactive-paycard-demo/src/main.ts",
             "polyfills": "projects/ngx-interactive-paycard-demo/src/polyfills.ts",
             "tsConfig": "projects/ngx-interactive-paycard-demo/tsconfig.app.json",
-            "aot": false,
+            "aot": true,
             "assets": [
               "projects/ngx-interactive-paycard-demo/src/favicon.ico",
               "projects/ngx-interactive-paycard-demo/src/assets"
@@ -80,7 +80,6 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
