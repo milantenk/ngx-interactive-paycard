@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { CardModel } from '../shared/card-model';
 import { FocusedElement } from '../shared/focused-element';
 import { trigger, transition, state, animate, style } from '@angular/animations';
