@@ -53,6 +53,22 @@ export class CardComponent implements OnInit {
 
     FocusedElement = FocusedElement; // This way the enum can be accessed in the template
 
+    currentlyFocusedNativeElement: any;
+
+    @HostListener('window:orientationchange', ['$event'])
+    onOrientationChange(event) {
+        if (this.currentlyFocusedNativeElement) {
+            setTimeout(() => {
+                this.focusStyle = {
+                    width: `${this.currentlyFocusedNativeElement.offsetWidth}px`,
+                    height: `${this.currentlyFocusedNativeElement.offsetHeight}px`,
+                    transition: 'none',
+                    transform: `translateX(${this.currentlyFocusedNativeElement.offsetLeft}px) translateY(${this.currentlyFocusedNativeElement.offsetTop}px)`
+                };
+            }, 50); // Workaround to get the style setting in at the end of the event queue. This way the currently focused element will be up-to-date
+        }
+    }
+
     ngOnInit() {
         this.currentCardNumberPlaceholder = this.cardNumberFormat.split('');
         this.cardHolderNamePlaceholder = Array(30).fill(""); // CardHolder name is handled the same way as the cardNumber
@@ -68,19 +84,19 @@ export class CardComponent implements OnInit {
         for (const propName in changes) {
             if (propName === 'focusedElement') {
                 if (changes[propName].currentValue != null) {
-                    let focusedNativeElement;
+                    //let focusedNativeElement;
                     if (changes[propName].currentValue === FocusedElement.CardNumber) {
-                        focusedNativeElement = this.cardNumberViewChild.nativeElement;
+                        this.currentlyFocusedNativeElement = this.cardNumberViewChild.nativeElement;
                     } else if (changes[propName].currentValue === FocusedElement.CardName) {
-                        focusedNativeElement = this.cardNameViewChild.nativeElement;
+                        this.currentlyFocusedNativeElement = this.cardNameViewChild.nativeElement;
                     } else if (changes[propName].currentValue === FocusedElement.ExpirationDate) {
-                        focusedNativeElement = this.expireDateViewChild.nativeElement;
+                        this.currentlyFocusedNativeElement = this.expireDateViewChild.nativeElement;
                     }
-                    if (focusedNativeElement) {
+                    if (this.currentlyFocusedNativeElement) {
                         this.focusStyle = {
-                            width: `${focusedNativeElement.offsetWidth}px`,
-                            height: `${focusedNativeElement.offsetHeight}px`,
-                            transform: `translateX(${focusedNativeElement.offsetLeft}px) translateY(${focusedNativeElement.offsetTop}px)`
+                            width: `${this.currentlyFocusedNativeElement.offsetWidth}px`,
+                            height: `${this.currentlyFocusedNativeElement.offsetHeight}px`,
+                            transform: `translateX(${this.currentlyFocusedNativeElement.offsetLeft}px) translateY(${this.currentlyFocusedNativeElement.offsetTop}px)`
                         };
                     }
                 } else {

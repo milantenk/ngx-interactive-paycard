@@ -19,11 +19,6 @@ export class InteractivePaycardComponent implements OnInit {
   @Output() submitEvent = new EventEmitter<CardModel>();
   @ViewChild('cardNumberInput', { static: false }) cardNumberInputViewChild: ElementRef;
 
-  @HostListener('window:orientationchange', ['$event'])
-  onOrientationChange(event) {
-    this.focusedElement = Object.assign({}, this.focusedElement); // enforce focused element change for screen orientation change
-  }
-
   cardModel: CardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' };
 
   cardNumberMaxLength = 19;
