@@ -1,6 +1,6 @@
 # ngx-interactive-paycard
 
-A parameterizable animated credit card form built with Angular. 
+A parameterizable animated credit card built with Angular. 
 [See live demo here](https://ngx-interactive-paycard.netlify.app/)
 
 <p align="center">
@@ -19,8 +19,10 @@ To embed the card use the `<ngx-interactive-paycard>` selector. It has following
 * `logoImagePath`: The path of the company logo image.
 * `frontBgImagePath`: The path of the card front background image.
 * `backBgImagePath`: The path of the card back background image.
-* `cardNumberFormat`: The format of the card number specified with `#` charaters. For example `"#### #### #### ####"` is a patter for Master or VISA cards.
+* `cardNumberFormat`: The format of the card number specified with `#` charaters.<br/> For example `"#### #### #### ####"` is a patter for Master or VISA cards.
 * `cardNumberMask`: Specifies which part of the card number should be masked. The masked characters are defined using `*` character the unmasked numbers are defined with `#` character. For example `"#### **** **** ####"` masks the middle of the card number. Note that it should have the same number of characters as the `cardNumberFormat` has.
+
+The component has one output event: if the Submit button is clicked the `submitEvent` is fired.
 
 An example for the usage can be found below. The exmaple assumes, that the consumer `assets` folder contains the necessary images.
 
@@ -59,6 +61,7 @@ A working example can be found in the `ngx-interactive-paycard-demo` folder in t
 
 
 # Development environment
+To develop the library the `LTS` version of `node.js` needs to be installed. 
 In this repository there is an Angular workspace which contains following projects
 * `ng-interactive-paycard-lib`: The source code of the card library.
 * `ng-interactive-paycard-demo`: The consumer that is used for the library development and to showcase the features of the library.
