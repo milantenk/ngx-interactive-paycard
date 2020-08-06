@@ -1,8 +1,9 @@
 {
   "name": "ngx-interactive-paycard",
   "version": "0.0.1",
+  "license": "MIT",
   "peerDependencies": {
-    "@angular/common": "^8.2.14",
-    "@angular/core": "^8.2.14"
+    "@angular/common": "^10.0.6",
+    "@angular/core": "^10.0.6"
   }
 }
