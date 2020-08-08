@@ -1,7 +1,7 @@
 # ngx-interactive-paycard
 
 A parameterizable animated credit card built with Angular. 
-[See live demo here](https://ngx-interactive-paycard.netlify.app/)
+[See live demo here.](https://ngx-interactive-paycard.netlify.app/)
 
 <p align="center">
   <img src="paycard-demo.gif" alt="Demo gif"/>
