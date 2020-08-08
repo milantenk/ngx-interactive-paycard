@@ -24,7 +24,7 @@ To embed the card use the `<ngx-interactive-paycard>` selector. It has following
 
 The component has one output event: if the Submit button is clicked the `submitEvent` is fired.
 
-An example for the usage can be found below. The exmaple assumes, that the consumer `assets` folder contains the necessary images.
+An example for the usage can be found below. The example assumes, that the consumer `assets` folder contains the necessary images.
 
 ```html
 <ngx-interactive-paycard 
