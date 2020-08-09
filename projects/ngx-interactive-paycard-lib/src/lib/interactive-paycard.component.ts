@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter, Injectable, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+
 import { CardModel } from './shared/card-model';
 import { FocusedElement } from './shared/focused-element';
 
