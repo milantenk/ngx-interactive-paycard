@@ -1,0 +1,77 @@
+<div [ngClass]="focusedElement === FocusedElement.CVV ? 'card-item -active':'card-item'">
+    <div class="card-item__side -front">
+        <div [ngClass]="focusStyle ? 'card-item__focus -active': 'card-item__focus'" [ngStyle]="focusStyle"></div>
+        <div class="card-item__cover">
+            <img class="card-item__bg" src="{{frontBgImgPath}}" />
+        </div>
+        <div class="card-item__wrapper">
+            <div class="card-item__top">
+                <img src="{{chipImgPath}}" class="card-item__chip" />
+                <div class="card-item__type">
+                    <img src="{{logoImgPath}}" class="card-item__typeImg" />
+                </div>
+            </div>
+            <label class="card-item__number" #cardNumber>
+                <span *ngFor="let cardPlaceHolderLetter of currentCardNumberPlaceholder; let i = index">
+                    <span *ifUndefinedChanges="cardModel.cardNumber.charAt(i)" [@slideFadeUp]="'in'"
+                        class="card-item__numberItem">
+                        <ng-container class="card-item__numberItem" *ngIf="getIsNumberMasked(i); else showCardNumer">*
+                        </ng-container>
+                        <ng-template #showCardNumer>
+                            <ng-container class="card-item__numberItem"
+                                *ngIf="cardModel.cardNumber.length > i; else showPlaceHolderLetter">
+                                {{cardModel.cardNumber.charAt(i)}}</ng-container>
+                        </ng-template>
+                        <ng-template class="card-item__numberItem" #showPlaceHolderLetter>{{cardPlaceHolderLetter}}
+                        </ng-template>
+                    </span>
+                </span>
+            </label>
+            <div class="card-item__content">
+                <label class="card-item__info" #cardName>
+                    <div class="card-item__holder">Card Holder</div>
+                    <div class="card-item__name" *ngIf="this.cardModel.cardName.length > 0; else namePlaceHolder">
+                        <span class="card-item__nameItem"
+                            *ngFor="let placeHolder of cardHolderNamePlaceholder; let i = index">
+                            <span *ifUndefinedChanges="this.cardModel.cardName.charAt(i)"
+                                [@cardHolderFadeRight]="'in'">{{this.cardModel.cardName.charAt(i)}}</span>
+                        </span>
+                    </div>
+                    <ng-template class="card-item__name" #namePlaceHolder><span [@cardHolderFadeUp]="'in'">Full
+                            Name</span></ng-template>
+                </label>
+                <div class="card-item__date" #expireDate>
+                    <label class="card-item__dateTitle">Expires</label>
+                    <label class="card-item__dateItem" *ifEveryChanges="cardModel.expirationMonth"
+                        [@slideFadeUp]="'in'">
+                        <span
+                            *ngIf="cardModel.expirationMonth; else monthPlaceHolder">{{cardModel.expirationMonth}}</span>
+                        <ng-template #monthPlaceHolder>MM</ng-template>
+                    </label>
+                    /
+                    <label for="cardYear" class="card-item__dateItem" *ifEveryChanges="cardModel.expirationYear"
+                        [@slideFadeUp]="'in'">
+                        <span
+                            *ngIf="cardModel.expirationYear; else yearPlaceHolder">{{cardModel.expirationYear.slice(2,4)}}</span>
+                        <ng-template #yearPlaceHolder>YY</ng-template>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-item__side -back">
+        <div class="card-item__cover">
+            <img class="card-item__bg" src="{{backBgImgPath}}" />
+        </div>
+        <div class="card-item__band"></div>
+        <div class="card-item__cvv">
+            <div class="card-item__cvvTitle">CVV</div>
+            <div class="card-item__cvvBand">
+                <span *ngFor="let n of cardModel.cvv.split('')">*</span>
+            </div>
+            <div class="card-item__type">
+                <img src="{{logoImgPath}}" class="card-item__typeImg" />
+            </div>
+        </div>
+    </div>
+</div>

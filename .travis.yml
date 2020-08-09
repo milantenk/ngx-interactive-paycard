@@ -1,0 +1,22 @@
+language: node_js
+node_js:
+ - "12"
+addons:
+ apt:
+  sources:
+   - google-chrome
+  packages:
+   - google-chrome-stable
+script:
+ - npm run lint:lib
+ - npm run test:lib:ci
+before_deploy:
+ - npm run build:lib:prod
+ - cd dist/ngx-interactive-paycard-lib
+deploy:
+ provider: npm
+ email: "$NPM_EMAIL"
+ api:key: "$NPM_API_TOKEN"
+ skip_cleanup: true
+ on:
+  tags: true

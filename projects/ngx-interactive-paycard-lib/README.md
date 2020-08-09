@@ -3,12 +3,8 @@
 A parameterizable animated credit card built with Angular. 
 [See live demo here.](https://ngx-interactive-paycard.netlify.app/)
 
-<p align="center">
-  <img src="paycard-demo.gif" alt="Demo gif"/>
-</p>
-
 # Using the library
-The library is published in Angular package format on in the global registry of `npmjs`. To install the library run in the consumer project following command:
+The library is published in Angular package format. To install the library run in the consumer project following command:
 
 ```bash
 npm install ngx-interactive-paycard 
@@ -57,28 +53,4 @@ export class AppComponent {
 }
 ```
 
-A working example can be found in the `ngx-interactive-paycard-demo` folder in this repository.
-
-
-# Development of the library
-To develop the library the `LTS` version of `node.js` needs to be installed. 
-In this repository there is an Angular workspace which contains following projects
-* `ng-interactive-paycard-lib`: The source code of the card library.
-* `ng-interactive-paycard-demo`: The consumer that is used for the library development and to showcase the features of the library.
-
-To install the dependencies of the workspace run 
-
-```bash
-npm install
-```
-
-To start the library and the demo project in watch mode run 
-
-```bash
-npm run watch:all
-```
-
-The demo of the library will be reachable on `http://localhost:4200`.
-
-# References
-This project is inspired by [vue-interactive-paycard](https://github.com/muhammederdem/vue-interactive-paycard).
+A working example can be found in the `ngx-interactive-paycard-demo` folder in the repository of the library.
