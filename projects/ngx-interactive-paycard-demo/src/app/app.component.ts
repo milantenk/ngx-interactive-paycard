@@ -7,8 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ngx-interactive-paycard-demo';
-  cardNumberFormat = "#### #### #### ####";
-  cardNumberMask = "#### **** **** ####";
+  cardNumberFormat = '#### #### #### ####';
+  cardNumberMask = '#### **** **** ####';
 
   onSubmitEvent($event) {
     console.log($event);

@@ -29,8 +29,8 @@ describe('InteractivePaycardComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(InteractivePaycardComponent);
     component = fixture.componentInstance;
-    component.cardNumberFormat = "#### #### #### ####";
-    component.cardNumberMask = "#### **** **** ####";
+    component.cardNumberFormat = '#### #### #### ####';
+    component.cardNumberMask = '#### **** **** ####';
     fixture.detectChanges();
   });
 

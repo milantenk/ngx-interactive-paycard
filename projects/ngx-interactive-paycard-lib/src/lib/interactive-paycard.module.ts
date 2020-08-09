@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {CommonModule} from "@angular/common"
+import {CommonModule} from '@angular/common';
 import { InteractivePaycardComponent } from './interactive-paycard.component';
 import { CardComponent } from './card/card.component';
 import { BrowserModule } from '@angular/platform-browser';

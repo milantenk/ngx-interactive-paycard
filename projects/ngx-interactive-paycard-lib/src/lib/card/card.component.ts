@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, ViewChild, ElementRef, HostListener, OnChanges } from '@angular/core';
 import { CardModel } from '../shared/card-model';
 import { FocusedElement } from '../shared/focused-element';
 import { trigger, transition, state, animate, style } from '@angular/animations';
@@ -31,7 +31,7 @@ import { trigger, transition, state, animate, style } from '@angular/animations'
         ])
     ]
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnChanges {
     constructor() { }
 
     @Input() cardModel: CardModel;
@@ -63,19 +63,20 @@ export class CardComponent implements OnInit {
                     width: `${this.currentlyFocusedNativeElement.offsetWidth}px`,
                     height: `${this.currentlyFocusedNativeElement.offsetHeight}px`,
                     transition: 'none',
-                    transform: `translateX(${this.currentlyFocusedNativeElement.offsetLeft}px) translateY(${this.currentlyFocusedNativeElement.offsetTop}px)`
+                    transform: `translateX(${this.currentlyFocusedNativeElement.offsetLeft}px)
+                    translateY(${this.currentlyFocusedNativeElement.offsetTop}px)`
                 };
-            }, 50); // Workaround to get the style setting in at the end of the event queue. This way the currently focused element will be up-to-date
+            }, 50); // Workaround: if the orientation changes, the ViewChild won't be updated immediatelly
         }
     }
 
     ngOnInit() {
         this.currentCardNumberPlaceholder = this.cardNumberFormat.split('');
-        this.cardHolderNamePlaceholder = Array(30).fill(""); // CardHolder name is handled the same way as the cardNumber
+        this.cardHolderNamePlaceholder = Array(30).fill(''); // CardHolder name is handled the same way as the cardNumber
     }
 
     getIsNumberMasked(index: number): boolean {
-        return this.displayedCardNumber[index] == '*';
+        return this.displayedCardNumber[index] === '*';
     }
 
     // The selection of the card elements is handled here
@@ -84,7 +85,7 @@ export class CardComponent implements OnInit {
         for (const propName in changes) {
             if (propName === 'focusedElement') {
                 if (changes[propName].currentValue != null) {
-                    //let focusedNativeElement;
+                    // let focusedNativeElement;
                     if (changes[propName].currentValue === FocusedElement.CardNumber) {
                         this.currentlyFocusedNativeElement = this.cardNumberViewChild.nativeElement;
                     } else if (changes[propName].currentValue === FocusedElement.CardName) {

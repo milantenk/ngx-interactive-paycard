@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter, Injectable, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { CardModel } from './shared/card-model';
 import { FocusedElement } from './shared/focused-element';
-import { Subject } from 'rxjs';
 
 @Component({
   selector: 'ngx-interactive-paycard',
@@ -42,8 +41,9 @@ export class InteractivePaycardComponent implements OnInit {
     if (new RegExp('[^# *]').test(this.cardNumberMask)) {
       throw new Error('The card number mask must contain only "#", "*" and " " characters! Check the "cardNumberMask" input parameter!');
     }
-    if (this.cardNumberMask.length != this.cardNumberFormat.length) {
-      throw new Error('The card number mask and the card number format must have the same length! Check the "cardNumberFormat" and the "cardNumberMask" input parameters!');
+    if (this.cardNumberMask.length !== this.cardNumberFormat.length) {
+      throw new Error('The card number mask and the card number format must have the same length! \
+      Check the "cardNumberFormat" and the "cardNumberMask" input parameters!');
     }
     this.cardNumberMaxLength = this.cardNumberFormat.length;
     this.cardNumberFormatArray = this.cardNumberFormat.split('');
@@ -55,7 +55,7 @@ export class InteractivePaycardComponent implements OnInit {
     let processedCardNumber: string = $event.target.value;
     const newValues: string[] = [];
     const letterRegex = new RegExp('[^0-9]');
-    const isCursorAtTheEnd = cursorPosEnd == processedCardNumber.length;
+    const isCursorAtTheEnd = cursorPosEnd === processedCardNumber.length;
     const cardNumWithoutSpaceAsArray = processedCardNumber.replace(/ /g, '').split('');
     this.cardNumberFormatArray.forEach((format) => {
       if (cardNumWithoutSpaceAsArray.length > 0) {
@@ -71,7 +71,7 @@ export class InteractivePaycardComponent implements OnInit {
               cursorPosEnd--;
               cursorPosStart--;
             }
-          } while (!isNumber && character != undefined); // find the next number
+          } while (!isNumber && character !== undefined); // find the next number
         } else if (format === ' ') {
           newValues.push(' ');
         }
@@ -126,7 +126,8 @@ export class InteractivePaycardComponent implements OnInit {
   }
 
   onCardNameKeyPress($event): boolean {
-    return (($event.charCode >= 65 && $event.charCode <= 90) || ($event.charCode >= 97 && $event.charCode <= 122) || ($event.charCode == 32));
+    return (($event.charCode >= 65 && $event.charCode <= 90) ||
+      ($event.charCode >= 97 && $event.charCode <= 122) || ($event.charCode === 32));
   }
 
   onYearChange(): void {
@@ -153,12 +154,12 @@ export class InteractivePaycardComponent implements OnInit {
 
   private maskCardNumber(): void {
     this.cardModel.cardNumber = this.displayedCardNumber;
-    let arr = this.displayedCardNumber.split('');
+    const arr = this.displayedCardNumber.split('');
     arr.forEach((element, index) => {
-      if (this.cardNumberMask[index] == '*') {
+      if (this.cardNumberMask[index] === '*') {
         arr[index] = '*';
       }
-    })
+    });
     this.displayedCardNumber = arr.join('');
   }
 
