@@ -2,10 +2,14 @@ language: node_js
 node_js:
  - "12"
 addons:
-  chrome: stable
+ apt:
+  sources:
+   - google-chrome
+  packages:
+   - google-chrome-stable
 script:
- - npm run lint
- - npm run test:lib
+ - npm run lint:lib
+ - npm run test:lib:ci
 before_deploy:
  - npm run build
  - cd dist/ngx-interactive-paycard-lib

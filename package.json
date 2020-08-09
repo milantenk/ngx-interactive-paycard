@@ -16,7 +16,8 @@
     "watch:lib": "ng build ngx-interactive-paycard-lib --watch",
     "watch:all": "npm run clean && run-p watch:lib start:demo",
     "test:lib": "ng test ngx-interactive-paycard-lib",
-    "lint": "ng lint",
+    "test:lib:ci": "ng test ngx-interactive-paycard-lib --no-progress --browsers=ChromeHeadlessNoSandbox",
+    "lint:lib": "ng lint ngx-interactive-paycard-lib",
     "e2e": "ng e2e"
   },
   "private": true,
