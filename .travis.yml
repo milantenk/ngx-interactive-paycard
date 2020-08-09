@@ -11,7 +11,7 @@ script:
  - npm run lint:lib
  - npm run test:lib:ci
 before_deploy:
- - npm run build
+ - npm run build:lib
  - cd dist/ngx-interactive-paycard-lib
 deploy:
  provider: npm
