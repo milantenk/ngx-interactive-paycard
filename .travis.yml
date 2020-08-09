@@ -1,6 +1,8 @@
 language: node_js
 node_js:
  - "12"
+addons:
+  chrome: stable
 script:
  - npm run lint
  - npm run test:lib
@@ -10,5 +12,5 @@ before_deploy:
 deploy:
    provider: npm
    email: "$NPM_EMAIL"
-   api:key: "NPM_API_TOKEN"
+   api:key: "$NPM_API_TOKEN"
    skip_cleanup: true
