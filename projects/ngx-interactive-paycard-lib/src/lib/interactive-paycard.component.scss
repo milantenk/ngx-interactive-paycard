@@ -1,4 +1,3 @@
-
 * {
   box-sizing: border-box;
   &:focus {
@@ -154,7 +153,7 @@
     }
     &.-select {
       -webkit-appearance: none;
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAeCAYAAABuUU38AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAUxJREFUeNrM1sEJwkAQBdCsngXPHsQO9O5FS7AAMVYgdqAd2IGCDWgFnryLFQiCZ8EGnJUNimiyM/tnk4HNEAg/8y6ZmMRVqz9eUJvRaSbvutCZ347bXVJy/ZnvTmdJ862Me+hAbZCTs6GHpyUi1tTSvPnqTpoWZPUa7W7ncT3vK4h4zVejy8QzM3WhVUO8ykI6jOxoGA4ig3BLHcNFSCGqGAkig2yqgpEiMsjSfY9LxYQg7L6r0X6wS29YJiYQYecemY+wHrXD1+bklGhpAhBDeu/JfIVGxaAQ9sb8CI+CQSJ+QmJg0Ii/EE2MBiIXooHRQhRCkBhNhBcEhLkwf05ZCG8ICCOpk0MULmvDSY2M8UawIRExLIQIEgHDRoghihgRIgiigBEjgiFATBACAgFgghEwSAAGgoBCBBgYAg5hYKAIFYgHBo6w9RRgAFfy160QuV8NAAAAAElFTkSuQmCC');
+      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAeCAYAAABuUU38AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAUxJREFUeNrM1sEJwkAQBdCsngXPHsQO9O5FS7AAMVYgdqAd2IGCDWgFnryLFQiCZ8EGnJUNimiyM/tnk4HNEAg/8y6ZmMRVqz9eUJvRaSbvutCZ347bXVJy/ZnvTmdJ862Me+hAbZCTs6GHpyUi1tTSvPnqTpoWZPUa7W7ncT3vK4h4zVejy8QzM3WhVUO8ykI6jOxoGA4ig3BLHcNFSCGqGAkig2yqgpEiMsjSfY9LxYQg7L6r0X6wS29YJiYQYecemY+wHrXD1+bklGhpAhBDeu/JfIVGxaAQ9sb8CI+CQSJ+QmJg0Ii/EE2MBiIXooHRQhRCkBhNhBcEhLkwf05ZCG8ICCOpk0MULmvDSY2M8UawIRExLIQIEgHDRoghihgRIgiigBEjgiFATBACAgFgghEwSAAGgoBCBBgYAg5hYKAIFYgHBo6w9RRgAFfy160QuV8NAAAAAElFTkSuQmCC");
       background-size: 12px;
       background-position: 90% center;
       background-repeat: no-repeat;
@@ -170,7 +169,7 @@
     border-radius: 50%;
     top: 35px;
     right: 10px;
-    opacity: .75;
+    opacity: 0.75;
     color: #8c9cae;
     cursor: pointer;
     padding: 0;
@@ -178,10 +177,10 @@
     display: inline-flex;
     border: 2px solid currentColor;
     box-shadow: none;
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 
     &:before {
-      content: '';
+      content: "";
       position: absolute;
       background: white;
       width: 0.35em;
@@ -190,14 +189,14 @@
       left: 6px;
       z-index: 2;
       border-radius: 50%;
-      transform: scale(.1);
+      transform: scale(0.1);
       opacity: 0;
-      transition: all .3s ease-in-out;
-      transition-delay: .1s;
+      transition: all 0.3s ease-in-out;
+      transition-delay: 0.1s;
     }
 
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       top: 3px;
       left: 3px;
@@ -205,18 +204,20 @@
       width: 0.6em;
       height: 0.6em;
       border-radius: 50%;
-      transform: scale(.1);
+      transform: scale(0.1);
       opacity: 0;
-      transition: all .3s ease-in-out;
+      transition: all 0.3s ease-in-out;
     }
 
-    &:hover:not(:disabled), &.-active:not(:disabled) {
+    &:hover:not(:disabled),
+    &.-active:not(:disabled) {
       color: #2364d2;
       opacity: 1;
     }
 
     &.-active {
-      &::before, &::after {
+      &::before,
+      &::after {
         transform: scale(1);
         opacity: 1;
       }
@@ -224,7 +225,7 @@
 
     &:disabled {
       cursor: not-allowed;
-      opacity: .4;
+      opacity: 0.4;
     }
   }
 }

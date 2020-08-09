@@ -15,7 +15,7 @@ describe('InteractivePaycardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InteractivePaycardComponent, CardComponent, IfUndefinedChangesDirective, IfEveryChangesDirective ],
+      declarations: [InteractivePaycardComponent, CardComponent, IfUndefinedChangesDirective, IfEveryChangesDirective],
       imports: [
         FormsModule,
         CommonModule,
@@ -23,7 +23,7 @@ describe('InteractivePaycardComponent', () => {
         BrowserAnimationsModule
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
