@@ -10,8 +10,6 @@ import { IfUndefinedChangesDirective } from './shared/if-undefined-changes.direc
 import { IfEveryChangesDirective } from './shared/if-every-changes.directive';
 
 describe('InteractivePaycardComponent', () => {
-  let component: InteractivePaycardComponent;
-  let fixture: ComponentFixture<InteractivePaycardComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,15 +24,24 @@ describe('InteractivePaycardComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(InteractivePaycardComponent);
-    component = fixture.componentInstance;
+  it('should create the component', () => {
+    const fixture = TestBed.createComponent(InteractivePaycardComponent);
+    const component = fixture.componentInstance;
     component.cardNumberFormat = '#### #### #### ####';
     component.cardNumberMask = '#### **** **** ####';
     fixture.detectChanges();
+    expect(component).toBeTruthy();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should throw error if there is no card number format', () => {
+    const errFixture = TestBed.createComponent(InteractivePaycardComponent);
+    expect(()=>{errFixture.detectChanges()}).toThrow();
+  });
+
+  it('should throw error if the mask format and card number format does not match', () => {
+    const errFixture = TestBed.createComponent(InteractivePaycardComponent);
+    errFixture.componentInstance.cardNumberFormat = '#### #### #### ####';
+    errFixture.componentInstance.cardNumberMask = '#### **** **** ###';
+    expect(()=>{errFixture.detectChanges()}).toThrow();
   });
 });
