@@ -14,7 +14,9 @@ before_deploy:
  - npm run build
  - cd dist/ngx-interactive-paycard-lib
 deploy:
-   provider: npm
-   email: "$NPM_EMAIL"
-   api:key: "$NPM_API_TOKEN"
-   skip_cleanup: true
+ provider: npm
+ email: "$NPM_EMAIL"
+ api:key: "$NPM_API_TOKEN"
+ skip_cleanup: true
+ on:
+  tags: true
