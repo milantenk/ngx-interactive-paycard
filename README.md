@@ -14,6 +14,23 @@ The library is published in Angular package format on in the global registry of 
 npm install ngx-interactive-paycard 
 ```
 
+Import the module of the paycard:
+
+```javascript
+import { InteractivePaycardModule } from 'ngx-interactive-paycard';
+
+@NgModule({
+  ...
+  imports: [
+    ...
+    InteractivePaycardModule,
+    ...
+  ],
+  ...
+})
+export class UsedModule { }
+```
+
 To embed the card use the `<ngx-interactive-paycard>` selector. It has following input parameters:
 * `chipImgPath`: The path of the image which should be displayed as chip on the card.
 * `logoImagePath`: The path of the company logo image.
