@@ -9,16 +9,17 @@
   "scripts": {
     "ng": "ng",
     "clean": "rimraf dist",
-    "start:demo": "wait-on dist/ngx-interactive-paycard-lib/fesm2015 && ng serve --poll 2000",
+    "e2e": "ng e2e",
     "build:demo": "ng build ngx-interactive-paycard-demo",
     "build:lib": "ng build ngx-interactive-paycard-lib",
+    "build:lib:prod": "ng build ngx-interactive-paycard-lib --prod",
     "build:all": "npm run build:lib && npm run build:demo -- --prod",
+    "start:demo": "wait-on dist/ngx-interactive-paycard-lib/fesm2015 && ng serve --poll 2000",
     "watch:lib": "ng build ngx-interactive-paycard-lib --watch",
     "watch:all": "npm run clean && run-p watch:lib start:demo",
     "test:lib": "ng test ngx-interactive-paycard-lib",
     "test:lib:ci": "ng test ngx-interactive-paycard-lib --no-progress --browsers=ChromeHeadlessNoSandbox",
     "lint:lib": "ng lint ngx-interactive-paycard-lib",
-    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
