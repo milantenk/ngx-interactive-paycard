@@ -1,6 +1,6 @@
 # ngx-interactive-paycard
 
-A parameterizable animated credit card built with Angular. 
+A parameterizable animated payment card built with Angular. 
 [See live demo here.](https://ngx-interactive-paycard.netlify.app/)
 
 <p align="center">
@@ -98,4 +98,6 @@ npm run watch:all
 The demo of the library will be reachable on `http://localhost:4200`.
 
 # References
-This project is inspired by [vue-interactive-paycard](https://github.com/muhammederdem/vue-interactive-paycard).
+This project is inspired by [vue-interactive-paycard](https://github.com/muhammederdem/vue-interactive-paycard). 
+
+The goal of this project is to have an Angular alternative for the original vue based version.
