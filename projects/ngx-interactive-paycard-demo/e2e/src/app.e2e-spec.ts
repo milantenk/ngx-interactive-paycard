@@ -1,5 +1,5 @@
 import { AppPage } from './app.po';
-import { browser, logging } from 'protractor';
+import { browser, by, element, logging } from 'protractor';
 
 describe('workspace-project App', () => {
   let page: AppPage;
@@ -7,6 +7,16 @@ describe('workspace-project App', () => {
   beforeEach(() => {
     page = new AppPage();
   });
+
+  it('should display 3 input elements', () => {
+    page.navigateTo();
+    expect(page.getInputElementsNumber().count()).toEqual(3);
+  })
+
+  it('should display 2 select elements', () => {
+    page.navigateTo();
+    expect(page.getSelectElementsNumber().count()).toEqual(2);
+  })
 
   it('should check if the submit button exists', () => {
     page.navigateTo();
