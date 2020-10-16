@@ -29,7 +29,7 @@
             </label>
             <div class="card-item__content">
                 <label class="card-item__info" #cardName>
-                    <div class="card-item__holder">Card Holder</div>
+                    <div class="card-item__holder">{{cardLabels.cardHolder}}</div>
                     <div class="card-item__name" *ngIf="this.cardModel.cardName.length > 0; else namePlaceHolder">
                         <span class="card-item__nameItem"
                             *ngFor="let placeHolder of cardHolderNamePlaceholder; let i = index">
@@ -37,23 +37,22 @@
                                 [@cardHolderFadeRight]="'in'">{{this.cardModel.cardName.charAt(i)}}</span>
                         </span>
                     </div>
-                    <ng-template class="card-item__name" #namePlaceHolder><span [@cardHolderFadeUp]="'in'">Full
-                            Name</span></ng-template>
+                    <ng-template class="card-item__name" #namePlaceHolder><span [@cardHolderFadeUp]="'in'">{{cardLabels.fullName}}</span></ng-template>
                 </label>
                 <div class="card-item__date" #expireDate>
-                    <label class="card-item__dateTitle">Expires</label>
+                    <label class="card-item__dateTitle">{{cardLabels.expires}}</label>
                     <label class="card-item__dateItem" *ifEveryChanges="cardModel.expirationMonth"
                         [@slideFadeUp]="'in'">
                         <span
                             *ngIf="cardModel.expirationMonth; else monthPlaceHolder">{{cardModel.expirationMonth}}</span>
-                        <ng-template #monthPlaceHolder>MM</ng-template>
+                        <ng-template #monthPlaceHolder>{{cardLabels.mm}}</ng-template>
                     </label>
                     /
                     <label for="cardYear" class="card-item__dateItem" *ifEveryChanges="cardModel.expirationYear"
                         [@slideFadeUp]="'in'">
                         <span
                             *ngIf="cardModel.expirationYear; else yearPlaceHolder">{{cardModel.expirationYear.slice(2,4)}}</span>
-                        <ng-template #yearPlaceHolder>YY</ng-template>
+                        <ng-template #yearPlaceHolder>{{cardLabels.yy}}</ng-template>
                     </label>
                 </div>
             </div>

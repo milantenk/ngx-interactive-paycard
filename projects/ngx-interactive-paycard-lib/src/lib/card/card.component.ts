@@ -3,6 +3,8 @@ import { trigger, transition, state, animate, style } from '@angular/animations'
 
 import { CardModel } from '../shared/card-model';
 import { FocusedElement } from '../shared/focused-element';
+import {CardLabel} from '../shared';
+
 
 @Component({
     selector: 'card',
@@ -43,6 +45,7 @@ export class CardComponent implements OnInit, OnChanges {
     @Input() cardNumberFormat: string;
     @Input() displayedCardNumber: string;
     @Input() focusedElement: FocusedElement;
+    @Input() cardLabels: CardLabel;
 
     @ViewChild('cardNumber', { static: false }) cardNumberViewChild: ElementRef;
     @ViewChild('cardName', { static: false }) cardNameViewChild: ElementRef;

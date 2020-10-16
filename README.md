@@ -51,6 +51,8 @@ An example for the usage can be found below. The example assumes, that the consu
     [backBgImgPath]="'./assets/SplitShire3.jpg'"
     [cardNumberFormat]="cardNumberFormat" 
     [cardNumberMask]="cardNumberMask" 
+    [cardLabels]="cardLabel"
+    [formLabels]="formLabel"
     (submitEvent)="onSubmitEvent($event)">
 </ngx-interactive-paycard>
 ```
@@ -67,7 +69,24 @@ export class AppComponent {
   title = 'ngx-interactive-paycard-demo';
   cardNumberFormat = "#### #### #### ####";
   cardNumberMask = "#### **** **** ####";
-
+  //ex: Spanish
+  cardLabel: CardLabel = {
+    expires: 'Expira',
+    cardHolder: 'Nombre del Titular',
+    fullName: 'Nombre completo',
+    mm: 'MM',
+    yy: 'AA',
+  };
+  //ex: Spanish
+  formLabel: FormLabel = {
+    cardNumber: 'Número de Tarjeta',
+    cardHolderName: 'Titular de la Tarjeta',
+    expirationDate: 'Fecha de Expiracion',
+    expirationMonth: 'Mes',
+    expirationYear: 'Año',
+    cvv: 'CVV',
+    submitButton: 'Enviar',
+  };
   onSubmitEvent($event) {
     console.log($event);
   }

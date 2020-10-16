@@ -1,11 +1,13 @@
 <div class="wrapper">
-    <ngx-interactive-paycard 
-    [chipImgPath]="'./assets/chip.png'" 
+    <ngx-interactive-paycard
+    [chipImgPath]="'./assets/chip.png'"
     [logoImgPath]="'./assets/logo.png'"
-    [frontBgImgPath]="'./assets/SplitShire1.jpg'" 
+    [frontBgImgPath]="'./assets/SplitShire1.jpg'"
     [backBgImgPath]="'./assets/SplitShire3.jpg'"
-    [cardNumberFormat]="cardNumberFormat" 
-    [cardNumberMask]="cardNumberMask" 
+    [cardNumberFormat]="cardNumberFormat"
+    [cardNumberMask]="cardNumberMask"
+    [cardLabels]="cardLabel"
+    [formLabels]="formLabel"
     (submitEvent)="onSubmitEvent($event)">
     </ngx-interactive-paycard>
 </div>
