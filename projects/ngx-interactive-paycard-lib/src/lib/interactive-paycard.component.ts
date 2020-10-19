@@ -28,7 +28,7 @@ export class InteractivePaycardComponent implements OnInit {
     cardHolder: DefaultComponentLabels.CARD_HOLDER_NAME,
     fullName: DefaultComponentLabels.CARD_FULL_NAME,
     mm: DefaultComponentLabels.CARD_EXPIRATION_MONTH_FORMAT,
-    yy: DefaultComponentLabels.CARD_EXPIRATION_MONTH_FORMAT
+    yy: DefaultComponentLabels.CARD_EXPIRATION_YEAR_FORMAT
   };
 
   @Input()

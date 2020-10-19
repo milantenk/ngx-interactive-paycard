@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import {CardLabel, FormLabel} from 'ngx-interactive-paycard-lib';
-
-
+import { CardLabel, FormLabel } from 'ngx-interactive-paycard-lib';
 
 @Component({
   selector: 'app-root',

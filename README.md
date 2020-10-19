@@ -38,6 +38,8 @@ To embed the card use the `<ngx-interactive-paycard>` selector. It has following
 * `backBgImagePath`: The path of the card back background image.
 * `cardNumberFormat`: The format of the card number specified with `#` charaters.<br/> For example `"#### #### #### ####"` is a pattern for Master or VISA cards.
 * `cardNumberMask`: Specifies which part of the card number should be masked. The masked characters are defined using `*` character the unmasked numbers are defined with `#` character. For example `"#### **** **** ####"` masks the middle of the card number. Note that it should have the same number of characters as the `cardNumberFormat` has.
+* `cardLabels`: Optional property to modify all labels in the card component.
+* `formLabels`: Optional property to modify all labels in form component.
 
 The component has one output event: if the Submit button is clicked the `submitEvent` is fired.
 
@@ -69,7 +71,7 @@ export class AppComponent {
   title = 'ngx-interactive-paycard-demo';
   cardNumberFormat = "#### #### #### ####";
   cardNumberMask = "#### **** **** ####";
-  //ex: Spanish
+  //ex: Optional cardLabels - Spanish
   cardLabel: CardLabel = {
     expires: 'Expira',
     cardHolder: 'Nombre del Titular',
@@ -77,7 +79,7 @@ export class AppComponent {
     mm: 'MM',
     yy: 'AA',
   };
-  //ex: Spanish
+  //ex: Optional formLabels - Spanish
   formLabel: FormLabel = {
     cardNumber: 'Número de Tarjeta',
     cardHolderName: 'Titular de la Tarjeta',

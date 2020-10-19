@@ -11,5 +11,4 @@ export enum DefaultComponentLabels {
   CARD_FULL_NAME = 'Full Name',
   CARD_EXPIRATION_YEAR_FORMAT = 'YY',
   CARD_EXPIRATION_MONTH_FORMAT = 'MM'
-
 }

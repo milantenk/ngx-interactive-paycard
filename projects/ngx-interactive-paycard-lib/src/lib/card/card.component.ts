@@ -3,8 +3,7 @@ import { trigger, transition, state, animate, style } from '@angular/animations'
 
 import { CardModel } from '../shared/card-model';
 import { FocusedElement } from '../shared/focused-element';
-import {CardLabel} from '../shared';
-
+import { CardLabel } from '../shared';
 
 @Component({
     selector: 'card',
