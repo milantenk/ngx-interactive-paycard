@@ -34,6 +34,8 @@ To embed the card use the `<ngx-interactive-paycard>` selector. It has following
 * `backBgImagePath`: The path of the card back background image.
 * `cardNumberFormat`: The format of the card number specified with `#` charaters.<br/> For example `"#### #### #### ####"` is a pattern for Master or VISA cards.
 * `cardNumberMask`: Specifies which part of the card number should be masked. The masked characters are defined using `*` character the unmasked numbers are defined with `#` character. For example `"#### **** **** ####"` masks the middle of the card number. Note that it should have the same number of characters as the `cardNumberFormat` has.
+* `cardLabels`: Optional property to modify all labels in the card component.
+* `formLabels`: Optional property to modify all labels in form component.
 
 The component has one output event: if the Submit button is clicked the `submitEvent` is fired.
 
@@ -47,6 +49,8 @@ An example for the usage can be found below. The example assumes, that the consu
     [backBgImgPath]="'./assets/SplitShire3.jpg'"
     [cardNumberFormat]="cardNumberFormat" 
     [cardNumberMask]="cardNumberMask" 
+    [cardLabels]="cardLabel"
+    [formLabels]="formLabel"
     (submitEvent)="onSubmitEvent($event)">
 </ngx-interactive-paycard>
 ```
@@ -63,6 +67,24 @@ export class AppComponent {
   title = 'ngx-interactive-paycard-demo';
   cardNumberFormat = "#### #### #### ####";
   cardNumberMask = "#### **** **** ####";
+ //ex: Optional cardLabels - Spanish
+  cardLabel: CardLabel = {
+    expires: 'Expira',
+    cardHolder: 'Nombre del Titular',
+    fullName: 'Nombre completo',
+    mm: 'MM',
+    yy: 'AA',
+  };
+  //ex: Optional formLabels - Spanish
+  formLabel: FormLabel = {
+    cardNumber: 'Número de Tarjeta',
+    cardHolderName: 'Titular de la Tarjeta',
+    expirationDate: 'Fecha de Expiracion',
+    expirationMonth: 'Mes',
+    expirationYear: 'Año',
+    cvv: 'CVV',
+    submitButton: 'Enviar',
+  };
 
   onSubmitEvent($event) {
     console.log($event);

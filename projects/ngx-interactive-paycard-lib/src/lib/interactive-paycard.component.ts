@@ -2,6 +2,8 @@ import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ElementRef }
 
 import { CardModel } from './shared/card-model';
 import { FocusedElement } from './shared/focused-element';
+import { CardLabel,  FormLabel} from './shared';
+import { DefaultComponentLabels } from './shared/default-component-labels';
 
 @Component({
   selector: 'ngx-interactive-paycard',
@@ -16,6 +18,34 @@ export class InteractivePaycardComponent implements OnInit {
   @Input() frontBgImgPath: string;
   @Input() cardNumberFormat: string;
   @Input() cardNumberMask: string;
+  @Input()
+  get cardLabels(): CardLabel { return this._cardLabels}
+  set cardLabels(value: CardLabel | null) {
+    this._cardLabels = value;
+  }
+  private _cardLabels: CardLabel = {
+    expires: DefaultComponentLabels.CARD_EXPIRES,
+    cardHolder: DefaultComponentLabels.CARD_HOLDER_NAME,
+    fullName: DefaultComponentLabels.CARD_FULL_NAME,
+    mm: DefaultComponentLabels.CARD_EXPIRATION_MONTH_FORMAT,
+    yy: DefaultComponentLabels.CARD_EXPIRATION_YEAR_FORMAT
+  };
+
+  @Input()
+  get formLabels(): FormLabel { return this._formLabels};
+  set formLabels(value: FormLabel | null) {
+    this._formLabels = value;
+  }
+  private _formLabels: FormLabel =  {
+    cardNumber: DefaultComponentLabels.FORM_CARD_NUMBER,
+    cardHolderName: DefaultComponentLabels.FORM_CARD_HOLDER_NAME,
+    expirationDate: DefaultComponentLabels.FORM_EXPIRATION_DATE,
+    expirationMonth: DefaultComponentLabels.FORM_EXPIRATION_MONTH,
+    expirationYear: DefaultComponentLabels.FORM_EXPIRATION_YEAR,
+    cvv: DefaultComponentLabels.FORM_CVV,
+    submitButton: DefaultComponentLabels.FORM_SUBMIT_BUTTON
+  };
+
   @Output() submitEvent = new EventEmitter<CardModel>();
   @ViewChild('cardNumberInput', { static: false }) cardNumberInputViewChild: ElementRef;
 
