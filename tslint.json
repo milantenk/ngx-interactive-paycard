@@ -85,6 +85,7 @@
       "check-typecast"
     ],
     "import-destructuring-spacing": true,
-    "import-spacing": true
+    "import-spacing": true,
+    "cyclomatic-complexity": [true, 10]
   }
 }
