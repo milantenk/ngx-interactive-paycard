@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
+import { CardLabel,  FormLabel } from './shared';
 import { CardModel } from './shared/card-model';
-import { FocusedElement } from './shared/focused-element';
-import { CardLabel,  FormLabel} from './shared';
 import { DefaultComponentLabels } from './shared/default-component-labels';
+import { FocusedElement } from './shared/focused-element';
 
 @Component({
   selector: 'ngx-interactive-paycard',
