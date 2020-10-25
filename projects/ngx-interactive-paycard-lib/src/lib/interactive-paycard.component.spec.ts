@@ -53,25 +53,38 @@ describe('InteractivePaycardComponent', () => {
 
   it('should throw error if there is no card number format', () => {
     const errFixture = TestBed.createComponent(InteractivePaycardComponent);
-    expect(()=>{errFixture.detectChanges()}).toThrow();
+    expect(() => { errFixture.detectChanges() }).toThrow();
   });
 
   it('should throw error if the mask format and card number format does not match', () => {
     const errFixture = TestBed.createComponent(InteractivePaycardComponent);
     errFixture.componentInstance.cardNumberFormat = '#### #### #### ####';
     errFixture.componentInstance.cardNumberMask = '#### **** **** ###';
-    expect(()=>{errFixture.detectChanges()}).toThrow();
+    expect(() => { errFixture.detectChanges() }).toThrow();
   });
 
-  it('should show default values for form component labels',  () =>  {
+  it('should show default values for form component labels', () => {
     const fixture = TestBed.createComponent(InteractivePaycardComponent);
     const component = fixture.componentInstance;
     expect(component.formLabels).toEqual(formLabelsByDefaultMock);
   });
 
-  it('should show default values for card component labels',  () => {
+  it('should show default values for card component labels', () => {
     const fixture = TestBed.createComponent(InteractivePaycardComponent);
     const component = fixture.componentInstance;
     expect(component.cardLabels).toEqual(cardLabelsByDefaultMock);
+  });
+
+  it('should emit an event when submit button is clicked', () => {
+    // Arrange
+    const fixture = TestBed.createComponent(InteractivePaycardComponent);
+    const component = fixture.componentInstance;
+    spyOn(component.submitEvent, 'emit');
+
+    // Act
+    component.onSubmitClick();
+
+    // Assert
+    expect(component.submitEvent.emit).toHaveBeenCalled();
   });
 });
