@@ -1,4 +1,4 @@
-import { IfEveryChangesDirective } from './if-every-changes.directive';
+import {IfEveryChangesDirective } from './if-every-changes.directive';
 
 describe('IfEveryChangesDirective', () => {
 
