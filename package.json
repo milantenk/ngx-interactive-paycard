@@ -19,8 +19,10 @@
     "watch:all": "npm run clean && run-p watch:lib start:demo",
     "test:lib": "ng test ngx-interactive-paycard-lib",
     "test:lib:watch": "ng test ngx-interactive-paycard-lib --watch=true",
+    "test:lib:cc": "ng test ngx-interactive-paycard-lib --codeCoverage=true",
     "test:lib:ci": "ng test ngx-interactive-paycard-lib --no-progress --browsers=ChromeHeadlessNoSandbox",
-    "lint:lib": "ng lint ngx-interactive-paycard-lib"
+    "lint:lib": "ng lint ngx-interactive-paycard-lib",
+    "lint:lib:fix": "ng lint ngx-interactive-paycard-lib --fix"
   },
   "private": true,
   "dependencies": {
