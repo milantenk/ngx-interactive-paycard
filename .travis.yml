@@ -10,6 +10,7 @@ addons:
 script:
  - npm run lint:lib
  - npm run test:lib:ci
+ - npm run e2e:demo
 before_deploy:
  - npm run build:lib:prod
  - cd dist/ngx-interactive-paycard-lib

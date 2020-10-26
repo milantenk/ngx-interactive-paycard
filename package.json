@@ -9,7 +9,7 @@
   "scripts": {
     "ng": "ng",
     "clean": "rimraf dist",
-    "e2e": "ng e2e",
+    "e2e:demo": "npm run build:lib && ng e2e",
     "build:demo": "ng build ngx-interactive-paycard-demo",
     "build:lib": "ng build ngx-interactive-paycard-lib",
     "build:lib:prod": "ng build ngx-interactive-paycard-lib --prod",

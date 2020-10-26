@@ -14,7 +14,7 @@ export class AppPage {
   }
 
   getButtonText() {
-    return element(by.buttonText('Submit')).getText() as Promise<string>;
+    return element(by.buttonText('Enviar')).getText() as Promise<string>;
   }
 
   getElementById(id: string) {
