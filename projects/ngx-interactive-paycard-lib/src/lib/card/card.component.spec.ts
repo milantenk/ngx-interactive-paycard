@@ -1,6 +1,5 @@
-import { CardComponent } from './card.component';
 import { FocusedElement } from '../shared/focused-element';
-import { verifyHostBindings } from '@angular/compiler';
+import { CardComponent } from './card.component';
 
 describe('CardComponent', () => {
     let component: any;
@@ -32,7 +31,6 @@ describe('CardComponent', () => {
         it('should do nothing if has no focus native element', (done: any) => {
             component.currentlyFocusedNativeElement = null;
             component.onOrientationChange();
-            
             setTimeout(() => {
                 expect(component.setFocusStyle).not.toHaveBeenCalled();
                 done();
