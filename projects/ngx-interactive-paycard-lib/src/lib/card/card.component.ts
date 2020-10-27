@@ -59,17 +59,9 @@ export class CardComponent implements OnInit, OnChanges {
     currentlyFocusedNativeElement: any;
 
     @HostListener('window:orientationchange', ['$event'])
-    onOrientationChange(event) {
+    onOrientationChange() {
         if (this.currentlyFocusedNativeElement) {
-            setTimeout(() => {
-                this.focusStyle = {
-                    width: `${this.currentlyFocusedNativeElement.offsetWidth}px`,
-                    height: `${this.currentlyFocusedNativeElement.offsetHeight}px`,
-                    transition: 'none',
-                    transform: `translateX(${this.currentlyFocusedNativeElement.offsetLeft}px)
-                    translateY(${this.currentlyFocusedNativeElement.offsetTop}px)`
-                };
-            }, 50); // Workaround: if the orientation changes, the ViewChild won't be updated immediatelly
+            setTimeout(this.setFocusStyle, 50); // Workaround: if the orientation changes, the ViewChild won't be updated immediatelly
         }
     }
 
@@ -110,4 +102,13 @@ export class CardComponent implements OnInit, OnChanges {
         }
     }
 
+    private setFocusStyle = () => {
+        this.focusStyle = {
+            width: `${this.currentlyFocusedNativeElement.offsetWidth}px`,
+            height: `${this.currentlyFocusedNativeElement.offsetHeight}px`,
+            transition: 'none',
+            transform: `translateX(${this.currentlyFocusedNativeElement.offsetLeft}px)
+            translateY(${this.currentlyFocusedNativeElement.offsetTop}px)`
+        };
+    }
 }
