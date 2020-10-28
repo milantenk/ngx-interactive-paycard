@@ -140,11 +140,6 @@ describe('InteractivePaycardComponent', () => {
     })
   })
 
-  // onYearChange(): void {
-  //   if (this.cardModel.expirationYear === this.minCardYear.toString()) {
-  //     this.cardModel.expirationMonth = '';
-  //   }
-  // }
   describe('onYearChange', () => {
     let component: InteractivePaycardComponent
 
