@@ -1,16 +1,16 @@
+import { async, TestBed } from '@angular/core/testing';
 import { CardLabel, FormLabel } from './shared';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
-import { CardComponent } from './card/card.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CardComponent } from './card/card.component';
+import { InteractivePaycardComponent } from './interactive-paycard.component';
 import { DefaultComponentLabels } from './shared/default-component-labels';
 import { FocusedElement } from './shared/focused-element';
-import { FormsModule } from '@angular/forms';
 import { IfEveryChangesDirective } from './shared/if-every-changes.directive';
 import { IfUndefinedChangesDirective } from './shared/if-undefined-changes.directive';
-import { InteractivePaycardComponent } from './interactive-paycard.component';
 
 describe('InteractivePaycardComponent', () => {
 
