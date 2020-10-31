@@ -19,7 +19,7 @@ export class InteractivePaycardComponent implements OnInit {
   @Input() cardNumberFormat: string;
   @Input() cardNumberMask: string;
   @Input()
-  get cardLabels(): CardLabel { return this._cardLabels}
+  get cardLabels(): CardLabel { return this._cardLabels; }
   set cardLabels(value: CardLabel | null) {
     this._cardLabels = value;
   }
@@ -32,7 +32,7 @@ export class InteractivePaycardComponent implements OnInit {
   };
 
   @Input()
-  get formLabels(): FormLabel { return this._formLabels};
+  get formLabels(): FormLabel { return this._formLabels; }
   set formLabels(value: FormLabel | null) {
     this._formLabels = value;
   }

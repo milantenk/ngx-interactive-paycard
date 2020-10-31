@@ -19,7 +19,7 @@ describe('CardComponent', () => {
             offsetHeight,
             offsetLeft,
             offsetTop
-        }
+        };
     });
 
     describe('#onOrientationChange', () => {
@@ -34,7 +34,7 @@ describe('CardComponent', () => {
             setTimeout(() => {
                 expect(component.setFocusStyle).not.toHaveBeenCalled();
                 done();
-            }, delay)
+            }, delay);
         });
 
         it('should set focus styles after delay if native element exists', (done: any) => {
@@ -43,7 +43,7 @@ describe('CardComponent', () => {
             setTimeout(() => {
                 expect(component.setFocusStyle).toHaveBeenCalled();
                 done();
-            }, delay)
+            }, delay);
         });
     });
 
