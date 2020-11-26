@@ -38,6 +38,7 @@ To embed the card use the `<ngx-interactive-paycard>` selector. It has following
 * `formLabels`: Optional property to modify all labels in form component.
 
 The component has one output event: if the Submit button is clicked the `submitEvent` is fired.
+The component has another output event (submitChanges): everytime the cardNumber input has changes, we can get these number to apply some function to validate the brand of the card.
 
 An example for the usage can be found below. The example assumes, that the consumer `assets` folder contains the necessary images.
 
@@ -51,7 +52,9 @@ An example for the usage can be found below. The example assumes, that the consu
     [cardNumberMask]="cardNumberMask" 
     [cardLabels]="cardLabel"
     [formLabels]="formLabel"
-    (submitEvent)="onSubmitEvent($event)">
+    (submitEvent)="onSubmitEvent($event)"
+    (submitChanges)="showChanges($event)"
+    >
 </ngx-interactive-paycard>
 ```
 
@@ -87,6 +90,10 @@ export class AppComponent {
   };
 
   onSubmitEvent($event) {
+    console.log($event);
+  }
+  
+  showChanges($event) {
     console.log($event);
   }
 }
