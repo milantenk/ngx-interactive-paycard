@@ -47,6 +47,7 @@ export class InteractivePaycardComponent implements OnInit {
   };
 
   @Output() submitEvent = new EventEmitter<CardModel>();
+  @Output() submitChanges = new EventEmitter<string>();
   @ViewChild('cardNumberInput', { static: false }) cardNumberInputViewChild: ElementRef;
 
   cardModel: CardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' };
@@ -116,6 +117,7 @@ export class InteractivePaycardComponent implements OnInit {
       $event.srcElement.selectionEnd = cursorPosEnd;
       $event.srcElement.selectionStart = cursorPosStart;
     }
+    this.onChangeCardNumber();
   }
 
   onCvvChange(event): void {
@@ -169,6 +171,10 @@ export class InteractivePaycardComponent implements OnInit {
 
   onSubmitClick() {
     this.submitEvent.emit(this.cardModel);
+  }
+
+  onChangeCardNumber() {
+    this.submitChanges.emit(this.cardModel.cardNumber);
   }
 
   minCardMonth(): number {

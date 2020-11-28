@@ -8,6 +8,8 @@
     [cardNumberMask]="cardNumberMask"
     [cardLabels]="cardLabel"
     [formLabels]="formLabel"
-    (submitEvent)="onSubmitEvent($event)">
-    </ngx-interactive-paycard>
+    (submitEvent)="onSubmitEvent($event)"
+    (submitChanges)="showChanges($event)"
+  >
+  </ngx-interactive-paycard>
 </div>

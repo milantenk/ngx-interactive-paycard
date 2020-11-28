@@ -32,4 +32,8 @@ export class AppComponent {
   onSubmitEvent($event) {
     console.log($event);
   }
+
+  showChanges($event) {
+    console.log($event);
+  }
 }
