@@ -47,7 +47,8 @@ export class InteractivePaycardComponent implements OnInit {
   };
 
   @Output() submitEvent = new EventEmitter<CardModel>();
-  @Output() submitChanges = new EventEmitter<string>();
+  @Output() changeCard = new EventEmitter<CardModel>();
+  @Output() changeCardNumber = new EventEmitter<string>();
   @ViewChild('cardNumberInput', { static: false }) cardNumberInputViewChild: ElementRef;
 
   cardModel: CardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' };
@@ -117,6 +118,7 @@ export class InteractivePaycardComponent implements OnInit {
       $event.srcElement.selectionEnd = cursorPosEnd;
       $event.srcElement.selectionStart = cursorPosStart;
     }
+    this.onChangeCard();
     this.onChangeCardNumber();
   }
 
@@ -124,6 +126,7 @@ export class InteractivePaycardComponent implements OnInit {
     this.cardModel.cvv = event.target.value.replace(/[^0-9]*/g, '');
     this.displayedCvv = this.cardModel.cvv;
     event.target.value = this.cardModel.cvv;
+    this.onChangeCard();
   }
 
   onCardNumberFocus(): void {
@@ -159,11 +162,17 @@ export class InteractivePaycardComponent implements OnInit {
   }
 
   onCardNameKeyPress($event): boolean {
+    this.onChangeCard();
     return (($event.charCode >= 65 && $event.charCode <= 90) ||
       ($event.charCode >= 97 && $event.charCode <= 122) || ($event.charCode === 32));
   }
 
+  onMonthChange(): void {
+    this.onChangeCard();
+  }
+
   onYearChange(): void {
+    this.onChangeCard();
     if (this.cardModel.expirationYear === this.minCardYear.toString()) {
       this.cardModel.expirationMonth = '';
     }
@@ -173,8 +182,12 @@ export class InteractivePaycardComponent implements OnInit {
     this.submitEvent.emit(this.cardModel);
   }
 
+  onChangeCard() {
+    this.changeCard.emit(this.cardModel);
+  }
+
   onChangeCardNumber() {
-    this.submitChanges.emit(this.cardModel.cardNumber);
+    this.changeCardNumber.emit(this.cardModel.cardNumber);
   }
 
   minCardMonth(): number {
