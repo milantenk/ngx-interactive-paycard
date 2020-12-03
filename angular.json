@@ -170,8 +170,5 @@
       }
     }
   },
-  "defaultProject": "ngx-interactive-paycard-lib",
-  "cli": {
-    "analytics": "25355561-9c6c-4327-a3c8-146063d97339"
-  }
+  "defaultProject": "ngx-interactive-paycard-lib"
 }
