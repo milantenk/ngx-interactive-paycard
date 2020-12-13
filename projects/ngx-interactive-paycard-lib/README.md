@@ -27,7 +27,9 @@ import { InteractivePaycardModule } from 'ngx-interactive-paycard';
 export class UsedModule { }
 ```
 
-To embed the card use the `<ngx-interactive-paycard>` selector. It has following input parameters:
+To embed the card use the `<ngx-interactive-paycard>` selector. 
+
+It has following input parameters:
 * `chipImgPath`: The path of the image which should be displayed as chip on the card.
 * `logoImagePath`: The path of the company logo image.
 * `frontBgImagePath`: The path of the card front background image.
@@ -37,8 +39,10 @@ To embed the card use the `<ngx-interactive-paycard>` selector. It has following
 * `cardLabels`: Optional property to modify all labels in the card component.
 * `formLabels`: Optional property to modify all labels in form component.
 
-The component has one output event: if the Submit button is clicked the `submitEvent` is fired.
-The component has another output event (submitChanges): everytime the cardNumber input has changes, we can get these number to apply some function to validate the brand of the card.
+The output parameters are following:
+* `submitEvent`: It is fired if the Submit button is clicked. The event contains all the card data.
+* `changeCard`: It is fired if one of the card properties change. The event contains all the card data.
+* `changeCardNumber`: It is fired if the card number changes. The event contains the card number.
 
 An example for the usage can be found below. The example assumes, that the consumer `assets` folder contains the necessary images.
 
