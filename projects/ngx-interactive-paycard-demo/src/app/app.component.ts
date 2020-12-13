@@ -33,7 +33,13 @@ export class AppComponent {
     console.log($event);
   }
 
-  showChanges($event) {
+  showChangesCard($event) {
+    // any changes on card (number, name, month, year, cvv)
+    console.log($event);
+  }
+
+  showChangesCardNumber($event) {
+    // any changes on card number
     console.log($event);
   }
 }

@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <ngx-interactive-paycard
+  <ngx-interactive-paycard
     [chipImgPath]="'./assets/chip.png'"
     [logoImgPath]="'./assets/logo.png'"
     [frontBgImgPath]="'./assets/SplitShire1.jpg'"
@@ -9,7 +9,8 @@
     [cardLabels]="cardLabel"
     [formLabels]="formLabel"
     (submitEvent)="onSubmitEvent($event)"
-    (submitChanges)="showChanges($event)"
+    (changeCard)="showChangesCard($event)"
+    (changeCardNumber)="showChangesCardNumber($event)"
   >
   </ngx-interactive-paycard>
 </div>

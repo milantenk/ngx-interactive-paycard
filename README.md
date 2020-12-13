@@ -57,7 +57,8 @@ An example for the usage can be found below. The example assumes, that the consu
     [cardLabels]="cardLabel"
     [formLabels]="formLabel"
     (submitEvent)="onSubmitEvent($event)"
-    (submitChanges)="showChanges($event)"
+    (changeCard)="showChangesCard($event)"
+    (changeCardNumber)="showChangesCardNumber($event)"
     >
 </ngx-interactive-paycard>
 ```
@@ -92,11 +93,18 @@ export class AppComponent {
     cvv: 'CVV',
     submitButton: 'Enviar',
   };
+  
   onSubmitEvent($event) {
     console.log($event);
   }
   
-  showChanges($event) {
+  showChangesCard($event) {
+    // any changes on card (number, name, month, year, cvv)
+    console.log($event);
+  }
+
+    showChangesCardNumber($event) {
+    // any changes on card number
     console.log($event);
   }
 }
