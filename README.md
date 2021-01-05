@@ -116,7 +116,6 @@ export class AppComponent {
 
 A working example can be found in the `ngx-interactive-paycard-demo` folder in this repository.
 
-
 # Development of the library
 To develop the library the `LTS` version of `node.js` needs to be installed. 
 In this repository there is an Angular workspace which contains following projects
@@ -136,6 +135,9 @@ npm run watch:all
 ```
 
 The demo of the library will be reachable on `http://localhost:4200`.
+
+# Contributing
+See `CONTRIBUTING.md`.
 
 # References
 This project is inspired by [vue-interactive-paycard](https://github.com/muhammederdem/vue-interactive-paycard). 
