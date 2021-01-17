@@ -7,6 +7,10 @@ addons:
    - google-chrome
   packages:
    - google-chrome-stable
+before_install:
+ - pip install --user codecov
+after_success:
+ - codecov --file coverage/lcov.info --disable search
 script:
  - npm run lint:lib
  - npm run test:lib:ci

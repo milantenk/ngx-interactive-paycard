@@ -20,7 +20,7 @@
     "test:lib": "ng test ngx-interactive-paycard-lib",
     "test:lib:watch": "ng test ngx-interactive-paycard-lib --watch=true",
     "test:lib:cc": "ng test ngx-interactive-paycard-lib --codeCoverage=true",
-    "test:lib:ci": "ng test ngx-interactive-paycard-lib --no-progress --browsers=ChromeHeadlessNoSandbox",
+    "test:lib:ci": "ng test ngx-interactive-paycard-lib --no-progress --browsers=ChromeHeadlessNoSandbox --codeCoverage=true",
     "lint:lib": "ng lint ngx-interactive-paycard-lib",
     "lint:lib:fix": "ng lint ngx-interactive-paycard-lib --fix"
   },
