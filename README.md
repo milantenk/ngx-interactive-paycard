@@ -7,6 +7,11 @@ A parameterizable animated payment card built with Angular.
   <img src="paycard-demo.gif" alt="Demo gif"/>
 </p>
 
+[![Build Status](https://travis-ci.org/milantenk/ngx-interactive-paycard.png?branch=master)](https://travis-ci.org/milantenk/ngx-interactive-paycard)
+[![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/milantenk/ngx-interactive-paycard.svg?maxAge=2592000)](https://codecov.io/gh/milantenk/ngx-interactive-paycard?branch=master)
+[![Npm version](https://img.shields.io/npm/v/ngx-interactive-paycard.svg?style=flat)](https://www.npmjs.com/package/ngx-interactive-paycard)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/milantenk/ngx-interactive-paycard/blob/master/CONTRIBUTING.md)
+
 # Using the library
 The library is published in Angular package format on in the global registry of `npmjs`. To install the library run in the consumer project following command:
 
