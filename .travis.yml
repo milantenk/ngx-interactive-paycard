@@ -10,7 +10,7 @@ addons:
 before_install:
  - pip install --user codecov
 after_success:
- - codecov --file coverage/lcov.info --disable search
+ - codecov --file coverage/ngx-interactive-paycard-lib/lcov.info --disable search
 script:
  - npm run lint:lib
  - npm run test:lib:ci
