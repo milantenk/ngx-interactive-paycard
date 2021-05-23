@@ -14,7 +14,6 @@ import { IfUndefinedChangesDirective } from './shared/if-undefined-changes.direc
   imports: [
     FormsModule,
     CommonModule,
-    BrowserModule,
     BrowserAnimationsModule
   ],
   exports: [InteractivePaycardComponent]
