@@ -1,6 +1,6 @@
 {
   "name": "ngx-interactive-paycard",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "license": "MIT",
   "peerDependencies": {
     "@angular/animations": "^21.0.0",
