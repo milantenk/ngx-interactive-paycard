@@ -20,21 +20,17 @@ The library is published in Angular package format on in the global registry of 
 npm install ngx-interactive-paycard 
 ```
 
-Import the module of the paycard:
+Import the component:
 
 ```javascript
-import { InteractivePaycardModule } from 'ngx-interactive-paycard';
+import { InteractivePaycardComponent } from 'ngx-interactive-paycard';
 
-@NgModule({
-  ...
-  imports: [
-    ...
-    InteractivePaycardModule,
-    ...
-  ],
-  ...
+@Component({
+  selector: 'app-example',
+  template: `<ngx-interactive-paycard ...></ngx-interactive-paycard>`,
+  imports: [InteractivePaycardComponent]
 })
-export class UsedModule { }
+export class ExampleComponent { }
 ```
 
 To embed the card use the `<ngx-interactive-paycard>` selector. 
@@ -79,29 +75,30 @@ And the component code for it:
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  imports: [InteractivePaycardComponent]
 })
 export class AppComponent {
   title = 'ngx-interactive-paycard-demo';
   cardNumberFormat = "#### #### #### ####";
   cardNumberMask = "#### **** **** ####";
-  //ex: Optional cardLabels - Spanish
+  //ex: Optional cardLabels
   cardLabel: CardLabel = {
-    expires: 'Expira',
-    cardHolder: 'Nombre del Titular',
-    fullName: 'Nombre completo',
+    expires: 'Expires',
+    cardHolder: 'Card Holder',
+    fullName: 'Full Name',
     mm: 'MM',
-    yy: 'AA',
+    yy: 'YY',
   };
-  //ex: Optional formLabels - Spanish
+  //ex: Optional formLabels
   formLabel: FormLabel = {
-    cardNumber: 'Número de Tarjeta',
-    cardHolderName: 'Titular de la Tarjeta',
-    expirationDate: 'Fecha de Expiracion',
-    expirationMonth: 'Mes',
-    expirationYear: 'Año',
+    cardNumber: 'Card Number',
+    cardHolderName: 'Card Holder Name',
+    expirationDate: 'Expiration Date',
+    expirationMonth: 'Month',
+    expirationYear: 'Year',
     cvv: 'CVV',
-    submitButton: 'Enviar',
+    submitButton: 'Submit',
   };
   
   onSubmitEvent($event) {
