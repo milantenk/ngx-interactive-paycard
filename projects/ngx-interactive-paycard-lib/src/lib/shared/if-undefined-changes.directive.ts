@@ -3,7 +3,6 @@ import { Directive, inject, Input, TemplateRef, ViewContainerRef } from '@angula
 // Used by animations, see following issue for expanition:
 // https://github.com/angular/angular/issues/29439
 @Directive({
-    standalone: true,
     selector: '[ifUndefinedChanges]'
 })
 export class IfUndefinedChangesDirective {

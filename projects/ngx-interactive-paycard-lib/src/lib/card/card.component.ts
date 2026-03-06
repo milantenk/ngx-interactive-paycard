@@ -9,7 +9,6 @@ import { IfEveryChangesDirective } from '../shared/if-every-changes.directive';
 import { IfUndefinedChangesDirective } from '../shared/if-undefined-changes.directive';
 
 @Component({
-    standalone: true,
     selector: 'card',
     templateUrl: 'card.component.html',
     styleUrls: ['card.component.scss'],

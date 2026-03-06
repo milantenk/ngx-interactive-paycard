@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, ElementRef, input, OnInit, output, signal, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, OnInit, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { CardLabel, FormLabel } from './shared';
@@ -8,7 +8,6 @@ import { FocusedElement } from './shared/focused-element';
 import { CardComponent } from './card/card.component';
 
 @Component({
-  standalone: true,
   selector: 'ngx-interactive-paycard',
   templateUrl: 'interactive-paycard.component.html',
   styleUrls: ['./interactive-paycard.component.scss'],
@@ -48,8 +47,6 @@ export class InteractivePaycardComponent implements OnInit {
   readonly submitEvent = output<CardModel>();
   readonly changeCard = output<CardModel>();
   readonly changeCardNumber = output<string>();
-
-  @ViewChild('cardNumberInput', { static: false }) cardNumberInputViewChild: ElementRef;
 
   readonly cardModel = signal<CardModel>({ cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' });
   readonly cardNumberMaxLength = computed(() => this.cardNumberFormat()?.length ?? 19);

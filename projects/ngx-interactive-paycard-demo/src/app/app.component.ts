@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CardLabel, FormLabel, CardModel, InteractivePaycardComponent } from 'ngx-interactive-paycard-lib';
 
 @Component({
-  standalone: true,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [InteractivePaycardComponent]
 })
 export class AppComponent {
