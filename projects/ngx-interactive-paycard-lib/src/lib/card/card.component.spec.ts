@@ -1,7 +1,17 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+
 import { FocusedElement } from '../shared/focused-element';
 import { CardComponent } from './card.component';
+import { CardModel } from '../shared/card-model';
+
+const mockCardModel: CardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' };
+const mockCardLabels = { cardHolder: '', expires: '', fullName: '', mm: '', yy: '' };
 
 describe('CardComponent', () => {
+    let fixture: ComponentFixture<CardComponent>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let component: any;
 
     const offsetWidth = 'offsetWidth';
@@ -9,8 +19,25 @@ describe('CardComponent', () => {
     const offsetLeft = 'offsetWidth';
     const offsetTop = 'offsetTop';
 
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [CardComponent],
+            providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+        }).compileComponents();
+    });
+
     beforeEach(() => {
-        component = new CardComponent();
+        fixture = TestBed.createComponent(CardComponent);
+        fixture.componentRef.setInput('cardModel', mockCardModel);
+        fixture.componentRef.setInput('cardNumberFormat', '#### #### #### ####');
+        fixture.componentRef.setInput('displayedCardNumber', '');
+        fixture.componentRef.setInput('chipImgPath', '');
+        fixture.componentRef.setInput('logoImgPath', '');
+        fixture.componentRef.setInput('backBgImgPath', '');
+        fixture.componentRef.setInput('frontBgImgPath', '');
+        fixture.componentRef.setInput('cardLabels', mockCardLabels);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
 
     beforeEach(() => {
@@ -25,43 +52,44 @@ describe('CardComponent', () => {
     describe('#onOrientationChange', () => {
         const delay = 50;
         beforeEach(() => {
-            component.setFocusStyle = jasmine.createSpy('setFocusStyle');
+            vi.useFakeTimers();
+            component.setFocusStyle = vi.fn();
         });
 
-        it('should do nothing if has no focus native element', (done: any) => {
+        afterEach(() => {
+            vi.useRealTimers();
+        });
+
+        it('should do nothing if has no focus native element', () => {
             component.currentlyFocusedNativeElement = null;
             component.onOrientationChange();
-            setTimeout(() => {
-                expect(component.setFocusStyle).not.toHaveBeenCalled();
-                done();
-            }, delay);
+            vi.advanceTimersByTime(delay);
+            expect(component.setFocusStyle).not.toHaveBeenCalled();
         });
 
-        it('should set focus styles after delay if native element exists', (done: any) => {
+        it('should set focus styles after delay if native element exists', () => {
             component.onOrientationChange();
             expect(component.setFocusStyle).not.toHaveBeenCalled();
-            setTimeout(() => {
-                expect(component.setFocusStyle).toHaveBeenCalled();
-                done();
-            }, delay);
+            vi.advanceTimersByTime(delay);
+            expect(component.setFocusStyle).toHaveBeenCalled();
         });
     });
 
     describe('#setFocusStyle', () => {
-        it('should  set focus style from current focused native element', () => {
+        it('should set focus style from current focused native element', () => {
             component.setFocusStyle();
-            expect(component.focusStyle).toEqual({
+            expect(component.focusStyle()).toEqual({
                 width: `${offsetWidth}px`,
                 height: `${offsetHeight}px`,
                 transition: 'none',
-                transform: jasmine.any(String)
+                transform: expect.any(String)
             });
-            expect(component.focusStyle.transform).toContain(`translateX(${offsetLeft}px)`);
-            expect(component.focusStyle.transform).toContain(`translateY(${offsetTop}px)`);
+            expect(component.focusStyle().transform).toContain(`translateX(${offsetLeft}px)`);
+            expect(component.focusStyle().transform).toContain(`translateY(${offsetTop}px)`);
         });
     });
 
-    describe('#ngOnChanges', () => {
+    describe('#focusedElement effect', () => {
         const cardNumberViewChildNativeElement = 'cardNumberViewChildNativeElement';
         const cardNameViewChildNativeElement = 'cardNameViewChildNativeElement';
         const expireDateViewChildNativeElement = 'expireDateViewChildNativeElement';
@@ -73,26 +101,30 @@ describe('CardComponent', () => {
         });
 
         it('should set native element based on current focused element', () => {
-            component.ngOnChanges({focusedElement: {currentValue: FocusedElement.CardNumber}});
+            fixture.componentRef.setInput('focusedElement', FocusedElement.CardNumber);
+            TestBed.flushEffects();
             expect(component.currentlyFocusedNativeElement).toBe(cardNumberViewChildNativeElement);
 
-            component.ngOnChanges({focusedElement: {currentValue: FocusedElement.CardName}});
+            fixture.componentRef.setInput('focusedElement', FocusedElement.CardName);
+            TestBed.flushEffects();
             expect(component.currentlyFocusedNativeElement).toBe(cardNameViewChildNativeElement);
 
-            component.ngOnChanges({focusedElement: {currentValue: FocusedElement.ExpirationDate}});
+            fixture.componentRef.setInput('focusedElement', FocusedElement.ExpirationDate);
+            TestBed.flushEffects();
             expect(component.currentlyFocusedNativeElement).toBe(expireDateViewChildNativeElement);
         });
 
         it('should set focus style based on current focused native element if it is defined', () => {
             component.cardNumberViewChild = { nativeElement: component.currentlyFocusedNativeElement };
-            component.ngOnChanges({focusedElement: {currentValue: FocusedElement.CardNumber}});
-            expect(component.focusStyle).toEqual({
+            fixture.componentRef.setInput('focusedElement', FocusedElement.CardNumber);
+            TestBed.flushEffects();
+            expect(component.focusStyle()).toEqual({
                 width: `${offsetWidth}px`,
                 height: `${offsetHeight}px`,
-                transform: jasmine.any(String)
+                transform: expect.any(String)
             });
-            expect(component.focusStyle.transform).toContain(`translateX(${offsetLeft}px)`);
-            expect(component.focusStyle.transform).toContain(`translateY(${offsetTop}px)`);
+            expect(component.focusStyle().transform).toContain(`translateX(${offsetLeft}px)`);
+            expect(component.focusStyle().transform).toContain(`translateY(${offsetTop}px)`);
         });
     });
 });

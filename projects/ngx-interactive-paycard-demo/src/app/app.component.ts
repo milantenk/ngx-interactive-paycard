@@ -1,44 +1,44 @@
-import { Component } from '@angular/core';
-import { CardLabel, FormLabel } from 'ngx-interactive-paycard-lib';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { CardLabel, FormLabel, CardModel, InteractivePaycardComponent } from 'ngx-interactive-paycard-lib';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [InteractivePaycardComponent]
 })
 export class AppComponent {
   title = 'ngx-interactive-paycard-demo';
   cardNumberFormat = '#### #### #### ####';
   cardNumberMask = '#### **** **** ####';
-  // cardLabel change the values of the card labels. ex: Spanish
   cardLabel: CardLabel = {
-    expires: 'Expira',
-    cardHolder: 'Nombre del Titular',
-    fullName: 'Nombre completo',
+    expires: 'Expires',
+    cardHolder: 'Card Holder',
+    fullName: 'Full Name',
     mm: 'MM',
-    yy: 'AA',
+    yy: 'YY',
   };
-  // cardLabel change the values of the form labels. ex: Spanish
   formLabel: FormLabel = {
-    cardNumber: 'Número de Tarjeta',
-    cardHolderName: 'Titular de la Tarjeta',
-    expirationDate: 'Fecha de Expiracion',
-    expirationMonth: 'Mes',
-    expirationYear: 'Año',
+    cardNumber: 'Card Number',
+    cardHolderName: 'Card Holder Name',
+    expirationDate: 'Expiration Date',
+    expirationMonth: 'Month',
+    expirationYear: 'Year',
     cvv: 'CVV',
-    submitButton: 'Enviar',
+    submitButton: 'Submit',
   };
 
-  onSubmitEvent($event) {
+  onSubmitEvent($event: CardModel) {
     console.log($event);
   }
 
-  showChangesCard($event) {
+  showChangesCard($event: CardModel) {
     // any changes on card (number, name, month, year, cvv)
     console.log($event);
   }
 
-  showChangesCardNumber($event) {
+  showChangesCardNumber($event: string) {
     // any changes on card number
     console.log($event);
   }

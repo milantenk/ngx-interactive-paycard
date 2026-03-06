@@ -1,42 +1,40 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, OnInit, output, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { CardLabel,  FormLabel } from './shared';
+import { CardLabel, FormLabel } from './shared';
 import { CardModel } from './shared/card-model';
 import { DefaultComponentLabels } from './shared/default-component-labels';
 import { FocusedElement } from './shared/focused-element';
+import { CardComponent } from './card/card.component';
 
 @Component({
   selector: 'ngx-interactive-paycard',
   templateUrl: 'interactive-paycard.component.html',
-  styleUrls: ['./interactive-paycard.component.scss']
+  styleUrls: ['./interactive-paycard.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule, CardComponent]
 })
 export class InteractivePaycardComponent implements OnInit {
 
-  @Input() chipImgPath: string;
-  @Input() logoImgPath: string;
-  @Input() backBgImgPath: string;
-  @Input() frontBgImgPath: string;
-  @Input() cardNumberFormat: string;
-  @Input() cardNumberMask: string;
-  @Input()
-  get cardLabels(): CardLabel { return this._cardLabels; }
-  set cardLabels(value: CardLabel | null) {
-    this._cardLabels = value;
-  }
-  private _cardLabels: CardLabel = {
+  readonly chipImgPath = input('');
+  readonly logoImgPath = input('');
+  readonly backBgImgPath = input('');
+  readonly frontBgImgPath = input('');
+  readonly cardNumberFormat = input<string>();
+  readonly cardNumberMask = input<string>();
+
+  readonly cardLabels = input<CardLabel | null>(null);
+  readonly formLabels = input<FormLabel | null>(null);
+
+  readonly resolvedCardLabels = computed<CardLabel>(() => this.cardLabels() ?? {
     expires: DefaultComponentLabels.CARD_EXPIRES,
     cardHolder: DefaultComponentLabels.CARD_HOLDER_NAME,
     fullName: DefaultComponentLabels.CARD_FULL_NAME,
     mm: DefaultComponentLabels.CARD_EXPIRATION_MONTH_FORMAT,
     yy: DefaultComponentLabels.CARD_EXPIRATION_YEAR_FORMAT
-  };
+  });
 
-  @Input()
-  get formLabels(): FormLabel { return this._formLabels; }
-  set formLabels(value: FormLabel | null) {
-    this._formLabels = value;
-  }
-  private _formLabels: FormLabel =  {
+  readonly resolvedFormLabels = computed<FormLabel>(() => this.formLabels() ?? {
     cardNumber: DefaultComponentLabels.FORM_CARD_NUMBER,
     cardHolderName: DefaultComponentLabels.FORM_CARD_HOLDER_NAME,
     expirationDate: DefaultComponentLabels.FORM_EXPIRATION_DATE,
@@ -44,53 +42,51 @@ export class InteractivePaycardComponent implements OnInit {
     expirationYear: DefaultComponentLabels.FORM_EXPIRATION_YEAR,
     cvv: DefaultComponentLabels.FORM_CVV,
     submitButton: DefaultComponentLabels.FORM_SUBMIT_BUTTON
-  };
+  });
 
-  @Output() submitEvent = new EventEmitter<CardModel>();
-  @Output() changeCard = new EventEmitter<CardModel>();
-  @Output() changeCardNumber = new EventEmitter<string>();
-  @ViewChild('cardNumberInput', { static: false }) cardNumberInputViewChild: ElementRef;
+  readonly submitEvent = output<CardModel>();
+  readonly changeCard = output<CardModel>();
+  readonly changeCardNumber = output<string>();
 
-  cardModel: CardModel = { cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' };
+  readonly cardModel = signal<CardModel>({ cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' });
+  readonly cardNumberMaxLength = computed(() => this.cardNumberFormat()?.length ?? 19);
+  readonly cardNumberFormatArray = computed(() => this.cardNumberFormat()?.split('') ?? []);
 
-  cardNumberMaxLength = 19;
   minCardYear = new Date().getFullYear();
-  displayedCardNumber = this.cardModel.cardNumber; // The displayedCardNumber can be masked, the cardModel.cardNumber contains the real data
-  displayedCvv = this.cardModel.cvv; // The displayed cvv can be masked
+  readonly displayedCardNumber = signal('');
+  readonly displayedCvv = signal('');
+  readonly focusedElement = signal<FocusedElement | null>(null);
 
-  cardNumberId = 'cardNumberId';
-  cardNameId = 'cardNameId';
-  monthSelect = 'monthSelect';
-  yearSelectId = 'yearSelectId';
-  cardCvvId = 'cardCvvId';
-
-  focusedElement: FocusedElement;
-  cardNumberFormatArray: string[];
+  readonly cardNumberId = 'cardNumberId';
+  readonly cardNameId = 'cardNameId';
+  readonly yearSelectId = 'yearSelectId';
 
   ngOnInit() {
-    if (new RegExp('[^# ]').test(this.cardNumberFormat)) {
+    const format = this.cardNumberFormat();
+    if (!format || new RegExp('[^# ]').test(format)) {
       throw new Error('The card number format must contain only "#" and " " characters! Check the "cardNumberFormat" input parameter!');
     }
-    if (new RegExp('[^# *]').test(this.cardNumberMask)) {
+    const mask = this.cardNumberMask();
+    if (!mask || new RegExp('[^# *]').test(mask)) {
       throw new Error('The card number mask must contain only "#", "*" and " " characters! Check the "cardNumberMask" input parameter!');
     }
-    if (this.cardNumberMask.length !== this.cardNumberFormat.length) {
+    if (mask.length !== format.length) {
       throw new Error('The card number mask and the card number format must have the same length! \
       Check the "cardNumberFormat" and the "cardNumberMask" input parameters!');
     }
-    this.cardNumberMaxLength = this.cardNumberFormat.length;
-    this.cardNumberFormatArray = this.cardNumberFormat.split('');
   }
 
-  onCardNumberChange($event): void {
-    let cursorPosStart = $event.srcElement.selectionStart;
-    let cursorPosEnd = $event.srcElement.selectionEnd;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onCardNumberChange($event: any): void {
+    const inputEl = $event.target;
+    let cursorPosStart = inputEl.selectionStart;
+    let cursorPosEnd = inputEl.selectionEnd;
     let processedCardNumber: string = $event.target.value;
     const newValues: string[] = [];
     const letterRegex = new RegExp('[^0-9]');
     const isCursorAtTheEnd = cursorPosEnd === processedCardNumber.length;
     const cardNumWithoutSpaceAsArray = processedCardNumber.replace(/ /g, '').split('');
-    this.cardNumberFormatArray.forEach((format) => {
+    this.cardNumberFormatArray().forEach((format) => {
       if (cardNumWithoutSpaceAsArray.length > 0) {
         if (format === '#') {
           let isNumber: boolean;
@@ -100,55 +96,57 @@ export class InteractivePaycardComponent implements OnInit {
             isNumber = !(letterRegex.test(character));
             if (isNumber) {
               newValues.push(character);
-            } else { // don't move the cursor, if a letter is removed
+            } else {
               cursorPosEnd--;
               cursorPosStart--;
             }
-          } while (!isNumber && character !== undefined); // find the next number
+          } while (!isNumber && character !== undefined);
         } else if (format === ' ') {
           newValues.push(' ');
         }
       }
     });
     processedCardNumber = newValues.join('').trim();
-    this.displayedCardNumber = processedCardNumber;
-    this.cardModel.cardNumber = processedCardNumber;
-    $event.target.value = processedCardNumber; // The value in event has to be updated, otherwise the letter remains in the <input>
-    if (!isCursorAtTheEnd) { // The cursor position has to be corrected because of the newly created string
-      $event.srcElement.selectionEnd = cursorPosEnd;
-      $event.srcElement.selectionStart = cursorPosStart;
+    this.displayedCardNumber.set(processedCardNumber);
+    this.cardModel.update(m => ({ ...m, cardNumber: processedCardNumber }));
+    $event.target.value = processedCardNumber;
+    if (!isCursorAtTheEnd) {
+      inputEl.selectionEnd = cursorPosEnd;
+      inputEl.selectionStart = cursorPosStart;
     }
     this.onChangeCard();
     this.onChangeCardNumber();
   }
 
-  onCvvChange(event): void {
-    this.cardModel.cvv = event.target.value.replace(/[^0-9]*/g, '');
-    this.displayedCvv = this.cardModel.cvv;
-    event.target.value = this.cardModel.cvv;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onCvvChange(event: any): void {
+    const cvv = event.target.value.replace(/[^0-9]*/g, '');
+    this.cardModel.update(m => ({ ...m, cvv }));
+    this.displayedCvv.set(cvv);
+    event.target.value = cvv;
     this.onChangeCard();
   }
 
   onCardNumberFocus(): void {
     this.unMaskCardNumber();
-    this.focusedElement = FocusedElement.CardNumber;
+    this.focusedElement.set(FocusedElement.CardNumber);
   }
 
   onCardNameFocus(): void {
-    this.focusedElement = FocusedElement.CardName;
+    this.focusedElement.set(FocusedElement.CardName);
   }
 
   onDateFocus(): void {
-    this.focusedElement = FocusedElement.ExpirationDate;
+    this.focusedElement.set(FocusedElement.ExpirationDate);
   }
 
   onCvvFocus(): void {
     this.unMaskCvv();
-    this.focusedElement = FocusedElement.CVV;
+    this.focusedElement.set(FocusedElement.CVV);
   }
 
   onBlur(): void {
-    this.focusedElement = null;
+    this.focusedElement.set(null);
   }
 
   onCardNumberBlur(): void {
@@ -161,37 +159,51 @@ export class InteractivePaycardComponent implements OnInit {
     this.onBlur();
   }
 
-  onCardNameKeyPress($event): boolean {
+  onCardNameKeyPress($event: KeyboardEvent): boolean {
     this.onChangeCard();
     return (($event.charCode >= 65 && $event.charCode <= 90) ||
       ($event.charCode >= 97 && $event.charCode <= 122) || ($event.charCode === 32));
+  }
+
+  onCardNameChange(name: string): void {
+    this.cardModel.update(m => ({ ...m, cardName: name }));
   }
 
   onMonthChange(): void {
     this.onChangeCard();
   }
 
+  onExpirationMonthChange(month: string): void {
+    this.cardModel.update(m => ({ ...m, expirationMonth: month }));
+    this.onMonthChange();
+  }
+
   onYearChange(): void {
     this.onChangeCard();
-    if (this.cardModel.expirationYear === this.minCardYear.toString()) {
-      this.cardModel.expirationMonth = '';
+    if (this.cardModel().expirationYear === this.minCardYear.toString()) {
+      this.cardModel.update(m => ({ ...m, expirationMonth: '' }));
     }
   }
 
+  onExpirationYearChange(year: string): void {
+    this.cardModel.update(m => ({ ...m, expirationYear: year }));
+    this.onYearChange();
+  }
+
   onSubmitClick() {
-    this.submitEvent.emit(this.cardModel);
+    this.submitEvent.emit(this.cardModel());
   }
 
   onChangeCard() {
-    this.changeCard.emit(this.cardModel);
+    this.changeCard.emit(this.cardModel());
   }
 
   onChangeCardNumber() {
-    this.changeCardNumber.emit(this.cardModel.cardNumber);
+    this.changeCardNumber.emit(this.cardModel().cardNumber);
   }
 
   minCardMonth(): number {
-    if (this.cardModel.expirationYear === this.minCardYear.toString()) {
+    if (this.cardModel().expirationYear === this.minCardYear.toString()) {
       return new Date().getMonth() + 1;
     } else {
       return 1;
@@ -203,25 +215,27 @@ export class InteractivePaycardComponent implements OnInit {
   }
 
   private maskCardNumber(): void {
-    this.cardModel.cardNumber = this.displayedCardNumber;
-    const arr = this.displayedCardNumber.split('');
+    const displayed = this.displayedCardNumber();
+    const mask = this.cardNumberMask();
+    this.cardModel.update(m => ({ ...m, cardNumber: displayed }));
+    const arr = displayed.split('');
     arr.forEach((element, index) => {
-      if (this.cardNumberMask[index] === '*') {
+      if (mask?.[index] === '*') {
         arr[index] = '*';
       }
     });
-    this.displayedCardNumber = arr.join('');
+    this.displayedCardNumber.set(arr.join(''));
   }
 
   private unMaskCardNumber(): void {
-    this.displayedCardNumber = this.cardModel.cardNumber;
+    this.displayedCardNumber.set(this.cardModel().cardNumber);
   }
 
   private unMaskCvv(): void {
-    this.displayedCvv = this.cardModel.cvv;
+    this.displayedCvv.set(this.cardModel().cvv);
   }
 
   private maskCvv(): void {
-    this.displayedCvv = new Array(this.cardModel.cvv.length + 1).join('*');
+    this.displayedCvv.set(new Array(this.cardModel().cvv.length + 1).join('*'));
   }
 }

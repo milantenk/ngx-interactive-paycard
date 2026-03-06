@@ -1,0 +1,6 @@
+[build]
+  command = "npm run build:lib:prod && npm run build:demo -- --configuration production"
+  publish = "dist/ngx-interactive-paycard-demo/browser"
+
+[build.environment]
+  NODE_VERSION = "20"

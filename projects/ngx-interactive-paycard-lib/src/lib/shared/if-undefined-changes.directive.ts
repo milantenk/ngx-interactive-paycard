@@ -1,20 +1,17 @@
-import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 // Used by animations, see following issue for expanition:
 // https://github.com/angular/angular/issues/29439
 @Directive({
-    selector: '[ifUndefinedChanges]'
+    selector: '[libIfUndefinedChanges]'
 })
 export class IfUndefinedChangesDirective {
-    private currentValue: any;
+    private readonly viewContainer = inject(ViewContainerRef);
+    private readonly templateRef = inject(TemplateRef);
+    private currentValue: unknown;
     private hasView = false;
 
-    constructor(
-        private viewContainer: ViewContainerRef,
-        private templateRef: TemplateRef<any>
-    ) { }
-
-    @Input() set ifUndefinedChanges(val: any) {
+    @Input() set libIfUndefinedChanges(val: unknown) {
         if (!this.hasView) {
             this.viewContainer.createEmbeddedView(this.templateRef);
             this.hasView = true;
