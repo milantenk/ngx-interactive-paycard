@@ -1,4 +1,4 @@
-import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, inject, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 // Used by animations, see following issue for expanition:
 // https://github.com/angular/angular/issues/29439
@@ -7,13 +7,10 @@ import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
     selector: '[ifUndefinedChanges]'
 })
 export class IfUndefinedChangesDirective {
+    private readonly viewContainer = inject(ViewContainerRef);
+    private readonly templateRef = inject<TemplateRef<any>>(TemplateRef);
     private currentValue: any;
     private hasView = false;
-
-    constructor(
-        private viewContainer: ViewContainerRef,
-        private templateRef: TemplateRef<any>
-    ) { }
 
     @Input() set ifUndefinedChanges(val: any) {
         if (!this.hasView) {

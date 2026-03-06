@@ -39,8 +39,6 @@ import { IfUndefinedChangesDirective } from '../shared/if-undefined-changes.dire
     ]
 })
 export class CardComponent implements OnInit, OnChanges {
-    constructor() { }
-
     @Input() cardModel: CardModel;
     @Input() chipImgPath: string;
     @Input() logoImgPath: string;
