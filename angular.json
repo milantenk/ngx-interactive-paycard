@@ -58,7 +58,7 @@
             "outputPath": "dist/ngx-interactive-paycard-demo",
             "index": "projects/ngx-interactive-paycard-demo/src/index.html",
             "browser": "projects/ngx-interactive-paycard-demo/src/main.ts",
-            "polyfills": ["zone.js"],
+            "polyfills": [],
             "tsConfig": "projects/ngx-interactive-paycard-demo/tsconfig.app.json",
             "assets": [
               {

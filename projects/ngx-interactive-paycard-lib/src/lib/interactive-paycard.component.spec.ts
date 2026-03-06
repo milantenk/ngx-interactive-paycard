@@ -1,4 +1,5 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { CardLabel, FormLabel } from './shared';
 
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -24,18 +25,19 @@ describe('InteractivePaycardComponent', () => {
     mm: DefaultComponentLabels.CARD_EXPIRATION_MONTH_FORMAT,
     yy: DefaultComponentLabels.CARD_EXPIRATION_YEAR_FORMAT
   };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [InteractivePaycardComponent],
-      providers: [provideNoopAnimations()]
+      providers: [provideNoopAnimations(), provideZonelessChangeDetection()]
     }).compileComponents();
   });
 
   it('should create the component', () => {
     const fixture = TestBed.createComponent(InteractivePaycardComponent);
     const component = fixture.componentInstance;
-    component.cardNumberFormat = '#### #### #### ####';
-    component.cardNumberMask = '#### **** **** ####';
+    fixture.componentRef.setInput('cardNumberFormat', '#### #### #### ####');
+    fixture.componentRef.setInput('cardNumberMask', '#### **** **** ####');
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });
@@ -47,27 +49,27 @@ describe('InteractivePaycardComponent', () => {
 
   it('should throw error if there is no card number mask', () => {
     const errFixture = TestBed.createComponent(InteractivePaycardComponent);
-    errFixture.componentInstance.cardNumberFormat = '#### #### #### ####';
+    errFixture.componentRef.setInput('cardNumberFormat', '#### #### #### ####');
     expect(() => { errFixture.detectChanges(); }).toThrow();
   });
 
   it('should throw error if the mask format and card number format does not match', () => {
     const errFixture = TestBed.createComponent(InteractivePaycardComponent);
-    errFixture.componentInstance.cardNumberFormat = '#### #### #### ####';
-    errFixture.componentInstance.cardNumberMask = '#### **** **** ###';
+    errFixture.componentRef.setInput('cardNumberFormat', '#### #### #### ####');
+    errFixture.componentRef.setInput('cardNumberMask', '#### **** **** ###');
     expect(() => { errFixture.detectChanges(); }).toThrow();
   });
 
   it('should show default values for form component labels', () => {
     const fixture = TestBed.createComponent(InteractivePaycardComponent);
     const component = fixture.componentInstance;
-    expect(component.formLabels).toEqual(formLabelsByDefaultMock);
+    expect(component.resolvedFormLabels()).toEqual(formLabelsByDefaultMock);
   });
 
   it('should show default values for card component labels', () => {
     const fixture = TestBed.createComponent(InteractivePaycardComponent);
     const component = fixture.componentInstance;
-    expect(component.cardLabels).toEqual(cardLabelsByDefaultMock);
+    expect(component.resolvedCardLabels()).toEqual(cardLabelsByDefaultMock);
   });
 
   it('should emit an event when submit button is clicked', () => {
@@ -92,7 +94,7 @@ describe('InteractivePaycardComponent', () => {
     });
 
     it('should provide a valid month when card is expirong this year', () => {
-      component.cardModel.expirationYear = '2000';
+      component.cardModel.update(m => ({ ...m, expirationYear: '2000' }));
       component.minCardYear = 2000;
 
       const thisMonth = new Date().getMonth();
@@ -100,7 +102,7 @@ describe('InteractivePaycardComponent', () => {
     });
 
     it('should return Jan as the default', () => {
-      component.cardModel.expirationYear = '2000';
+      component.cardModel.update(m => ({ ...m, expirationYear: '2000' }));
       component.minCardYear = 2001;
 
       expect(component.minCardMonth()).toEqual(1);
@@ -137,21 +139,19 @@ describe('InteractivePaycardComponent', () => {
     });
 
     it('should reset the expiration month when the expiration year equals the minCardYear', () => {
-      component.cardModel.expirationYear = '2000';
+      component.cardModel.update(m => ({ ...m, expirationYear: '2000', expirationMonth: '04' }));
       component.minCardYear = 2000;
-      component.cardModel.expirationMonth = '04';
 
       component.onYearChange();
-      expect(component.cardModel.expirationMonth).toEqual('');
+      expect(component.cardModel().expirationMonth).toEqual('');
     });
 
     it('should not reset the expiration month when the expiration year is not equal to the minCardYear', () => {
-      component.cardModel.expirationYear = '2000';
+      component.cardModel.update(m => ({ ...m, expirationYear: '2000', expirationMonth: '04' }));
       component.minCardYear = 2001;
-      component.cardModel.expirationMonth = '04';
 
       component.onYearChange();
-      expect(component.cardModel.expirationMonth).toEqual('04');
+      expect(component.cardModel().expirationMonth).toEqual('04');
     });
   });
 
@@ -164,18 +164,18 @@ describe('InteractivePaycardComponent', () => {
     });
 
     it('should set the displayed CVV to what is stored in the model', () => {
-      component.cardModel.cvv = '123';
-      expect(component.displayedCvv).toEqual('');
+      component.cardModel.update(m => ({ ...m, cvv: '123' }));
+      expect(component.displayedCvv()).toEqual('');
 
       component.onCvvFocus();
-      expect(component.displayedCvv).toEqual(component.cardModel.cvv);
+      expect(component.displayedCvv()).toEqual(component.cardModel().cvv);
     });
 
     it('should force focus to the CVV field', () => {
-      expect(component.focusedElement).toBeUndefined();
+      expect(component.focusedElement()).toBeNull();
 
       component.onCvvFocus();
-      expect(component.focusedElement).toEqual(FocusedElement.CVV);
+      expect(component.focusedElement()).toEqual(FocusedElement.CVV);
     });
   });
 
@@ -188,24 +188,24 @@ describe('InteractivePaycardComponent', () => {
     });
 
     it('should replace the displayed CVV value with a masked string of same length', () => {
-      component.displayedCvv = '123';
-      component.cardModel.cvv = '123';
+      component.displayedCvv.set('123');
+      component.cardModel.update(m => ({ ...m, cvv: '123' }));
 
       component.onCvvBlur();
-      expect(component.displayedCvv).toEqual('***');
+      expect(component.displayedCvv()).toEqual('***');
 
-      component.displayedCvv = '12345';
-      component.cardModel.cvv = '12345';
+      component.displayedCvv.set('12345');
+      component.cardModel.update(m => ({ ...m, cvv: '12345' }));
 
       component.onCvvBlur();
-      expect(component.displayedCvv).toEqual('*****');
+      expect(component.displayedCvv()).toEqual('*****');
     });
 
     it('should clear focus', () => {
-      component.focusedElement = FocusedElement.CVV;
+      component.focusedElement.set(FocusedElement.CVV);
 
       component.onCvvBlur();
-      expect(component.focusedElement).toBeNull();
+      expect(component.focusedElement()).toBeNull();
     });
   });
 
@@ -218,62 +218,64 @@ describe('InteractivePaycardComponent', () => {
     });
 
     it('should set the displayed card number to what is stored in the model', () => {
-      component.cardModel.cardNumber = '1234123412341234';
-      expect(component.displayedCardNumber).toEqual('');
+      component.cardModel.update(m => ({ ...m, cardNumber: '1234123412341234' }));
+      expect(component.displayedCardNumber()).toEqual('');
 
       component.onCardNumberFocus();
-      expect(component.displayedCardNumber).toEqual(component.cardModel.cardNumber);
+      expect(component.displayedCardNumber()).toEqual(component.cardModel().cardNumber);
     });
 
     it('should force focus to the Card Number field', () => {
-      expect(component.focusedElement).toBeUndefined();
+      expect(component.focusedElement()).toBeNull();
 
       component.onCardNumberFocus();
-      expect(component.focusedElement).toEqual(FocusedElement.CardNumber);
+      expect(component.focusedElement()).toEqual(FocusedElement.CardNumber);
     });
   });
 
   describe('onCardNumberBlur', () => {
+    let fixture: ComponentFixture<InteractivePaycardComponent>;
     let component: InteractivePaycardComponent;
 
     beforeEach(() => {
-      const fixture = TestBed.createComponent(InteractivePaycardComponent);
+      fixture = TestBed.createComponent(InteractivePaycardComponent);
       component = fixture.componentInstance;
     });
 
     it('should set the card number in the model equal to the display value', () => {
       const value = '1234123412341234';
-      component.displayedCardNumber = value;
-      component.cardNumberMask = '************####';
-      component.cardModel.cardNumber = '';
+      component.displayedCardNumber.set(value);
+      fixture.componentRef.setInput('cardNumberMask', '************####');
+      component.cardModel.update(m => ({ ...m, cardNumber: '' }));
 
       component.onCardNumberBlur();
-      expect(component.cardModel.cardNumber).toEqual(value);
+      expect(component.cardModel().cardNumber).toEqual(value);
     });
 
     it('should replace the displayed CardNumber value with a masked string following the card mask', () => {
-      component.displayedCardNumber = '1234123412349876';
-      component.cardNumberMask = '************####';
+      component.displayedCardNumber.set('1234123412349876');
+      fixture.componentRef.setInput('cardNumberMask', '************####');
 
       component.onCardNumberBlur();
-      expect(component.displayedCardNumber).toEqual('************9876');
+      expect(component.displayedCardNumber()).toEqual('************9876');
     });
 
     it('should clear focus', () => {
-      component.focusedElement = FocusedElement.CardNumber;
+      component.focusedElement.set(FocusedElement.CardNumber);
 
       component.onCardNumberBlur();
-      expect(component.focusedElement).toBeNull();
+      expect(component.focusedElement()).toBeNull();
     });
   });
 
   describe('onCardNumberChange', () => {
+    let fixture: ComponentFixture<InteractivePaycardComponent>;
     let component: InteractivePaycardComponent;
 
     beforeEach(() => {
-      const fixture = TestBed.createComponent(InteractivePaycardComponent);
+      fixture = TestBed.createComponent(InteractivePaycardComponent);
+      fixture.componentRef.setInput('cardNumberFormat', '#### #### #### ####');
       component = fixture.componentInstance;
-      component.cardNumberFormatArray = ['#', '#', '#', '#', ' ', '#', '#', '#', '#', ' ', '#', '#', '#', '#', ' ', '#', '#', '#', '#'];
     });
 
     it('should do nothing if the card number is empty', () => {
@@ -288,8 +290,8 @@ describe('InteractivePaycardComponent', () => {
       component.onCardNumberFocus();
       component.onCardNumberChange(event);
 
-      expect(component.displayedCardNumber).toEqual(event.target.value);
-      expect(component.cardModel.cardNumber).toEqual(event.target.value);
+      expect(component.displayedCardNumber()).toEqual(event.target.value);
+      expect(component.cardModel().cardNumber).toEqual(event.target.value);
       expect(event.target.selectionStart).toBe(0);
       expect(event.target.selectionEnd).toBe(0);
     });
@@ -306,8 +308,8 @@ describe('InteractivePaycardComponent', () => {
       component.onCardNumberFocus();
       component.onCardNumberChange(event);
 
-      expect(component.displayedCardNumber).toEqual(event.target.value);
-      expect(component.cardModel.cardNumber).toEqual(event.target.value);
+      expect(component.displayedCardNumber()).toEqual(event.target.value);
+      expect(component.cardModel().cardNumber).toEqual(event.target.value);
       expect(event.target.selectionStart).toBe(2);
       expect(event.target.selectionEnd).toBe(4);
     });
@@ -318,15 +320,15 @@ describe('InteractivePaycardComponent', () => {
         target: {
           selectionStart: 2,
           selectionEnd: 4,
-          value: `${value}` // convert to new string so it can be overwritten
+          value: `${value}`
         }
       };
 
       component.onCardNumberFocus();
       component.onCardNumberChange(event);
 
-      expect(component.displayedCardNumber).toEqual(value.slice(1));
-      expect(component.cardModel.cardNumber).toEqual(value.slice(1));
+      expect(component.displayedCardNumber()).toEqual(value.slice(1));
+      expect(component.cardModel().cardNumber).toEqual(value.slice(1));
       expect(event.target.value).toEqual(value.slice(1));
       expect(event.target.selectionStart).toBe(1);
       expect(event.target.selectionEnd).toBe(3);
@@ -342,9 +344,9 @@ describe('InteractivePaycardComponent', () => {
     });
 
     it('should force focus to the Card Name field', () => {
-      expect(component.focusedElement).toBeUndefined();
+      expect(component.focusedElement()).toBeNull();
       component.onCardNameFocus();
-      expect(component.focusedElement).toEqual(FocusedElement.CardName);
+      expect(component.focusedElement()).toEqual(FocusedElement.CardName);
     });
   });
 
@@ -392,9 +394,9 @@ describe('InteractivePaycardComponent', () => {
     });
 
     it('should force focus to the Date field', () => {
-      expect(component.focusedElement).toBeUndefined();
+      expect(component.focusedElement()).toBeNull();
       component.onDateFocus();
-      expect(component.focusedElement).toEqual(FocusedElement.ExpirationDate);
+      expect(component.focusedElement()).toEqual(FocusedElement.ExpirationDate);
     });
   });
 });

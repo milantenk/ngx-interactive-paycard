@@ -1,6 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { NgStyle } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, effect, ElementRef, HostListener, input, signal, ViewChild } from '@angular/core';
 
 import { CardLabel } from '../shared';
 import { CardModel } from '../shared/card-model';
@@ -13,7 +13,8 @@ import { IfUndefinedChangesDirective } from '../shared/if-undefined-changes.dire
     selector: 'card',
     templateUrl: 'card.component.html',
     styleUrls: ['card.component.scss'],
-    imports: [CommonModule, IfEveryChangesDirective, IfUndefinedChangesDirective],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [NgStyle, IfEveryChangesDirective, IfUndefinedChangesDirective],
     animations: [
         trigger('slideFadeUp', [
             state('in', style({ transform: 'translateY(0)' })),
@@ -38,80 +39,70 @@ import { IfUndefinedChangesDirective } from '../shared/if-undefined-changes.dire
         ])
     ]
 })
-export class CardComponent implements OnInit, OnChanges {
-    @Input() cardModel: CardModel;
-    @Input() chipImgPath: string;
-    @Input() logoImgPath: string;
-    @Input() backBgImgPath: string;
-    @Input() frontBgImgPath: string;
-    @Input() cardNumberFormat: string;
-    @Input() displayedCardNumber: string;
-    @Input() focusedElement: FocusedElement;
-    @Input() cardLabels: CardLabel;
+export class CardComponent {
+    readonly cardModel = input.required<CardModel>();
+    readonly chipImgPath = input.required<string>();
+    readonly logoImgPath = input.required<string>();
+    readonly backBgImgPath = input.required<string>();
+    readonly frontBgImgPath = input.required<string>();
+    readonly cardNumberFormat = input.required<string>();
+    readonly displayedCardNumber = input.required<string>();
+    readonly focusedElement = input<FocusedElement | null>(null);
+    readonly cardLabels = input.required<CardLabel>();
 
     @ViewChild('cardNumber', { static: false }) cardNumberViewChild: ElementRef;
     @ViewChild('cardName', { static: false }) cardNameViewChild: ElementRef;
     @ViewChild('expireDate', { static: false }) expireDateViewChild: ElementRef;
 
-    currentCardNumberPlaceholder: string[];
-    cardHolderNamePlaceholder: string[];
-    focusStyle = null;
+    readonly currentCardNumberPlaceholder = computed(() => this.cardNumberFormat().split(''));
+    readonly cardHolderNamePlaceholder = Array(30).fill('');
+    readonly focusStyle = signal<any>(null);
 
-    FocusedElement = FocusedElement; // This way the enum can be accessed in the template
-
+    FocusedElement = FocusedElement;
     currentlyFocusedNativeElement: any;
+
+    constructor() {
+        effect(() => {
+            const focused = this.focusedElement();
+            if (focused != null) {
+                if (focused === FocusedElement.CardNumber) {
+                    this.currentlyFocusedNativeElement = this.cardNumberViewChild?.nativeElement;
+                } else if (focused === FocusedElement.CardName) {
+                    this.currentlyFocusedNativeElement = this.cardNameViewChild?.nativeElement;
+                } else if (focused === FocusedElement.ExpirationDate) {
+                    this.currentlyFocusedNativeElement = this.expireDateViewChild?.nativeElement;
+                }
+                if (this.currentlyFocusedNativeElement) {
+                    this.focusStyle.set({
+                        width: `${this.currentlyFocusedNativeElement.offsetWidth}px`,
+                        height: `${this.currentlyFocusedNativeElement.offsetHeight}px`,
+                        transform: `translateX(${this.currentlyFocusedNativeElement.offsetLeft}px) translateY(${this.currentlyFocusedNativeElement.offsetTop}px)`
+                    });
+                }
+            } else {
+                this.focusStyle.set(null);
+            }
+        });
+    }
 
     @HostListener('window:orientationchange')
     onOrientationChange() {
         if (this.currentlyFocusedNativeElement) {
-            setTimeout(this.setFocusStyle, 50); // Workaround: if the orientation changes, the ViewChild won't be updated immediatelly
+            setTimeout(this.setFocusStyle, 50);
         }
-    }
-
-    ngOnInit() {
-        this.currentCardNumberPlaceholder = this.cardNumberFormat.split('');
-        this.cardHolderNamePlaceholder = Array(30).fill(''); // CardHolder name is handled the same way as the cardNumber
     }
 
     getIsNumberMasked(index: number): boolean {
-        return this.displayedCardNumber[index] === '*';
-    }
-
-    // The selection of the card elements is handled here
-    // The card flip based on the CVV is handled in the template directly
-    ngOnChanges(changes: SimpleChanges) {
-        for (const propName in changes) {
-            if (propName === 'focusedElement') {
-                if (changes[propName].currentValue != null) {
-                    // let focusedNativeElement;
-                    if (changes[propName].currentValue === FocusedElement.CardNumber) {
-                        this.currentlyFocusedNativeElement = this.cardNumberViewChild.nativeElement;
-                    } else if (changes[propName].currentValue === FocusedElement.CardName) {
-                        this.currentlyFocusedNativeElement = this.cardNameViewChild.nativeElement;
-                    } else if (changes[propName].currentValue === FocusedElement.ExpirationDate) {
-                        this.currentlyFocusedNativeElement = this.expireDateViewChild.nativeElement;
-                    }
-                    if (this.currentlyFocusedNativeElement) {
-                        this.focusStyle = {
-                            width: `${this.currentlyFocusedNativeElement.offsetWidth}px`,
-                            height: `${this.currentlyFocusedNativeElement.offsetHeight}px`,
-                            transform: `translateX(${this.currentlyFocusedNativeElement.offsetLeft}px) translateY(${this.currentlyFocusedNativeElement.offsetTop}px)`
-                        };
-                    }
-                } else {
-                    this.focusStyle = null;
-                }
-            }
-        }
+        return this.displayedCardNumber()[index] === '*';
     }
 
     private setFocusStyle = () => {
-        this.focusStyle = {
+        this.focusStyle.set({
             width: `${this.currentlyFocusedNativeElement.offsetWidth}px`,
             height: `${this.currentlyFocusedNativeElement.offsetHeight}px`,
             transition: 'none',
             transform: `translateX(${this.currentlyFocusedNativeElement.offsetLeft}px)
             translateY(${this.currentlyFocusedNativeElement.offsetTop}px)`
-        };
+        });
     }
 }
