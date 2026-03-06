@@ -3,12 +3,10 @@ node_js:
  - "20"
 before_install:
  - npx playwright install --with-deps
-after_success:
- - codecov --file coverage/ngx-interactive-paycard-lib/lcov.info --disable search
 script:
  - npm run lint:lib
  - npm run test:lib:ci
- - npm run e2e:demo
+ - npm run test:e2e
 before_deploy:
  - npm run build:lib:prod
  - cd dist/ngx-interactive-paycard-lib
