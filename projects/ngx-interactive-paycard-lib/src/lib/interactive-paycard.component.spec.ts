@@ -1,4 +1,4 @@
-import { waitForAsync, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { CardLabel, FormLabel } from './shared';
 
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -24,13 +24,12 @@ describe('InteractivePaycardComponent', () => {
     mm: DefaultComponentLabels.CARD_EXPIRATION_MONTH_FORMAT,
     yy: DefaultComponentLabels.CARD_EXPIRATION_YEAR_FORMAT
   };
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [InteractivePaycardComponent],
       providers: [provideNoopAnimations()]
-    })
-      .compileComponents();
-  }));
+    }).compileComponents();
+  });
 
   it('should create the component', () => {
     const fixture = TestBed.createComponent(InteractivePaycardComponent);
@@ -75,7 +74,7 @@ describe('InteractivePaycardComponent', () => {
     // Arrange
     const fixture = TestBed.createComponent(InteractivePaycardComponent);
     const component = fixture.componentInstance;
-    spyOn(component.submitEvent, 'emit');
+    vi.spyOn(component.submitEvent, 'emit');
 
     // Act
     component.onSubmitClick();
@@ -364,22 +363,22 @@ describe('InteractivePaycardComponent', () => {
     });
     it('should allow ASCII characters 65 thru 90', () => {
       for (let i = 65; i < 91; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i })).toBeTrue();
+        expect(component.onCardNameKeyPress({ charCode: i })).toBe(true);
       }
     });
     it('should exclude ASCII characters 91 thru 96', () => {
       for (let i = 91; i < 96; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i })).toBeFalse();
+        expect(component.onCardNameKeyPress({ charCode: i })).toBe(false);
       }
     });
     it('should allow ASCII characters 97 thru 122', () => {
       for (let i = 97; i < 123; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i })).toBeTrue();
+        expect(component.onCardNameKeyPress({ charCode: i })).toBe(true);
       }
     });
     it('should exclude ASCII characters above 122', () => {
       for (let i = 123; i < 128; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i })).toBeFalse();
+        expect(component.onCardNameKeyPress({ charCode: i })).toBe(false);
       }
     });
   });

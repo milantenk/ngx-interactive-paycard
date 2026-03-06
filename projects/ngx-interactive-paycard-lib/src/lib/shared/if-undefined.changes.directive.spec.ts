@@ -5,8 +5,8 @@ describe('IfUndefinedChangesDirective', () => {
     const viewContainerRefMock = { createEmbeddedView: () => { }, clear: () => { } };
 
     beforeEach(() => {
-        spyOn(viewContainerRefMock, 'createEmbeddedView');
-        spyOn(viewContainerRefMock, 'clear');
+        viewContainerRefMock.createEmbeddedView = vi.fn();
+        viewContainerRefMock.clear = vi.fn();
     });
 
     it('should create embedded view without clear if there is no previous value yet', () => {

@@ -3,8 +3,9 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
     "types": [
-      "jasmine"
-    ]
+      "vitest/globals"
+    ],
+    "lib": ["ES2022", "dom", "esnext.disposable"]
   },
   "include": [
     "**/*.spec.ts",

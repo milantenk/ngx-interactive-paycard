@@ -25,7 +25,7 @@ describe('CardComponent', () => {
     describe('#onOrientationChange', () => {
         const delay = 50;
         beforeEach(() => {
-            component.setFocusStyle = jasmine.createSpy('setFocusStyle');
+            component.setFocusStyle = vi.fn();
         });
 
         it('should do nothing if has no focus native element', (done: any) => {
@@ -54,7 +54,7 @@ describe('CardComponent', () => {
                 width: `${offsetWidth}px`,
                 height: `${offsetHeight}px`,
                 transition: 'none',
-                transform: jasmine.any(String)
+                transform: expect.any(String)
             });
             expect(component.focusStyle.transform).toContain(`translateX(${offsetLeft}px)`);
             expect(component.focusStyle.transform).toContain(`translateY(${offsetTop}px)`);
@@ -89,7 +89,7 @@ describe('CardComponent', () => {
             expect(component.focusStyle).toEqual({
                 width: `${offsetWidth}px`,
                 height: `${offsetHeight}px`,
-                transform: jasmine.any(String)
+                transform: expect.any(String)
             });
             expect(component.focusStyle.transform).toContain(`translateX(${offsetLeft}px)`);
             expect(component.focusStyle.transform).toContain(`translateY(${offsetTop}px)`);

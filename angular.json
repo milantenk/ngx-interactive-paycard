@@ -10,7 +10,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular/build:ng-packagr",
           "options": {
             "project": "projects/ngx-interactive-paycard-lib/ng-package.json",
             "tsConfig": "projects/ngx-interactive-paycard-lib/tsconfig.lib.json"
@@ -23,11 +23,11 @@
           "defaultConfiguration": "production"
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
+            "buildTarget": "ngx-interactive-paycard-demo:build:development",
             "tsConfig": "projects/ngx-interactive-paycard-lib/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "karmaConfig": "projects/ngx-interactive-paycard-lib/karma.conf.js"
+            "include": ["**/*.spec.ts"]
           }
         },
         "lint": {
@@ -53,7 +53,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
             "outputPath": "dist/ngx-interactive-paycard-demo",
             "index": "projects/ngx-interactive-paycard-demo/src/index.html",
@@ -120,27 +120,10 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "projects/ngx-interactive-paycard-demo/tsconfig.spec.json",
-            "polyfills": ["zone.js", "zone.js/testing"],
-            "karmaConfig": "projects/ngx-interactive-paycard-demo/karma.conf.js",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "projects/ngx-interactive-paycard-demo/src/assets",
-                "output": "assets"
-              },
-              {
-                "glob": "favicon.ico",
-                "input": "projects/ngx-interactive-paycard-demo/src",
-                "output": ""
-              }
-            ],
-            "styles": [
-              "projects/ngx-interactive-paycard-demo/src/styles.scss"
-            ],
-            "scripts": []
+            "include": ["**/*.spec.ts"]
           }
         },
         "lint": {
@@ -154,5 +137,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
