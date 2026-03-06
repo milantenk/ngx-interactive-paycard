@@ -3,6 +3,5 @@
  */
 
 export * from './lib/interactive-paycard.component';
-export * from './lib/interactive-paycard.module';
 export * from './lib/shared';
 export * from './lib/shared/card-model';

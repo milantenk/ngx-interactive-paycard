@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { CardLabel, FormLabel } from 'ngx-interactive-paycard-lib';
-import { InteractivePaycardModule } from 'ngx-interactive-paycard-lib';
-import { CardModel } from 'ngx-interactive-paycard-lib';
+import { CardLabel, FormLabel, CardModel, InteractivePaycardComponent } from 'ngx-interactive-paycard-lib';
 
 @Component({
   standalone: true,
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  imports: [InteractivePaycardModule]
+  imports: [InteractivePaycardComponent]
 })
 export class AppComponent {
   title = 'ngx-interactive-paycard-demo';
