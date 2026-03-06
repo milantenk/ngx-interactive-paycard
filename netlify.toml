@@ -1,5 +1,6 @@
+# npm publish on git tags is not handled here — run `npm publish` manually from dist/ngx-interactive-paycard-lib after tagging.
 [build]
-  command = "npm run build:lib && npm run build:demo -- --configuration production"
+  command = "npm run lint:lib && npm run test:lib:ci && npm run build:lib:prod && npx playwright install chromium --with-deps && npm run test:e2e && npm run build:demo -- --configuration production"
   publish = "dist/ngx-interactive-paycard-demo/browser"
 
 [build.environment]
