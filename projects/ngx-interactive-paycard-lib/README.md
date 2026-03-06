@@ -10,21 +10,10 @@ The library is published in Angular package format. To install the library run i
 npm install ngx-interactive-paycard 
 ```
 
-Import the module of the paycard:
+Import the component:
 
 ```javascript
-import { InteractivePaycardModule } from 'ngx-interactive-paycard';
-
-@NgModule({
-  ...
-  imports: [
-    ...
-    InteractivePaycardModule,
-    ...
-  ],
-  ...
-})
-export class UsedModule { }
+import { InteractivePaycardComponent } from 'ngx-interactive-paycard';
 ```
 
 To embed the card use the `<ngx-interactive-paycard>` selector. 
@@ -66,44 +55,46 @@ An example for the usage can be found below. The example assumes, that the consu
 And the component code for it:
 
 ```javascript
+import { CardLabel, FormLabel, CardModel, InteractivePaycardComponent } from 'ngx-interactive-paycard';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  imports: [InteractivePaycardComponent]
 })
 export class AppComponent {
-  title = 'ngx-interactive-paycard-demo';
-  cardNumberFormat = "#### #### #### ####";
-  cardNumberMask = "#### **** **** ####";
- //ex: Optional cardLabels - Spanish
+  cardNumberFormat = '#### #### #### ####';
+  cardNumberMask = '#### **** **** ####';
+  // ex: Optional cardLabels
   cardLabel: CardLabel = {
-    expires: 'Expira',
-    cardHolder: 'Nombre del Titular',
-    fullName: 'Nombre completo',
+    expires: 'Expires',
+    cardHolder: 'Card Holder',
+    fullName: 'Full Name',
     mm: 'MM',
-    yy: 'AA',
+    yy: 'YY',
   };
-  //ex: Optional formLabels - Spanish
+  // ex: Optional formLabels
   formLabel: FormLabel = {
-    cardNumber: 'Número de Tarjeta',
-    cardHolderName: 'Titular de la Tarjeta',
-    expirationDate: 'Fecha de Expiracion',
-    expirationMonth: 'Mes',
-    expirationYear: 'Año',
+    cardNumber: 'Card Number',
+    cardHolderName: 'Card Holder Name',
+    expirationDate: 'Expiration Date',
+    expirationMonth: 'Month',
+    expirationYear: 'Year',
     cvv: 'CVV',
-    submitButton: 'Enviar',
+    submitButton: 'Submit',
   };
 
-  onSubmitEvent($event) {
+  onSubmitEvent($event: CardModel) {
     console.log($event);
   }
-  
-  showChangesCard($event) {
+
+  showChangesCard($event: CardModel) {
     // any changes on card (number, name, month, year, cvv)
     console.log($event);
   }
 
-    showChangesCardNumber($event) {
+  showChangesCardNumber($event: string) {
     // any changes on card number
     console.log($event);
   }
