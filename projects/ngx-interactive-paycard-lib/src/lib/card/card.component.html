@@ -13,7 +13,7 @@
             </div>
             <label class="card-item__number" #cardNumber>
                 @for (cardPlaceHolderLetter of currentCardNumberPlaceholder(); track $index; let i = $index) {
-                    <span *ifUndefinedChanges="cardModel().cardNumber.charAt(i)" [@slideFadeUp]="'in'"
+                    <span *libIfUndefinedChanges="cardModel().cardNumber.charAt(i)" [@slideFadeUp]="'in'"
                         class="card-item__numberItem">
                         @if (getIsNumberMasked(i)) {
                             <ng-container>*</ng-container>
@@ -32,7 +32,7 @@
                         <div class="card-item__name">
                             @for (placeHolder of cardHolderNamePlaceholder; track $index; let i = $index) {
                                 <span class="card-item__nameItem">
-                                    <span *ifUndefinedChanges="cardModel().cardName.charAt(i)"
+                                    <span *libIfUndefinedChanges="cardModel().cardName.charAt(i)"
                                         [@cardHolderFadeRight]="'in'">{{cardModel().cardName.charAt(i)}}</span>
                                 </span>
                             }
@@ -43,7 +43,7 @@
                 </label>
                 <div class="card-item__date" #expireDate>
                     <label class="card-item__dateTitle">{{cardLabels().expires}}</label>
-                    <label class="card-item__dateItem" *ifEveryChanges="cardModel().expirationMonth"
+                    <label class="card-item__dateItem" *libIfEveryChanges="cardModel().expirationMonth"
                         [@slideFadeUp]="'in'">
                         @if (cardModel().expirationMonth) {
                             <span>{{cardModel().expirationMonth}}</span>
@@ -52,7 +52,7 @@
                         }
                     </label>
                     /
-                    <label for="cardYear" class="card-item__dateItem" *ifEveryChanges="cardModel().expirationYear"
+                    <label for="cardYear" class="card-item__dateItem" *libIfEveryChanges="cardModel().expirationYear"
                         [@slideFadeUp]="'in'">
                         @if (cardModel().expirationYear) {
                             <span>{{cardModel().expirationYear.slice(2,4)}}</span>

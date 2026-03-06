@@ -76,6 +76,7 @@ export class InteractivePaycardComponent implements OnInit {
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onCardNumberChange($event: any): void {
     const inputEl = $event.target;
     let cursorPosStart = inputEl.selectionStart;
@@ -117,6 +118,7 @@ export class InteractivePaycardComponent implements OnInit {
     this.onChangeCardNumber();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onCvvChange(event: any): void {
     const cvv = event.target.value.replace(/[^0-9]*/g, '');
     this.cardModel.update(m => ({ ...m, cvv }));
@@ -157,7 +159,7 @@ export class InteractivePaycardComponent implements OnInit {
     this.onBlur();
   }
 
-  onCardNameKeyPress($event: any): boolean {
+  onCardNameKeyPress($event: KeyboardEvent): boolean {
     this.onChangeCard();
     return (($event.charCode >= 65 && $event.charCode <= 90) ||
       ($event.charCode >= 97 && $event.charCode <= 122) || ($event.charCode === 32));

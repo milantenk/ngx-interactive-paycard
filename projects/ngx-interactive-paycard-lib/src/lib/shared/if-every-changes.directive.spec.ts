@@ -25,7 +25,7 @@ describe('IfEveryChangesDirective', () => {
         const directive = TestBed.runInInjectionContext(() => new IfEveryChangesDirective());
 
         // Act
-        directive.ifEveryChanges = 'test';
+        directive.libIfEveryChanges = 'test';
 
         // Assert
         expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalled();
@@ -37,8 +37,8 @@ describe('IfEveryChangesDirective', () => {
         const directive = TestBed.runInInjectionContext(() => new IfEveryChangesDirective());
 
         // Act
-        directive.ifEveryChanges = 'test';
-        directive.ifEveryChanges = 'test2';
+        directive.libIfEveryChanges = 'test';
+        directive.libIfEveryChanges = 'test2';
 
         // Assert
         expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledTimes(2);
@@ -50,10 +50,10 @@ describe('IfEveryChangesDirective', () => {
         const directive = TestBed.runInInjectionContext(() => new IfEveryChangesDirective());
 
         // Act
-        directive.ifEveryChanges = 'test';
-        directive.ifEveryChanges = 'test2';
-        directive.ifEveryChanges = 'test2';
-        directive.ifEveryChanges = 'test2';
+        directive.libIfEveryChanges = 'test';
+        directive.libIfEveryChanges = 'test2';
+        directive.libIfEveryChanges = 'test2';
+        directive.libIfEveryChanges = 'test2';
 
         // Assert
         expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledTimes(2);

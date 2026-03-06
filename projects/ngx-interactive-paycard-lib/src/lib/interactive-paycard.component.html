@@ -1,10 +1,10 @@
 <div class="card-form">
   <div class="card-list">
-    <card [cardModel]="cardModel()" [chipImgPath]="chipImgPath()" [logoImgPath]="logoImgPath()"
+    <lib-card [cardModel]="cardModel()" [chipImgPath]="chipImgPath()" [logoImgPath]="logoImgPath()"
       [backBgImgPath]="backBgImgPath()" [frontBgImgPath]="frontBgImgPath()"
       [cardNumberFormat]="cardNumberFormat() ?? ''"
       [displayedCardNumber]="displayedCardNumber()" [focusedElement]="focusedElement()"
-      [cardLabels]="resolvedCardLabels()"></card>
+      [cardLabels]="resolvedCardLabels()"></lib-card>
   </div>
   <div class="card-form__inner">
     <div class="card-input">

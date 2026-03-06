@@ -8,8 +8,15 @@ import { FocusedElement } from '../shared/focused-element';
 import { IfEveryChangesDirective } from '../shared/if-every-changes.directive';
 import { IfUndefinedChangesDirective } from '../shared/if-undefined-changes.directive';
 
+interface FocusStyle {
+    width: string;
+    height: string;
+    transform: string;
+    transition?: string;
+}
+
 @Component({
-    selector: 'card',
+    selector: 'lib-card',
     templateUrl: 'card.component.html',
     styleUrls: ['card.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -55,10 +62,10 @@ export class CardComponent {
 
     readonly currentCardNumberPlaceholder = computed(() => this.cardNumberFormat().split(''));
     readonly cardHolderNamePlaceholder = Array(30).fill('');
-    readonly focusStyle = signal<any>(null);
+    readonly focusStyle = signal<FocusStyle | null>(null);
 
     FocusedElement = FocusedElement;
-    currentlyFocusedNativeElement: any;
+    currentlyFocusedNativeElement: HTMLElement | undefined;
 
     constructor() {
         effect(() => {

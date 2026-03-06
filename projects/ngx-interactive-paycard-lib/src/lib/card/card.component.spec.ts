@@ -11,6 +11,7 @@ const mockCardLabels = { cardHolder: '', expires: '', fullName: '', mm: '', yy: 
 
 describe('CardComponent', () => {
     let fixture: ComponentFixture<CardComponent>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let component: any;
 
     const offsetWidth = 'offsetWidth';
@@ -54,7 +55,7 @@ describe('CardComponent', () => {
             component.setFocusStyle = vi.fn();
         });
 
-        it('should do nothing if has no focus native element', (done: any) => {
+        it('should do nothing if has no focus native element', (done: () => void) => {
             component.currentlyFocusedNativeElement = null;
             component.onOrientationChange();
             setTimeout(() => {
@@ -63,7 +64,7 @@ describe('CardComponent', () => {
             }, delay);
         });
 
-        it('should set focus styles after delay if native element exists', (done: any) => {
+        it('should set focus styles after delay if native element exists', (done: () => void) => {
             component.onOrientationChange();
             expect(component.setFocusStyle).not.toHaveBeenCalled();
             setTimeout(() => {

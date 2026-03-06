@@ -25,7 +25,7 @@ describe('IfUndefinedChangesDirective', () => {
         const directive = TestBed.runInInjectionContext(() => new IfUndefinedChangesDirective());
 
         // Act
-        directive.ifUndefinedChanges = 'test';
+        directive.libIfUndefinedChanges = 'test';
 
         // Assert
         expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalled();
@@ -37,8 +37,8 @@ describe('IfUndefinedChangesDirective', () => {
         const directive = TestBed.runInInjectionContext(() => new IfUndefinedChangesDirective());
 
         // Act
-        directive.ifUndefinedChanges = 'test';
-        directive.ifUndefinedChanges = 'test2';
+        directive.libIfUndefinedChanges = 'test';
+        directive.libIfUndefinedChanges = 'test2';
 
         // Assert
         expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledTimes(1);
@@ -50,9 +50,9 @@ describe('IfUndefinedChangesDirective', () => {
         const directive = TestBed.runInInjectionContext(() => new IfUndefinedChangesDirective());
 
         // Act
-        directive.ifUndefinedChanges = 'test';
-        directive.ifUndefinedChanges = undefined;
-        directive.ifUndefinedChanges = 'test2';
+        directive.libIfUndefinedChanges = 'test';
+        directive.libIfUndefinedChanges = undefined;
+        directive.libIfUndefinedChanges = 'test2';
 
         // Assert
         expect(viewContainerRefMock.createEmbeddedView).toHaveBeenCalledTimes(3);

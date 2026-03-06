@@ -360,27 +360,27 @@ describe('InteractivePaycardComponent', () => {
 
     it('should exclude ASCII characters 64 and below, but allow 32', () => {
       for (let i = 0; i < 65; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i })).toBe(i === 32);
+        expect(component.onCardNameKeyPress({ charCode: i } as unknown as KeyboardEvent)).toBe(i === 32);
       }
     });
     it('should allow ASCII characters 65 thru 90', () => {
       for (let i = 65; i < 91; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i })).toBe(true);
+        expect(component.onCardNameKeyPress({ charCode: i } as unknown as KeyboardEvent)).toBe(true);
       }
     });
     it('should exclude ASCII characters 91 thru 96', () => {
       for (let i = 91; i < 96; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i })).toBe(false);
+        expect(component.onCardNameKeyPress({ charCode: i } as unknown as KeyboardEvent)).toBe(false);
       }
     });
     it('should allow ASCII characters 97 thru 122', () => {
       for (let i = 97; i < 123; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i })).toBe(true);
+        expect(component.onCardNameKeyPress({ charCode: i } as unknown as KeyboardEvent)).toBe(true);
       }
     });
     it('should exclude ASCII characters above 122', () => {
       for (let i = 123; i < 128; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i })).toBe(false);
+        expect(component.onCardNameKeyPress({ charCode: i } as unknown as KeyboardEvent)).toBe(false);
       }
     });
   });
