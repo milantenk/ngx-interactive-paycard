@@ -7,7 +7,7 @@ A parameterizable animated payment card built with Angular.
   <img src="paycard-demo.gif" alt="Demo gif"/>
 </p>
 
-[![Build Status](https://travis-ci.org/milantenk/ngx-interactive-paycard.png?branch=master)](https://travis-ci.org/milantenk/ngx-interactive-paycard)
+[![CI](https://github.com/milantenk/ngx-interactive-paycard/actions/workflows/ci.yml/badge.svg)](https://github.com/milantenk/ngx-interactive-paycard/actions/workflows/ci.yml)
 [![codecov.io Code Coverage](https://img.shields.io/codecov/c/github/milantenk/ngx-interactive-paycard/master.svg?style=flat)](http://codecov.io/github/milantenk/ngx-interactive-paycard?branch=master)
 [![Npm version](https://img.shields.io/npm/v/ngx-interactive-paycard.svg?style=flat)](https://www.npmjs.com/package/ngx-interactive-paycard)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
