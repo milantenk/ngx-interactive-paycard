@@ -52,25 +52,26 @@ describe('CardComponent', () => {
     describe('#onOrientationChange', () => {
         const delay = 50;
         beforeEach(() => {
+            vi.useFakeTimers();
             component.setFocusStyle = vi.fn();
         });
 
-        it('should do nothing if has no focus native element', (done: () => void) => {
-            component.currentlyFocusedNativeElement = null;
-            component.onOrientationChange();
-            setTimeout(() => {
-                expect(component.setFocusStyle).not.toHaveBeenCalled();
-                done();
-            }, delay);
+        afterEach(() => {
+            vi.useRealTimers();
         });
 
-        it('should set focus styles after delay if native element exists', (done: () => void) => {
+        it('should do nothing if has no focus native element', () => {
+            component.currentlyFocusedNativeElement = null;
+            component.onOrientationChange();
+            vi.advanceTimersByTime(delay);
+            expect(component.setFocusStyle).not.toHaveBeenCalled();
+        });
+
+        it('should set focus styles after delay if native element exists', () => {
             component.onOrientationChange();
             expect(component.setFocusStyle).not.toHaveBeenCalled();
-            setTimeout(() => {
-                expect(component.setFocusStyle).toHaveBeenCalled();
-                done();
-            }, delay);
+            vi.advanceTimersByTime(delay);
+            expect(component.setFocusStyle).toHaveBeenCalled();
         });
     });
 
