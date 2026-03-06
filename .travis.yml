@@ -1,14 +1,8 @@
 language: node_js
 node_js:
- - "12"
-addons:
- apt:
-  sources:
-   - google-chrome
-  packages:
-   - google-chrome-stable
+ - "20"
 before_install:
- - pip install --user codecov
+ - npx playwright install --with-deps
 after_success:
  - codecov --file coverage/ngx-interactive-paycard-lib/lcov.info --disable search
 script:
