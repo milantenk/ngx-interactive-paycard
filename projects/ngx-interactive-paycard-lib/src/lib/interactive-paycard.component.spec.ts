@@ -1,16 +1,10 @@
-import { async, TestBed } from '@angular/core/testing';
+import { waitForAsync, TestBed } from '@angular/core/testing';
 import { CardLabel, FormLabel } from './shared';
 
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CardComponent } from './card/card.component';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { InteractivePaycardComponent } from './interactive-paycard.component';
 import { DefaultComponentLabels } from './shared/default-component-labels';
 import { FocusedElement } from './shared/focused-element';
-import { IfEveryChangesDirective } from './shared/if-every-changes.directive';
-import { IfUndefinedChangesDirective } from './shared/if-undefined-changes.directive';
 
 describe('InteractivePaycardComponent', () => {
 
@@ -30,15 +24,10 @@ describe('InteractivePaycardComponent', () => {
     mm: DefaultComponentLabels.CARD_EXPIRATION_MONTH_FORMAT,
     yy: DefaultComponentLabels.CARD_EXPIRATION_YEAR_FORMAT
   };
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [InteractivePaycardComponent, CardComponent, IfUndefinedChangesDirective, IfEveryChangesDirective],
-      imports: [
-        FormsModule,
-        CommonModule,
-        BrowserModule,
-        BrowserAnimationsModule
-      ]
+      imports: [InteractivePaycardComponent],
+      providers: [provideNoopAnimations()]
     })
       .compileComponents();
   }));
@@ -290,11 +279,9 @@ describe('InteractivePaycardComponent', () => {
 
     it('should do nothing if the card number is empty', () => {
       const event = {
-        srcElement: {
+        target: {
           selectionStart: 0,
           selectionEnd: 0,
-        },
-        target: {
           value: ''
         }
       };
@@ -304,17 +291,15 @@ describe('InteractivePaycardComponent', () => {
 
       expect(component.displayedCardNumber).toEqual(event.target.value);
       expect(component.cardModel.cardNumber).toEqual(event.target.value);
-      expect(event.srcElement.selectionStart).toBe(0);
-      expect(event.srcElement.selectionEnd).toBe(0);
+      expect(event.target.selectionStart).toBe(0);
+      expect(event.target.selectionEnd).toBe(0);
     });
 
     it('should do nothing with inputs that match the mask', () => {
       const event = {
-        srcElement: {
+        target: {
           selectionStart: 2,
           selectionEnd: 4,
-        },
-        target: {
           value: '1234 2345 3456 7890'
         }
       };
@@ -324,18 +309,16 @@ describe('InteractivePaycardComponent', () => {
 
       expect(component.displayedCardNumber).toEqual(event.target.value);
       expect(component.cardModel.cardNumber).toEqual(event.target.value);
-      expect(event.srcElement.selectionStart).toBe(2);
-      expect(event.srcElement.selectionEnd).toBe(4);
+      expect(event.target.selectionStart).toBe(2);
+      expect(event.target.selectionEnd).toBe(4);
     });
 
     it('should remove a non-numerical character with inputs that match the mask', () => {
       const value = 'A1234 2345 3456 7890';
       const event = {
-        srcElement: {
+        target: {
           selectionStart: 2,
           selectionEnd: 4,
-        },
-        target: {
           value: `${value}` // convert to new string so it can be overwritten
         }
       };
@@ -346,8 +329,8 @@ describe('InteractivePaycardComponent', () => {
       expect(component.displayedCardNumber).toEqual(value.slice(1));
       expect(component.cardModel.cardNumber).toEqual(value.slice(1));
       expect(event.target.value).toEqual(value.slice(1));
-      expect(event.srcElement.selectionStart).toBe(1);
-      expect(event.srcElement.selectionEnd).toBe(3);
+      expect(event.target.selectionStart).toBe(1);
+      expect(event.target.selectionEnd).toBe(3);
     });
   });
 

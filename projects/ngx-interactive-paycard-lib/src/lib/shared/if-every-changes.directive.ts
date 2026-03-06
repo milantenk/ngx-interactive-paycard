@@ -3,6 +3,7 @@ import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 // Used by animations, see following issue for expanition:
 // https://github.com/angular/angular/issues/29439
 @Directive({
+    standalone: true,
     selector: '[ifEveryChanges]'
 })
 export class IfEveryChangesDirective {

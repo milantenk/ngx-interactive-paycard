@@ -1,14 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
-import { CardLabel,  FormLabel } from './shared';
+import { CardLabel, FormLabel } from './shared';
 import { CardModel } from './shared/card-model';
 import { DefaultComponentLabels } from './shared/default-component-labels';
 import { FocusedElement } from './shared/focused-element';
+import { CardComponent } from './card/card.component';
 
 @Component({
+  standalone: true,
   selector: 'ngx-interactive-paycard',
   templateUrl: 'interactive-paycard.component.html',
-  styleUrls: ['./interactive-paycard.component.scss']
+  styleUrls: ['./interactive-paycard.component.scss'],
+  imports: [CommonModule, FormsModule, CardComponent]
 })
 export class InteractivePaycardComponent implements OnInit {
 
@@ -36,7 +41,7 @@ export class InteractivePaycardComponent implements OnInit {
   set formLabels(value: FormLabel | null) {
     this._formLabels = value;
   }
-  private _formLabels: FormLabel =  {
+  private _formLabels: FormLabel = {
     cardNumber: DefaultComponentLabels.FORM_CARD_NUMBER,
     cardHolderName: DefaultComponentLabels.FORM_CARD_HOLDER_NAME,
     expirationDate: DefaultComponentLabels.FORM_EXPIRATION_DATE,
@@ -82,9 +87,10 @@ export class InteractivePaycardComponent implements OnInit {
     this.cardNumberFormatArray = this.cardNumberFormat.split('');
   }
 
-  onCardNumberChange($event): void {
-    let cursorPosStart = $event.srcElement.selectionStart;
-    let cursorPosEnd = $event.srcElement.selectionEnd;
+  onCardNumberChange($event: any): void {
+    const inputEl = $event.target;
+    let cursorPosStart = inputEl.selectionStart;
+    let cursorPosEnd = inputEl.selectionEnd;
     let processedCardNumber: string = $event.target.value;
     const newValues: string[] = [];
     const letterRegex = new RegExp('[^0-9]');
@@ -115,14 +121,14 @@ export class InteractivePaycardComponent implements OnInit {
     this.cardModel.cardNumber = processedCardNumber;
     $event.target.value = processedCardNumber; // The value in event has to be updated, otherwise the letter remains in the <input>
     if (!isCursorAtTheEnd) { // The cursor position has to be corrected because of the newly created string
-      $event.srcElement.selectionEnd = cursorPosEnd;
-      $event.srcElement.selectionStart = cursorPosStart;
+      inputEl.selectionEnd = cursorPosEnd;
+      inputEl.selectionStart = cursorPosStart;
     }
     this.onChangeCard();
     this.onChangeCardNumber();
   }
 
-  onCvvChange(event): void {
+  onCvvChange(event: any): void {
     this.cardModel.cvv = event.target.value.replace(/[^0-9]*/g, '');
     this.displayedCvv = this.cardModel.cvv;
     event.target.value = this.cardModel.cvv;
@@ -161,7 +167,7 @@ export class InteractivePaycardComponent implements OnInit {
     this.onBlur();
   }
 
-  onCardNameKeyPress($event): boolean {
+  onCardNameKeyPress($event: any): boolean {
     this.onChangeCard();
     return (($event.charCode >= 65 && $event.charCode <= 90) ||
       ($event.charCode >= 97 && $event.charCode <= 122) || ($event.charCode === 32));

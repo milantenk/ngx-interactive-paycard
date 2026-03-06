@@ -2,6 +2,9 @@
 
 # compiled output
 /dist
+/.angular
+/playwright-report
+/test-results
 /tmp
 /out-tsc
 # Only exists if Bazel was run

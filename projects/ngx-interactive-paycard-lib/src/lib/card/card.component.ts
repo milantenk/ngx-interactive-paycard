@@ -1,14 +1,19 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
 import { CardLabel } from '../shared';
 import { CardModel } from '../shared/card-model';
 import { FocusedElement } from '../shared/focused-element';
+import { IfEveryChangesDirective } from '../shared/if-every-changes.directive';
+import { IfUndefinedChangesDirective } from '../shared/if-undefined-changes.directive';
 
 @Component({
+    standalone: true,
     selector: 'card',
     templateUrl: 'card.component.html',
     styleUrls: ['card.component.scss'],
+    imports: [CommonModule, IfEveryChangesDirective, IfUndefinedChangesDirective],
     animations: [
         trigger('slideFadeUp', [
             state('in', style({ transform: 'translateY(0)' })),
@@ -58,7 +63,7 @@ export class CardComponent implements OnInit, OnChanges {
 
     currentlyFocusedNativeElement: any;
 
-    @HostListener('window:orientationchange', ['$event'])
+    @HostListener('window:orientationchange')
     onOrientationChange() {
         if (this.currentlyFocusedNativeElement) {
             setTimeout(this.setFocusStyle, 50); // Workaround: if the orientation changes, the ViewChild won't be updated immediatelly
