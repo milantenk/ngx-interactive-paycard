@@ -57,9 +57,44 @@ export class InteractivePaycardComponent implements OnInit {
   readonly displayedCvv = signal('');
   readonly focusedElement = signal<FocusedElement | null>(null);
 
+  readonly submitted = signal(false);
+  readonly submitSuccess = signal(false);
+
   readonly cardNumberId = 'cardNumberId';
   readonly cardNameId = 'cardNameId';
   readonly yearSelectId = 'yearSelectId';
+
+  // Validation computeds
+  readonly cardNumberDigitCount = computed(() =>
+    (this.cardNumberFormat() ?? '').split('').filter(c => c === '#').length
+  );
+
+  readonly isAmexNumber = computed(() => {
+    const num = this.cardModel().cardNumber.replace(/ /g, '');
+    return num.length >= 2 && (num.startsWith('34') || num.startsWith('37'));
+  });
+
+  readonly formatSupportsAmex = computed(() => this.cardNumberDigitCount() === 15);
+
+  readonly showAmexWarning = computed(() => this.isAmexNumber() && !this.formatSupportsAmex());
+
+  readonly isCardNumberValid = computed(() => {
+    const num = this.cardModel().cardNumber.replace(/ /g, '');
+    return num.length === this.cardNumberDigitCount() && this.luhnCheck(num);
+  });
+
+  readonly isCardNameValid = computed(() => this.cardModel().cardName.trim().length >= 2);
+
+  readonly isMonthValid = computed(() => !!this.cardModel().expirationMonth);
+
+  readonly isYearValid = computed(() => !!this.cardModel().expirationYear);
+
+  readonly isCvvValid = computed(() => this.cardModel().cvv.length >= 3);
+
+  readonly isFormValid = computed(() =>
+    this.isCardNumberValid() && this.isCardNameValid() &&
+    this.isMonthValid() && this.isYearValid() && this.isCvvValid()
+  );
 
   ngOnInit() {
     const format = this.cardNumberFormat();
@@ -159,14 +194,11 @@ export class InteractivePaycardComponent implements OnInit {
     this.onBlur();
   }
 
-  onCardNameKeyPress($event: KeyboardEvent): boolean {
-    this.onChangeCard();
-    return (($event.charCode >= 65 && $event.charCode <= 90) ||
-      ($event.charCode >= 97 && $event.charCode <= 122) || ($event.charCode === 32));
-  }
-
   onCardNameChange(name: string): void {
-    this.cardModel.update(m => ({ ...m, cardName: name }));
+    // Only allow letters (including accented), spaces, hyphens, and apostrophes
+    const filtered = name.replace(/[^a-zA-Z\u00C0-\u024F ' -]/g, '');
+    this.cardModel.update(m => ({ ...m, cardName: filtered }));
+    this.onChangeCard();
   }
 
   onMonthChange(): void {
@@ -190,8 +222,15 @@ export class InteractivePaycardComponent implements OnInit {
     this.onYearChange();
   }
 
-  onSubmitClick() {
+  onSubmitClick(): void {
+    this.submitted.set(true);
+    if (!this.isFormValid()) {
+      return;
+    }
     this.submitEvent.emit(this.cardModel());
+    this.resetForm();
+    this.submitSuccess.set(true);
+    setTimeout(() => this.submitSuccess.set(false), 3000);
   }
 
   onChangeCard() {
@@ -212,6 +251,28 @@ export class InteractivePaycardComponent implements OnInit {
 
   generateMonthValue(index: number): string {
     return index < 10 ? `0${index}` : index.toString();
+  }
+
+  private resetForm(): void {
+    this.cardModel.set({ cardNumber: '', cardName: '', expirationMonth: '', expirationYear: '', cvv: '' });
+    this.displayedCardNumber.set('');
+    this.displayedCvv.set('');
+    this.submitted.set(false);
+  }
+
+  private luhnCheck(num: string): boolean {
+    let sum = 0;
+    let isEven = false;
+    for (let i = num.length - 1; i >= 0; i--) {
+      let digit = parseInt(num[i], 10);
+      if (isEven) {
+        digit *= 2;
+        if (digit > 9) digit -= 9;
+      }
+      sum += digit;
+      isEven = !isEven;
+    }
+    return sum % 10 === 0;
   }
 
   private maskCardNumber(): void {
