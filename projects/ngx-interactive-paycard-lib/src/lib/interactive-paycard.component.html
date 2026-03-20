@@ -7,50 +7,72 @@
       [cardLabels]="resolvedCardLabels()"></lib-card>
   </div>
   <div class="card-form__inner">
-    <div class="card-input">
+    @if (submitSuccess()) {
+      <div class="card-form__success" role="alert">
+        <span class="card-form__success-icon">&#10003;</span>
+        Payment submitted successfully!
+      </div>
+    }
+    <div class="card-input" [class.-error]="submitted() && !isCardNumberValid()">
       <label for="cardNumber" class="card-input__label">{{resolvedFormLabels().cardNumber}}</label>
       <input class="card-input__input" type="tel" [id]="cardNumberId" [attr.maxlength]="cardNumberMaxLength()"
         [value]="displayedCardNumber()" (input)="onCardNumberChange($event)" (focus)="onCardNumberFocus()"
         (blur)="onCardNumberBlur()" autocomplete="off" />
+      @if (showAmexWarning()) {
+        <span class="card-input__error-msg">American Express cards are not supported.</span>
+      } @else if (submitted() && !isCardNumberValid()) {
+        <span class="card-input__error-msg">Please enter a valid card number.</span>
+      }
     </div>
-    <div class="card-input">
+    <div class="card-input" [class.-error]="submitted() && !isCardNameValid()">
       <label for="cardName" class="card-input__label">{{resolvedFormLabels().cardHolderName}}</label>
       <input class="card-input__input" type="text" [id]="cardNameId"
         [ngModel]="cardModel().cardName" (ngModelChange)="onCardNameChange($event)"
-        (keyup)='onCardNameKeyPress($event)' autocomplete="off" (focus)="onCardNameFocus()" (blur)="onBlur()" />
+        autocomplete="off" (focus)="onCardNameFocus()" (blur)="onBlur()" />
+      @if (submitted() && !isCardNameValid()) {
+        <span class="card-input__error-msg">Please enter the card holder name.</span>
+      }
     </div>
     <div class="card-form__row">
       <div class="card-form__col">
         <div class="card-form__group">
           <label for="cardMonth" class="card-input__label">{{resolvedFormLabels().expirationDate}}</label>
-          <select class="card-input__input -select" id="monthSelect"
-            [ngModel]="cardModel().expirationMonth" (ngModelChange)="onExpirationMonthChange($event)"
-            (focus)="onDateFocus()" (blur)="onBlur()">
-            <option value disabled selected>{{resolvedFormLabels().expirationMonth}}</option>
-            @for (element of [].constructor(12); track $index; let i = $index) {
-              <option [value]="(i+1) < 10 ? '0' + (i+1) : (i+1)" [disabled]="(i+1) < minCardMonth()">
-                {{generateMonthValue((i+1))}}
-              </option>
-            }
-          </select>
-          <select class="card-input__input -select" [id]="yearSelectId"
-            [ngModel]="cardModel().expirationYear" (ngModelChange)="onExpirationYearChange($event)"
-            (focus)="onDateFocus()" (blur)="onBlur()">
-            <option value disabled selected>{{resolvedFormLabels().expirationYear}}</option>
-            @for (element of [].constructor(12); track $index; let i = $index) {
-              <option [value]="minCardYear + i">{{i + minCardYear}}</option>
-            }
-          </select>
+          <div class="card-form__group-selects" [class.-error]="submitted() && (!isMonthValid() || !isYearValid())">
+            <select class="card-input__input -select" id="monthSelect"
+              [ngModel]="cardModel().expirationMonth" (ngModelChange)="onExpirationMonthChange($event)"
+              (focus)="onDateFocus()" (blur)="onBlur()">
+              <option value disabled selected>{{resolvedFormLabels().expirationMonth}}</option>
+              @for (element of [].constructor(12); track $index; let i = $index) {
+                <option [value]="(i+1) < 10 ? '0' + (i+1) : (i+1)" [disabled]="(i+1) < minCardMonth()">
+                  {{generateMonthValue((i+1))}}
+                </option>
+              }
+            </select>
+            <select class="card-input__input -select" [id]="yearSelectId"
+              [ngModel]="cardModel().expirationYear" (ngModelChange)="onExpirationYearChange($event)"
+              (focus)="onDateFocus()" (blur)="onBlur()">
+              <option value disabled selected>{{resolvedFormLabels().expirationYear}}</option>
+              @for (element of [].constructor(12); track $index; let i = $index) {
+                <option [value]="minCardYear + i">{{i + minCardYear}}</option>
+              }
+            </select>
+          </div>
+          @if (submitted() && (!isMonthValid() || !isYearValid())) {
+            <span class="card-input__error-msg">Please select an expiration date.</span>
+          }
         </div>
       </div>
       <div class="card-form__col -cvv">
-        <div class="card-input">
+        <div class="card-input" [class.-error]="submitted() && !isCvvValid()">
           <label for="cardCvv" class="card-input__label">{{resolvedFormLabels().cvv}}</label>
           <input class="card-input__input" type="tel" id="cardCvvId" maxlength="4" autocomplete="off"
             [value]="displayedCvv()" (blur)="onCvvBlur()" (focus)="onCvvFocus()" (input)="onCvvChange($event)" />
+          @if (submitted() && !isCvvValid()) {
+            <span class="card-input__error-msg">Please enter the CVV.</span>
+          }
         </div>
       </div>
     </div>
-    <button class="card-form__button" (click)="submitEvent.emit(cardModel())">{{resolvedFormLabels().submitButton}}</button>
+    <button class="card-form__button" (click)="onSubmitClick()">{{resolvedFormLabels().submitButton}}</button>
   </div>
 </div>
