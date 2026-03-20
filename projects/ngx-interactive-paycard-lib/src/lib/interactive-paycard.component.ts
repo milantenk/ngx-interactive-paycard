@@ -196,7 +196,7 @@ export class InteractivePaycardComponent implements OnInit {
 
   onCardNameChange(name: string): void {
     // Only allow letters (including accented), spaces, hyphens, and apostrophes
-    const filtered = name.replace(/[^a-zA-Z\u00C0-\u024F '\-]/g, '');
+    const filtered = name.replace(/[^a-zA-Z\u00C0-\u024F ' -]/g, '');
     this.cardModel.update(m => ({ ...m, cardName: filtered }));
     this.onChangeCard();
   }
