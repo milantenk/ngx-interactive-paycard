@@ -72,7 +72,30 @@ describe('InteractivePaycardComponent', () => {
     expect(component.resolvedCardLabels()).toEqual(cardLabelsByDefaultMock);
   });
 
-  it('should emit an event when submit button is clicked', () => {
+  it('should emit an event when submit button is clicked with a valid form', () => {
+    // Arrange
+    const fixture = TestBed.createComponent(InteractivePaycardComponent);
+    fixture.componentRef.setInput('cardNumberFormat', '#### #### #### ####');
+    fixture.componentRef.setInput('cardNumberMask', '#### **** **** ####');
+    fixture.detectChanges();
+    const component = fixture.componentInstance;
+    vi.spyOn(component.submitEvent, 'emit');
+    component.cardModel.set({
+      cardNumber: '4539 1488 0343 6467',
+      cardName: 'John Doe',
+      expirationMonth: '12',
+      expirationYear: new Date().getFullYear().toString(),
+      cvv: '123'
+    });
+
+    // Act
+    component.onSubmitClick();
+
+    // Assert
+    expect(component.submitEvent.emit).toHaveBeenCalled();
+  });
+
+  it('should not emit an event when submit button is clicked with an invalid form', () => {
     // Arrange
     const fixture = TestBed.createComponent(InteractivePaycardComponent);
     const component = fixture.componentInstance;
@@ -82,7 +105,7 @@ describe('InteractivePaycardComponent', () => {
     component.onSubmitClick();
 
     // Assert
-    expect(component.submitEvent.emit).toHaveBeenCalled();
+    expect(component.submitEvent.emit).not.toHaveBeenCalled();
   });
 
   describe('minCardMonth', () => {
@@ -350,7 +373,7 @@ describe('InteractivePaycardComponent', () => {
     });
   });
 
-  describe('onCardNameKeyPress', () => {
+  describe('onCardNameChange', () => {
     let component: InteractivePaycardComponent;
 
     beforeEach(() => {
@@ -358,30 +381,25 @@ describe('InteractivePaycardComponent', () => {
       component = fixture.componentInstance;
     });
 
-    it('should exclude ASCII characters 64 and below, but allow 32', () => {
-      for (let i = 0; i < 65; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i } as unknown as KeyboardEvent)).toBe(i === 32);
-      }
+    it('should allow letters', () => {
+      component.onCardNameChange('John');
+      expect(component.cardModel().cardName).toBe('John');
     });
-    it('should allow ASCII characters 65 thru 90', () => {
-      for (let i = 65; i < 91; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i } as unknown as KeyboardEvent)).toBe(true);
-      }
+    it('should allow spaces', () => {
+      component.onCardNameChange('John Doe');
+      expect(component.cardModel().cardName).toBe('John Doe');
     });
-    it('should exclude ASCII characters 91 thru 96', () => {
-      for (let i = 91; i < 96; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i } as unknown as KeyboardEvent)).toBe(false);
-      }
+    it('should allow hyphens', () => {
+      component.onCardNameChange('Mary-Jane');
+      expect(component.cardModel().cardName).toBe('Mary-Jane');
     });
-    it('should allow ASCII characters 97 thru 122', () => {
-      for (let i = 97; i < 123; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i } as unknown as KeyboardEvent)).toBe(true);
-      }
+    it('should allow apostrophes', () => {
+      component.onCardNameChange("O'Brien");
+      expect(component.cardModel().cardName).toBe("O'Brien");
     });
-    it('should exclude ASCII characters above 122', () => {
-      for (let i = 123; i < 128; i++) {
-        expect(component.onCardNameKeyPress({ charCode: i } as unknown as KeyboardEvent)).toBe(false);
-      }
+    it('should strip digits and special characters', () => {
+      component.onCardNameChange('John123 @#$');
+      expect(component.cardModel().cardName).toBe('John ');
     });
   });
 
